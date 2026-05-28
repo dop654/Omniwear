@@ -4,6 +4,23 @@
 	font-family: Verdana, Helvetica, sans-serif;
 }
 
+@font-face {
+  font-family: Les_Flos;
+  src: url(../fonts/les_flos/Les_Flos_Sage.otf);
+}
+
+@font-face {
+  font-family: Les_Flos;
+  src: url(../fonts/les_flos/Les_Flos_Sans.otf);
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Les_Flos;
+  src: url(../fonts/les_flos/Les_Flos_Chaos.otf);
+  font-style: oblique;
+}
+
 footer {
 	background-color: #FFDA78;
 	color: #AF7A18;
@@ -46,14 +63,19 @@ header a:hover{
 }
 
 header #logo{
-	font-weight: bold;
 	display: flex;
   	align-items: center;
 }
 
 header img{
-	width: 150px;
-	height:auto;
+	width: 80px;
+	height: auto;
+	margin: 10px;
+}
+
+header h1 {
+	font-family: Les_Flos;
+	font-style: italic;
 }
 
 nav {

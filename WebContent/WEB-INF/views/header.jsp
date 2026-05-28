@@ -10,7 +10,7 @@
 <body>
 	<header>
 		<div id="logo">
-			<img src="images/logo_tmp.png" alt="logo">
+			<img src="images/logo_w.svg" alt="logo">
 			<h1>OMNIWEAR</h1>
 		</div>
 		<nav>

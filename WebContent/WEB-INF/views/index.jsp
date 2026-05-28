@@ -3,13 +3,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Omniwear - Homepage</title>
-<link rel="stylesheet" type="text/css" href="styles/style.css">
+	<meta charset="UTF-8">
+	<title>Omniwear - Homepage</title>
+	<link rel="stylesheet" type="text/css" href="styles/style.css">
+	<link rel="icon" type="image/x-icon" href="images/favicons/favicon.ico">
 </head>
 <body>
-<%@ include file="header.jsp" %>
-
-<%@ include file="footer.jsp" %>
+	<%@ include file="header.jsp" %>
+	
+	<%@ include file="footer.jsp" %>
 </body>
 </html>
