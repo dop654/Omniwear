@@ -12,6 +12,10 @@ footer {
 	height: 100px;
 }
 
+padding ul {
+	margin-bottom: 20px;
+}
+
 .sx {
 	float: left;
 }
@@ -29,6 +33,7 @@ header{
 	padding: 5px 10px 10px 20px;
 	margin: auto;
   	margin-top: -10px;
+  	margin-bottom: 30px;
 }
 
 header a, header a:visited{

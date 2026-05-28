@@ -10,6 +10,7 @@
 <body>
 	<footer>
 		<hr>
+		<br>
 		<div class="sx">
 			Copyright &copy; 2026.<br>
 			Tutti i diritti riservati.<br>
