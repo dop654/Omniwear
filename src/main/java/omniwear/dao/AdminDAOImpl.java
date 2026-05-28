@@ -84,7 +84,7 @@ public class AdminDAOImpl implements AdminDAO{
                 bean.setEmail(rs.getString("email"));
                 bean.setPassword(rs.getString("password_hash"));
                 
-               admins.add(bean);
+                admins.add(bean);
             }
         }
         return admins;

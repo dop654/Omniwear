@@ -7,42 +7,42 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 import javax.sql.DataSource;
-import omniwear.model.CategoriaBean;
+import omniwear.model.MisuraBean;
 
-public class CategoriaDAOImpl implements CategoriaDAO{
-	private static final String TABLE_NAME = "Categoria";
+public class MisuraDAOImpl implements MisuraDAO{
+	private static final String TABLE_NAME = "Misura";
     private DataSource ds;
     
-    public CategoriaDAOImpl(DataSource ds) {
+    public MisuraDAOImpl(DataSource ds) {
         this.ds = ds;
     }
     
     @Override
-    public synchronized void doSave(CategoriaBean categoria) throws SQLException {
-        String insertSQL = "INSERT INTO " + TABLE_NAME + " (nome_categoria) VALUES (?)";
+    public synchronized void doSave(MisuraBean misura) throws SQLException {
+        String insertSQL = "INSERT INTO " + TABLE_NAME + " (valore_misura) VALUES (?)";
 
         try (Connection connection = ds.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
              
-            preparedStatement.setString(1, categoria.getNomeCat());         
+            preparedStatement.setString(1, misura.getMisura());         
             
             preparedStatement.executeUpdate();
         }
     }
     
     @Override
-    public synchronized CategoriaBean doRetrieveByKey(String nome_categoria) throws SQLException {
-        	CategoriaBean bean = new CategoriaBean();
-        	String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome_categoria = ?";
+    public synchronized MisuraBean doRetrieveByKey(String valore_misura) throws SQLException {
+        	MisuraBean bean = new MisuraBean();
+        	String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE valore_misura = ?";
 
         try (Connection connection = ds.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
              
-            preparedStatement.setString(1, nome_categoria);
+            preparedStatement.setString(1, valore_misura);
 
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
-                    bean.setNomeCat(rs.getString("nome_categoria"));
+                    bean.setMisura(rs.getString("valore_misura"));
                 }
             }
         }
@@ -50,20 +50,20 @@ public class CategoriaDAOImpl implements CategoriaDAO{
     }
 
     @Override
-    public synchronized boolean doDelete(String nome_categoria) throws SQLException {
-        String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE nome_categoria = ?";
+    public synchronized boolean doDelete(String valore_misura) throws SQLException {
+        String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE valore_misura = ?";
         try (Connection connection = ds.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
              
-            preparedStatement.setString(1, nome_categoria);
+            preparedStatement.setString(1, valore_misura);
             int result = preparedStatement.executeUpdate();
             return (result != 0);
         }
     }
 
     @Override
-    public synchronized Collection<CategoriaBean> doRetrieveAll(String order) throws SQLException {
-        Collection<CategoriaBean> categorie = new LinkedList<>();
+    public synchronized Collection<MisuraBean> doRetrieveAll(String order) throws SQLException {
+        Collection<MisuraBean> misure = new LinkedList<>();
         String selectSQL = "SELECT * FROM " + TABLE_NAME;
 
         if (order != null && !order.isEmpty()) {
@@ -75,12 +75,12 @@ public class CategoriaDAOImpl implements CategoriaDAO{
              ResultSet rs = preparedStatement.executeQuery()) {
 
             while (rs.next()) {
-                CategoriaBean bean = new CategoriaBean();
-                bean.setNomeCat(rs.getString("nome_categoria"));
+                MisuraBean bean = new MisuraBean();
+                bean.setMisura(rs.getString("valore_misura"));
                 
-                categorie.add(bean);
+                misure.add(bean);
             }
         }
-        return categorie;
+        return misure;
     }
 }
