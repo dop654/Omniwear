@@ -7,46 +7,42 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 import javax.sql.DataSource;
-import omniwear.model.AdminBean;
+import omniwear.model.CategoriaBean;
 
-public class AdminDAOImpl implements AdminDAO{
-	private static final String TABLE_NAME = "Admin";
+public class CategoriaDAOImpl implements CategoriaDAO{
+	private static final String TABLE_NAME = "Categoria";
     private DataSource ds;
     
-    public AdminDAOImpl(DataSource ds) {
+    public CategoriaDAOImpl(DataSource ds) {
         this.ds = ds;
     }
     
     @Override
-    public synchronized void doSave(AdminBean admin) throws SQLException {
-        String insertSQL = "INSERT INTO " + TABLE_NAME + " (id_admin, email, password_hash) VALUES (?, ?, ?)";
+    public synchronized void doSave(CategoriaBean categoria) throws SQLException {
+        String insertSQL = "INSERT INTO " + TABLE_NAME + " (nome_categoria) VALUES (?)";
 
         try (Connection connection = ds.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
              
-            preparedStatement.setInt(1, admin.getIdAdmin());
-            preparedStatement.setString(2, admin.getEmail());
-            preparedStatement.setString(3, admin.getPassword());            
+            preparedStatement.setString(1, categoria.getNomeCat());         
             
             preparedStatement.executeUpdate();
         }
     }
     
     @Override
-    public synchronized AdminBean doRetrieveByKey(int id_admin) throws SQLException {
-        AdminBean bean = new AdminBean();
-        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id_admin = ?";
+    public synchronized CategoriaBean doRetrieveByKey(String nome_categoria) throws SQLException {
+        	CategoriaBean bean = new CategoriaBean();
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome_categoria = ?";
 
         try (Connection connection = ds.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
              
-            preparedStatement.setInt(1, id_admin);
+            preparedStatement.setString(1, nome_categoria);
 
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
-                    bean.setIdAdmin(rs.getInt("id_admin"));
-                    bean.setEmail(rs.getString("email"));
-                    bean.setPassword(rs.getString("password_hash"));
+                    bean.setNomeCat(rs.getString("nome_categoria"));
                 }
             }
         }
@@ -54,20 +50,20 @@ public class AdminDAOImpl implements AdminDAO{
     }
 
     @Override
-    public synchronized boolean doDelete(int id_admin) throws SQLException {
-        String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE id_admin = ?";
+    public synchronized boolean doDelete(String nome_categoria) throws SQLException {
+        String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE nome_categoria = ?";
         try (Connection connection = ds.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
              
-            preparedStatement.setInt(1, id_admin);
+            preparedStatement.setString(1, nome_categoria);
             int result = preparedStatement.executeUpdate();
             return (result != 0);
         }
     }
 
     @Override
-    public synchronized Collection<AdminBean> doRetrieveAll(String order) throws SQLException {
-        Collection<AdminBean> admins = new LinkedList<>();
+    public synchronized Collection<CategoriaBean> doRetrieveAll(String order) throws SQLException {
+        Collection<CategoriaBean> categorie = new LinkedList<>();
         String selectSQL = "SELECT * FROM " + TABLE_NAME;
 
         if (order != null && !order.isEmpty()) {
@@ -79,14 +75,12 @@ public class AdminDAOImpl implements AdminDAO{
              ResultSet rs = preparedStatement.executeQuery()) {
 
             while (rs.next()) {
-                AdminBean bean = new AdminBean();
-                bean.setIdAdmin(rs.getInt("id_admin"));
-                bean.setEmail(rs.getString("email"));
-                bean.setPassword(rs.getString("password_hash"));
+                CategoriaBean bean = new CategoriaBean();
+                bean.setNomeCat(rs.getString("nome_categoria"));
                 
-               admins.add(bean);
+               categorie.add(bean);
             }
         }
-        return admins;
+        return categorie;
     }
 }
