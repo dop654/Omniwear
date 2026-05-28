@@ -13,8 +13,8 @@ CREATE TABLE Utente (
 
 CREATE TABLE Admin (
     id_admin INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL
+    email VARCHAR(254) UNIQUE NOT NULL,
+    password_hash VARCHAR(256) NOT NULL
 );
 
 CREATE TABLE Categoria (
