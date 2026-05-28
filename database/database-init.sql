@@ -29,7 +29,7 @@ CREATE TABLE Ordine (
     id_ordine INT AUTO_INCREMENT PRIMARY KEY,
     data_ordine DATETIME DEFAULT CURRENT_TIMESTAMP,
     indirizzo_destinazione VARCHAR(255) NOT NULL,
-    stato_ordine VARCHAR(50) NOT NULL DEFAULT 'In elaborazione',
+    stato_ordine SMALLINT NOT NULL DEFAULT 0,
     id_utente INT NOT NULL,
     FOREIGN KEY (id_utente) REFERENCES Utente(id_utente) ON UPDATE CASCADE ON DELETE CASCADE
 );
