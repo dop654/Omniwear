@@ -14,7 +14,7 @@
 			<ul>
 				<li><a href="#">Home</a></li>
 				<li><a href="#">Sconti</a></li>
-				<li><a href="#">Accedi</a></li>
+				<li><a href="${request.getContextPath}LoginServlet">Accedi</a></li>
 				<li><a href="#">Carrello</a></li>
 			</ul>
 		</nav>

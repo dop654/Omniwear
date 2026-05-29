@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Omniwear - Registrazione</title>
+	<title>Omniwear - Login</title>
 	<link rel="stylesheet" type="text/css" href="styles/style.css">
 	<link rel="icon" type="image/x-icon" href="images/favicons/favicon.ico">
 </head>
@@ -12,19 +12,13 @@
 	<%@ include file="header.jsp" %>
 	
 	<section id="form">
-		<h3>Registrazione</h3><br>
-		<form method="POST" action="${request.getContextPath}/RegisterServlet">
-			<label for="nome">Nome: </label>
-			<input type="text" name="nome" id="nome"><br>
-			<label for="cognome">Cognome: </label>
-			<input type="text" name="cognome" id="cognome"><br>
+		<h3>Accedi</h3><br>
+		<form method="POST" action="${request.getContextPath}LoginServlet">
 			<label for="email">E-Mail: </label>
 			<input type="email" name="email" id="email"><br>
 			<label for="pass">Password: </label>
 			<input type="password" name="pass" id="pass"><br>
-			<label for="dataNascita">Data di nascita: </label>
-			<input type="date" name="dataNascita" id="dataNascita"><br>
-			<input type="submit" value="Registrati">
+			<input type="submit" value="Accedi">
 		</form>
 	</section>
 	
