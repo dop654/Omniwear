@@ -24,24 +24,29 @@ public class RegisterServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UtenteBean user = new UtenteBean();
 		
-		user.setNome(request.getParameter("nome"));
-		user.setCognome(request.getParameter("cognome"));
-		user.setEmail(request.getParameter("email"));
-		user.setPassword(toDigest(request.getParameter("password")));
-		user.setDataNascita(LocalDate.parse(request.getParameter("dataNascita")));
-		
-		PrintWriter out = response.getWriter();
-		
-		out.println("<!doctype html>");
-		out.println("<html><head></head><body>");
-		out.println(user.getNome());
-		out.println(user.getCognome());
-		out.println(user.getEmail());
-		out.println(user.getPassword());
-		out.println(user.getDataNascita());
-		out.println("</body></html>");
+		if(request.getParameter("email") != null) {
+			UtenteBean user = new UtenteBean();
+			
+			user.setNome(request.getParameter("nome"));
+			user.setCognome(request.getParameter("cognome"));
+			user.setEmail(request.getParameter("email"));
+			user.setPassword(toDigest(request.getParameter("password")));
+			user.setDataNascita(LocalDate.parse(request.getParameter("dataNascita")));
+			
+			PrintWriter out = response.getWriter();
+			
+			out.println("<!doctype html>");
+			out.println("<html><head></head><body>");
+			out.println(user.getNome());
+			out.println(user.getCognome());
+			out.println(user.getEmail());
+			out.println(user.getPassword());
+			out.println(user.getDataNascita());
+			out.println("</body></html>");
+		} else {
+			request.getRequestDispatcher("WEB-INF/views/register.jsp").forward(request, response);
+		}
 	}
 	
 	private static String toDigest(String pw) {

@@ -13,15 +13,15 @@
 	
 	<section id="form">
 		<h3>Registrazione</h3><br>
-		<form method="POST" action="${request.getContextPath}/RegisterServlet">
+		<form method="POST" action="${request.getContextPath}RegisterServlet">
 			<label for="nome">Nome: </label>
 			<input type="text" name="nome" id="nome"><br>
 			<label for="cognome">Cognome: </label>
 			<input type="text" name="cognome" id="cognome"><br>
 			<label for="email">E-Mail: </label>
 			<input type="email" name="email" id="email"><br>
-			<label for="pass">Password: </label>
-			<input type="password" name="pass" id="pass"><br>
+			<label for="password">Password: </label>
+			<input type="password" name="password" id="password"><br>
 			<label for="dataNascita">Data di nascita: </label>
 			<input type="date" name="dataNascita" id="dataNascita"><br>
 			<input type="submit" value="Registrati">

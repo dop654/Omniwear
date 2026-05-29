@@ -20,6 +20,7 @@
 			<input type="password" name="pass" id="pass"><br>
 			<input type="submit" value="Accedi">
 		</form>
+		Non sei registrato? <a href="${request.getContextPath}RegisterServlet">Fallo ora!</a>
 	</section>
 	
 	<%@ include file="footer.jsp" %>
