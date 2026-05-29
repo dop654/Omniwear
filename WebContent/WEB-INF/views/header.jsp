@@ -3,9 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>header</title>
-	<link rel="stylesheet" type="text/css" href="styles/style.css">
 </head>
 <body>
 	<header>
