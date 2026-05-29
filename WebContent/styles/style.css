@@ -92,3 +92,35 @@ nav ul li {
 	display: inline;
 	margin: 20px 15px;
 }
+
+#form {
+	width: 80%;
+	margin: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding: 20px;
+	border-radius: 30px;
+	background-color: #FAFAFA;
+	border: #003285 solid 5px;
+}
+
+#form label, #form input{
+	display: table-cell;
+	margin: 5px;
+}
+
+#form h3 {
+	color: #FF7F3E;
+}
+
+#form input[type=submit] {
+	background-color: #FF7F3E;
+	color: #FAFAFA;
+	padding: 5px 15px;
+	border-radius: 30px;
+	border-style: none;
+}
+
+#form input[type=submit]:hover {
+	background-color: #003285;
+}
