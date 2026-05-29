@@ -14,12 +14,13 @@
 	<section id="form">
 		<h3>Accedi</h3><br>
 		<form method="POST" action="${request.getContextPath}LoginServlet">
-			<label for="email">E-Mail: </label>
-			<input type="email" name="email" id="email"><br>
-			<label for="pass">Password: </label>
-			<input type="password" name="pass" id="pass"><br>
+			<span class="row"><label for="email">E-Mail: </label>
+			<input type="email" name="email" id="email"></span>
+			<span class="row"><label for="pass">Password: </label>
+			<input type="password" name="pass" id="pass"></span>
 			<input type="submit" value="Accedi">
 		</form>
+		<br>
 		Non sei registrato? <a href="${request.getContextPath}RegisterServlet">Fallo ora!</a>
 	</section>
 	

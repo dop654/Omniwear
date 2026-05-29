@@ -106,6 +106,12 @@ nav ul li {
 
 #form label, #form input{
 	display: table-cell;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#form .row{
+	display: table-row;
 	margin: 5px;
 }
 

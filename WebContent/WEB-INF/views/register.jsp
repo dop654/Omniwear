@@ -14,18 +14,20 @@
 	<section id="form">
 		<h3>Registrazione</h3><br>
 		<form method="POST" action="${request.getContextPath}RegisterServlet">
-			<label for="nome">Nome: </label>
-			<input type="text" name="nome" id="nome"><br>
-			<label for="cognome">Cognome: </label>
-			<input type="text" name="cognome" id="cognome"><br>
-			<label for="email">E-Mail: </label>
-			<input type="email" name="email" id="email"><br>
-			<label for="password">Password: </label>
-			<input type="password" name="password" id="password"><br>
-			<label for="dataNascita">Data di nascita: </label>
-			<input type="date" name="dataNascita" id="dataNascita"><br>
+			<span class="row"><label for="nome">Nome: </label>
+			<input type="text" name="nome" id="nome" required></span>
+			<span class="row"><label for="cognome">Cognome: </label>
+			<input type="text" name="cognome" id="cognome" required></span>
+			<span class="row"><label for="email">E-Mail: </label>
+			<input type="email" name="email" id="email" required></span>
+			<span class="row"><label for="password">Password: </label>
+			<input type="password" name="password" id="password" required></span>
+			<span class="row"><label for="dataNascita">Data di nascita: </label>
+			<input type="date" name="dataNascita" id="dataNascita" required></span>
 			<input type="submit" value="Registrati">
 		</form>
+		<br>
+		Già registrato? <a href="${request.getContextPath}LoginServlet">Accedi!</a>
 	</section>
 	
 	<%@ include file="footer.jsp" %>
