@@ -39,11 +39,13 @@ public class LoginServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String email = request.getParameter("email");
-		String pw = RegisterServlet.toDigest(request.getParameter("pass"));
+		String pw = request.getParameter("pass");
 		
 		if(email == null || pw == null) {
 			request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
-		}else {
+			return;
+		}
+		String pwCriptata = RegisterServlet.toDigest(pw);
 			try {
 				UtenteBean utente = utenteDAO.doRetrieveByEmailPassword(email, pw);
 				if(utente != null) {
@@ -58,5 +60,5 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 
-}
+
 
