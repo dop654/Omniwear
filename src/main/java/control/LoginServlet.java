@@ -12,6 +12,7 @@ import omniwear.dao.UtenteDAOImpl;
 import omniwear.model.UtenteBean;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
@@ -43,8 +44,17 @@ public class LoginServlet extends HttpServlet {
 		if(email == null || pw == null) {
 			request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
 		}else {
-			UtenteBean utente = utenteDAO.doRetrieveByEmailPassword(email, pw);
-			request.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
+			try {
+				UtenteBean utente = utenteDAO.doRetrieveByEmailPassword(email, pw);
+				if(utente != null) {
+					session.setAttribute("id_utente", utente.getIdUtente());
+					request.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
+				}else {
+					request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+				}
+			}catch(SQLException e) {
+				System.out.println(e);
+			}
 		}
 	}
 
