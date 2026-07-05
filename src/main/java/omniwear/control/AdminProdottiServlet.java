@@ -1,4 +1,4 @@
-package control;
+package omniwear.control;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -65,7 +65,6 @@ public class AdminProdottiServlet extends HttpServlet {
     		        prodotto.setPrezzo(price);
     		        prodotto.setIdUtente(idAdmin);
     		        
-    		        
     		        try {
     					prodDAO.doSave(prodotto);
     					response.sendRedirect(request.getContextPath() + "/admin/prodotti");
@@ -100,7 +99,6 @@ public class AdminProdottiServlet extends HttpServlet {
 		        prodottoAggiornato.setPrezzo(price);
 		        prodottoAggiornato.setNomeProdotto(nome);
 		        
-    			
     			try {
     				prodDAO.doUpdate(prodottoAggiornato);
     				response.sendRedirect(request.getContextPath() + "/admin/prodotti");
