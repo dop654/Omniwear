@@ -49,7 +49,7 @@ public class RegisterServlet extends HttpServlet {
 		}
 	}
 	
-	private static String toDigest(String pw) {
+	protected static String toDigest(String pw) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-256"); // TODO aggiorna a SHA-512
 			StringBuilder sb = new StringBuilder();
