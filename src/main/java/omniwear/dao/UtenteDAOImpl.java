@@ -19,7 +19,7 @@ public class UtenteDAOImpl implements UtenteDAO{
     
     @Override
     public synchronized void doSave(UtenteBean utente) throws SQLException {
-        String insertSQL = "INSERT INTO " + TABLE_NAME + " (nome, cognome, email, password_hash, data_nascita) VALUES (?, ?, ?, ?, ?)";
+        String insertSQL = "INSERT INTO " + TABLE_NAME + " (nome, cognome, email, password_hash, data_nascita, isAdmin) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ds.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
@@ -29,6 +29,7 @@ public class UtenteDAOImpl implements UtenteDAO{
             preparedStatement.setString(3, utente.getEmail());
             preparedStatement.setString(4, utente.getPassword());            
             preparedStatement.setDate(5, java.sql.Date.valueOf(utente.getDataNascita()));
+            preparedStatement.setBoolean(6, utente.getAdmin());
 
             preparedStatement.executeUpdate();
         }
@@ -51,6 +52,7 @@ public class UtenteDAOImpl implements UtenteDAO{
                     bean.setCognome(rs.getString("cognome"));
                     bean.setEmail(rs.getString("email"));
                     bean.setPassword(rs.getString("password_hash"));
+                    bean.setAdmin(rs.getBoolean("isAdmin"));
                     
                     java.sql.Date sqlDate = rs.getDate("data_nascita");
                     if (sqlDate != null) {

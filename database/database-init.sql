@@ -8,13 +8,8 @@ CREATE TABLE Utente (
     cognome VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password_hash VARCHAR(256) NOT NULL,
-    data_nascita DATE NOT NULL
-);
-
-CREATE TABLE Admin (
-    id_admin INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(254) UNIQUE NOT NULL,
-    password_hash VARCHAR(256) NOT NULL
+    data_nascita DATE NOT NULL,
+    isAdmin BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE Categoria (
@@ -38,8 +33,8 @@ CREATE TABLE Prodotto (
     id_prodotto INT AUTO_INCREMENT PRIMARY KEY,
     nome_prodotto VARCHAR(100) NOT NULL,
     prezzo DECIMAL(10, 2) NOT NULL,
-    id_admin INT NOT NULL,
-    FOREIGN KEY (id_admin) REFERENCES Admin(id_admin) ON UPDATE CASCADE ON DELETE RESTRICT
+    id_utente INT NOT NULL,
+    FOREIGN KEY (id_utente) REFERENCES Admin(id_utente) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 CREATE TABLE Immagine (

@@ -12,6 +12,7 @@ public class UtenteBean implements Serializable{
 	private String email;
 	private String password_hash;
 	private LocalDate data_nascita;
+	private boolean isAdmin;
 	
 	public UtenteBean() {
 		
@@ -52,6 +53,12 @@ public class UtenteBean implements Serializable{
 	}
 	public void setDataNascita(LocalDate data) {
 		
+	}
+	public boolean getAdmin() {
+		return isAdmin;
+	}
+	public void setAdmin(boolean admin) {
+		isAdmin = admin;
 	}
 	
 	
