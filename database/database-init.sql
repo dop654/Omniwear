@@ -34,7 +34,7 @@ CREATE TABLE Prodotto (
     nome_prodotto VARCHAR(100) NOT NULL,
     prezzo DECIMAL(10, 2) NOT NULL,
     id_utente INT NOT NULL,
-    FOREIGN KEY (id_utente) REFERENCES Admin(id_utente) ON UPDATE CASCADE ON DELETE RESTRICT
+    FOREIGN KEY (id_utente) REFERENCES Utente(id_utente) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 CREATE TABLE Immagine (
