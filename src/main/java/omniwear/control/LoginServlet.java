@@ -47,7 +47,7 @@ public class LoginServlet extends HttpServlet {
 		}
 		String pwCriptata = RegisterServlet.toDigest(pw);
 			try {
-				UtenteBean utente = utenteDAO.doRetrieveByEmailPassword(email, pw);
+				UtenteBean utente = utenteDAO.doRetrieveByEmailPassword(email, pwCriptata);
 				if(utente != null) {
 					session.setAttribute("id_utente", utente.getIdUtente());
 					request.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
