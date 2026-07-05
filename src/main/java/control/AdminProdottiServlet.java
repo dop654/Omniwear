@@ -10,7 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.http.HttpSession;
 import omniwear.model.ProdottoBean;
 import omniwear.dao.ProdottoDAO;
 import omniwear.dao.ProdottoDAOImpl;
@@ -41,13 +41,75 @@ public class AdminProdottiServlet extends HttpServlet {
         }
     }
 
-    // 3. IL METODO PER RICEVERE I DATI DEI FORM (INSERT, UPDATE, DELETE)
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        
-        // Qui dentro gestiremo l'arrivo dei dati del form "Aggiungi Prodotto"
-        // Per ora, se qualcuno fa un POST, lo rimandiamo al doGet (così vede la lista)
-        doGet(request, response);
+    	String action = request.getParameter("action");
+    	
+    	 DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
+			
+		ProdottoDAOImpl prodDAO = new ProdottoDAOImpl(ds);
+    	
+    	if(action!=null) {
+    		if(action.equalsIgnoreCase("inserisci")) {
+    			 	String nome = request.getParameter("nomeProdotto");
+    		        String prezzo = request.getParameter("prezzo");
+    		        
+    		        float price = Float.parseFloat(prezzo);
+    		        
+    		        ProdottoBean prodotto = new ProdottoBean();
+    		        HttpSession session = request.getSession();
+    		        int idAdmin = (int) session.getAttribute("id_utente");
+    		        
+    		        prodotto.setNomeProdotto(nome);
+    		        prodotto.setPrezzo(price);
+    		        prodotto.setIdUtente(idAdmin);
+    		        
+    		        
+    		        try {
+    					prodDAO.doSave(prodotto);
+    					response.sendRedirect(request.getContextPath() + "/admin/prodotti");
+    				} catch (SQLException e) {
+    					e.printStackTrace();
+    					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore fatale del Database");
+    				}
+    		}
+    		else if(action.equalsIgnoreCase("elimina")) {
+    			String idDel = request.getParameter("id_prodotto");
+    			int idProdDel = Integer.parseInt(idDel);
+    			
+    			try {
+    				prodDAO.doDelete(idProdDel);
+    				response.sendRedirect(request.getContextPath() + "/admin/prodotti");
+    			} catch(SQLException e) {
+    				e.printStackTrace();
+    				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore fatale del Database");
+    			}
+    		}
+    		else if(action.equalsIgnoreCase("aggiorna")) {
+    			String idProd = request.getParameter("idProdotto");
+    			String nome = request.getParameter("nomeProdotto");
+		        String prezzo = request.getParameter("prezzo");
+		        
+		        int idProduct = Integer.parseInt(idProd);
+		        float price = Float.parseFloat(prezzo);
+		        
+		        ProdottoBean prodottoAggiornato = new ProdottoBean();
+		        
+		        prodottoAggiornato.setIdProdotto(idProduct);
+		        prodottoAggiornato.setPrezzo(price);
+		        prodottoAggiornato.setNomeProdotto(nome);
+		        
+    			
+    			try {
+    				prodDAO.doUpdate(prodottoAggiornato);
+    				response.sendRedirect(request.getContextPath() + "/admin/prodotti");
+    			} catch(SQLException e) {
+    				e.printStackTrace();
+    				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore fatale del Database");
+    			}
+    		}
+    	}
+       
     }
 }

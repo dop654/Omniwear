@@ -34,7 +34,21 @@ public class ProdottoDAOImpl implements ProdottoDAO {
             preparedStatement.executeUpdate();
         }
     }
-
+    
+    public synchronized void doUpdate(ProdottoBean prodotto) throws SQLException {
+    	String updateSQL = "UPDATE Prodotto SET nome = ?, prezzo = ? WHERE id_prodotto = ?";
+    	
+    	try (Connection connection = ds.getConnection();
+    		PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+    		
+    		preparedStatement.setString(1, prodotto.getNomeProdotto());
+    		preparedStatement.setFloat(2, prodotto.getPrezzo());
+    		preparedStatement.setInt(3, prodotto.getIdProdotto());
+    		
+    		preparedStatement.executeUpdate();
+    	}
+    }
+    
     @Override
     public synchronized ProdottoBean doRetrieveByKey(int id_prodotto) throws SQLException {
         ProdottoBean prodotto = null;

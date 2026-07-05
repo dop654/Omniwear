@@ -9,6 +9,8 @@ public interface ProdottoDAO {
     
     boolean doDelete(int id_prodotto) throws SQLException;
     
+    void doUpdate(ProdottoBean prodotto) throws SQLException;
+    
     ProdottoBean doRetrieveByKey(int id_prodotto) throws SQLException;
     
     Collection<ProdottoBean> doRetrieveAll(String order) throws SQLException;
