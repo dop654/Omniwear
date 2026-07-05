@@ -63,6 +63,35 @@ public class UtenteDAOImpl implements UtenteDAO{
         }
         return bean;
     }
+    
+    public synchronized UtenteBean doRetrieveByEmailPassword(String email, String password) throws SQLException{
+        UtenteBean bean = new UtenteBean();
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE email = ? AND password_hash = ?";
+
+        try (Connection connection = ds.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+             
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    bean.setIdUtente(rs.getInt("id_utente"));
+                    bean.setNome(rs.getString("nome"));
+                    bean.setCognome(rs.getString("cognome"));
+                    bean.setEmail(rs.getString("email"));
+                    bean.setPassword(rs.getString("password_hash"));
+                    bean.setAdmin(rs.getBoolean("isAdmin"));
+                    
+                    java.sql.Date sqlDate = rs.getDate("data_nascita");
+                    if (sqlDate != null) {
+                        bean.setDataNascita(sqlDate.toLocalDate());
+                    }
+                }
+            }
+        }
+        return bean;
+    }
 
     @Override
     public synchronized boolean doDelete(int id_utente) throws SQLException {
