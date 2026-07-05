@@ -1,4 +1,4 @@
-package control;
+package omniwear.control;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,5 +26,4 @@ public class LogoutServlet extends HttpServlet {
 			request.getRequestDispatcher("WEB-INF/views/index.jsp").forward(request, response);
 		}
 	}
-
 }

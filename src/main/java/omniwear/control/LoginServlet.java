@@ -1,4 +1,4 @@
-package control;
+package omniwear.control;
 
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;

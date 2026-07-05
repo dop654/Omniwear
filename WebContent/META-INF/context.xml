@@ -7,7 +7,7 @@
 	maxIdle="10"
 	maxWaitMillis="10000"
 	username="root"
-	password="Nuovapassword123!"
+	password="root"
 	driverClassName="com.mysql.cj.jdbc.Driver"
 	url="jdbc:mysql://localhost:3306/OMNIWEAR_DB/">
 	</Resource>

@@ -1,10 +1,13 @@
-package control;
+package omniwear.control;
 
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import omniwear.dao.UtenteDAO;
+import omniwear.dao.UtenteDAOImpl;
 import omniwear.model.UtenteBean;
 
 import java.io.IOException;
@@ -12,13 +15,27 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.time.LocalDate;
+
+import javax.sql.DataSource;
 
 
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private UtenteDAO utenteDAO;
+	
+	@Override
+	public void init(ServletConfig servletConfig) throws ServletException	 {
+		super.init(servletConfig);
+		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
+		if(ds == null) {
+			throw new ServletException("DataSource non disponibile");
+		}
+		utenteDAO = new UtenteDAOImpl(ds);
+	}
+	
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
@@ -34,17 +51,16 @@ public class RegisterServlet extends HttpServlet {
 			user.setPassword(toDigest(request.getParameter("password")));
 			user.setDataNascita(LocalDate.parse(request.getParameter("dataNascita")));
 			
-			PrintWriter out = response.getWriter();
-			
-			out.println("<!doctype html>");
-			out.println("<html><head></head><body>");
-			out.println(user.getNome());
-			out.println(user.getCognome());
-			out.println(user.getEmail());
-			out.println(user.getPassword());
-			out.println(user.getDataNascita());
-			out.println("</body></html>");
+			try {
+				utenteDAO.doSave(user);
+				System.out.println("Registrazione effettuata con successo");
+				request.getRequestDispatcher("WEB-INF/views/login.jsp").forward(request, response);
+			}catch(SQLException e) {
+				System.out.println("Errore nella registrazione");
+				request.getRequestDispatcher("WEB-INF/views/register.jsp").forward(request, response);
+			}
 		} else {
+			System.out.println("Dati mancanti");
 			request.getRequestDispatcher("WEB-INF/views/register.jsp").forward(request, response);
 		}
 	}
