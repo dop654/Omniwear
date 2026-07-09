@@ -5,14 +5,14 @@
 <head>
 </head>
 <body>
-	<header>
+	<header class="glass">
 		<div id="logo">
-			<img src="images/logo_w.svg" alt="logo">
+			<img src="images/logo_b.svg" alt="logo">
 			<h1>OMNIWEAR</h1>
 		</div>
 		<nav>
 			<ul>
-				<li><a href="#">Home</a></li>
+				<li><a href="${request.getContextPath}HomeServlet">Home</a></li>
 				<li><a href="#">Sconti</a></li>
 				<li><a href="${request.getContextPath}LoginServlet">Accedi</a></li>
 				<li><a href="#">Carrello</a></li>
