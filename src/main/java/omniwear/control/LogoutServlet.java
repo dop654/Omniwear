@@ -23,7 +23,7 @@ public class LogoutServlet extends HttpServlet {
 		if(session != null) { 
 			session.invalidate();
 			request.setAttribute("msg", "Logout effettuato con successo");
-			request.getRequestDispatcher("WEB-INF/views/index.jsp").forward(request, response);
 		}
-	}
+			response.sendRedirect(request.getContextPath() + "/HomeServlet");
+		}
 }

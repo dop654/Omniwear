@@ -23,6 +23,12 @@
 					<% } %>
 				</li>
 				<li><a href="#">Carrello</a></li>
+				<li>
+					<% if(session.getAttribute("id_utente")!=null) {%>
+						<a href="${request.getContextPath}LogoutServlet">Esci</a>
+						
+				<%} %>
+				</li>
 			</ul>
 		</nav>
 	</header>
