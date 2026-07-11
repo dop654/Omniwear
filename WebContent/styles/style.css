@@ -53,6 +53,12 @@ footer{
 	font-weight: 500;
 	position: relative;
 }
+.footer-col p {
+	color: #FFDA78;
+	font-size: small;
+	font-family: Les_Flos;
+	font-weight: oblique;
+}
 .footer-col h2::before{
 	content: '';
 	position: absolute;
@@ -174,7 +180,7 @@ nav ul li {
 	margin: auto;
 	margin-top: 20px;
 	margin-bottom: 20px;
-	padding: 20px;
+	padding: 40px;
 }
 
 #form label, #form input{
@@ -204,7 +210,9 @@ nav ul li {
 	background-color: #003285;
 }
 
-#error {
+.error {
 	background-color: rgba(217, 44, 56, 0.36);
 	color: rgba(198, 0, 13, 1);
+	margin: auto;
+	margin-bottom: 20px;
 }

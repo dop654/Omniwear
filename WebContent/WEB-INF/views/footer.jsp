@@ -10,9 +10,11 @@
      <div class="container">
       <div class="row">
         <div class="footer-col">
-          <h3>Copyright &copy; 2026.<br>
+        	<h3>Copyright &copy; 2026.<br>
 				Tutti i diritti riservati.<br>
-				F.N. &amp; D.O.P.B.</h3>
+				F.N. &amp; D.O.P.B.
+			</h3>
+			<p>Creato con 100% Human Dumbness&trade;</p>
         </div>
         <div class="footer-col">
           <h2>Contatti</h2>
