@@ -19,7 +19,7 @@
 							<a href="${request.getContextPath}LoginServlet">Accedi</a>
 						<% } else {%>
 						<% String nomeUtente = (String) session.getAttribute("nome_utente");%>	
-							<a href="${request.getContextPath}LogoutServlet">Ciao, <%= nomeUtente%></a>
+							<a href="${request.getContextPath}user_page">Ciao, <%= nomeUtente%></a>
 					<% } %>
 				</li>
 				<li><a href="#">Carrello</a></li>

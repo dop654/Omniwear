@@ -44,7 +44,8 @@ public class UserPageServlet extends HttpServlet{
 		try {
 			UtenteBean currentUser = utenteDAO.doRetrieveByKey(userId);
 			
-			request.setAttribute("utente", currentUser);
+			request.setAttribute("id_utente", currentUser.getIdUtente());
+			request.setAttribute("nome_utente", currentUser.getNome());
 			request.getRequestDispatcher("/WEB-INF/views/user.jsp").forward(request, response);
 		}catch(SQLException e) {
 			errors.add(e.toString());
