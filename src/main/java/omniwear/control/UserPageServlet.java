@@ -20,7 +20,6 @@ import javax.sql.DataSource;
 @WebServlet("/user_page")
 public class UserPageServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
-	private UtenteDAO utenteDAO;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
@@ -39,7 +38,7 @@ public class UserPageServlet extends HttpServlet{
 		}
 
 		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
-		utenteDAO = new UtenteDAOImpl(ds);
+		UtenteDAO utenteDAO = new UtenteDAOImpl(ds);
 		
 		try {
 			UtenteBean currentUser = utenteDAO.doRetrieveByKey(userId);
@@ -57,7 +56,47 @@ public class UserPageServlet extends HttpServlet{
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		HttpSession session = request.getSession();
+		List<String> errors = new ArrayList<>();
+		
+		Integer grabId = (Integer) session.getAttribute("id_utente");
+		int userId;
+		
+		if(grabId!=null && grabId>0) {
+			userId = grabId;
+		}
+		else {
+			response.sendRedirect(request.getContextPath() + "/login.jsp");
+			return;
+		}
+		
+		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
+		UtenteDAO utenteDAO = new UtenteDAOImpl(ds);
+		
+		try {
+			UtenteBean currentUser = utenteDAO.doRetrieveByKey(userId);
+			
+			String newPass = RegisterServlet.validateField(request.getParameter("varPassword"), "password", errors); 
+			String newName = RegisterServlet.validateField(request.getParameter("varName"), "nome", errors);
+			String newSurname = RegisterServlet.validateField(request.getParameter("varSurname"), "cognome", errors);
+			String newBirth = RegisterServlet.validateField(request.getParameter("varData"), "data di nascita", errors);
+			
+			currentUser.setNome(newName);
+			currentUser.setCognome(newSurname);
+			currentUser.setDataNascita(newBirth);
+			currentUser.setPassword(RegisterServlet.toDigest(newPass));
+			
+			try {
+				utenteDAO.doUpdate(currentUser);
+				response.sendRedirect(request.getContextPath() + "/user_page");
+			}catch(SQLException e) {
+				errors.add(e.toString());
+			}
+		}catch(SQLException err) {
+			errors.add(err.toString());
+		}
 	}
-	
+		
 }
+	
+

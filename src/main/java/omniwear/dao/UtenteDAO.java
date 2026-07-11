@@ -9,6 +9,8 @@ public interface UtenteDAO {
     
     public boolean doDelete(int id_utente) throws SQLException;
     
+    public void doUpdate(UtenteBean newUtente) throws SQLException;
+    
     public UtenteBean doRetrieveByKey(int id_utente) throws SQLException;
     
     public UtenteBean doRetrieveByEmailPassword(String email, String password) throws SQLException;

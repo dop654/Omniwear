@@ -35,6 +35,20 @@ public class UtenteDAOImpl implements UtenteDAO{
         }
     }
     
+    public synchronized void doUpdate(UtenteBean newUtente) throws SQLException{
+    	String updateSQL = "UPDATE Utente SET nome = ?, cognome = ?, password_hash = ?, data_nascita = ? WHERE id_utente = ?";
+    	
+    	try(Connection connection = ds.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)){
+    		preparedStatement.setString(1, newUtente.getNome());
+    		preparedStatement.setString(2, newUtente.getCognome());
+    		preparedStatement.setString(3, newUtente.getPassword());
+    		preparedStatement.setString(4, newUtente.getDataNascita());
+    		preparedStatement.setInt(5,  newUtente.getIdUtente());
+    		
+    		preparedStatement.executeUpdate();
+    	}
+    }
+    
     @Override
     public synchronized UtenteBean doRetrieveByKey(int id_utente) throws SQLException {
         UtenteBean bean = new UtenteBean();
