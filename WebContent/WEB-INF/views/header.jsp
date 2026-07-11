@@ -17,8 +17,9 @@
 				<li>
 					<% if(session.getAttribute("id_utente") == null) { %>
 							<a href="${request.getContextPath}LoginServlet">Accedi</a>
-						<% } else { %>
-							<a href="${request.getContextPath}LogoutServlet">Ciao, ${session.getAttribute("nome_utente")}</a>
+						<% } else {%>
+						<% String nomeUtente = (String) session.getAttribute("nome_utente");%>
+							<a href="${request.getContextPath}LogoutServlet">Ciao, <%= nomeUtente%></a>
 					<% } %>
 				</li>
 				<li><a href="#">Carrello</a></li>
