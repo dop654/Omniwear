@@ -84,7 +84,7 @@ public class RegisterServlet extends HttpServlet {
 		}
 	}
 	
-	protected String validateField(String value, String fieldName, List<String> errors) {
+	protected static String validateField(String value, String fieldName, List<String> errors) {
 		if(value == null || value.trim().isEmpty()) {
 			errors.add("Campo mancante: " + fieldName);
 			return "";

@@ -56,7 +56,7 @@ public class UtenteDAOImpl implements UtenteDAO{
                     
                     java.sql.Date sqlDate = rs.getDate("data_nascita");
                     if (sqlDate != null) {
-                        bean.setDataNascita(sqlDate.toLocalDate());
+                        bean.setDataNascita(sqlDate.toString());
                     }
                 }
             }
@@ -85,7 +85,7 @@ public class UtenteDAOImpl implements UtenteDAO{
                     
                     java.sql.Date sqlDate = rs.getDate("data_nascita");
                     if (sqlDate != null) {
-                        bean.setDataNascita(sqlDate.toLocalDate());
+                        bean.setDataNascita(sqlDate.toString());
                     }
                 }
             }
@@ -128,7 +128,7 @@ public class UtenteDAOImpl implements UtenteDAO{
                 
                 java.sql.Date sqlDate = rs.getDate("data_nascita");
                 if (sqlDate != null) {
-                    bean.setDataNascita(sqlDate.toLocalDate());
+                    bean.setDataNascita(sqlDate.toString());
                 }
                 utenti.add(bean);
             }

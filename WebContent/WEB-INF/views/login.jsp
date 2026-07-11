@@ -13,7 +13,13 @@
 	
 	<section class="glass" id="form">
 		<h3>Accedi</h3><br>
-		<%List<String> errors = (List<String>) request.getAttribute("errors");%>
+		<%
+			List<String> errors = (List<String>) request.getAttribute("errors");
+			String email = (String) request.getAttribute("email");
+			if(email == null) { email = ""; }
+			String pass = (String) request.getAttribute("pass");
+			if(pass == null) { pass = ""; }
+		%>
 		<% if(errors != null && !errors.isEmpty()) { %>
 			<div class="glass error">
 				<ul>

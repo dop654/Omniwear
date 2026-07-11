@@ -13,6 +13,8 @@ import omniwear.model.UtenteBean;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -37,28 +39,31 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		List<String> errors = new ArrayList<>();
 		
-		String email = request.getParameter("email");
-		String pw = request.getParameter("pass");
+		String email = RegisterServlet.validateField(request.getParameter("email"), "email", errors);
+		String pw = RegisterServlet.validateField(request.getParameter("pass"), "password", errors);
 		
-		if(email == null || pw == null) {
+		if(!errors.isEmpty()) {
+			request.setAttribute("errors", errors);
 			request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
-			return;
 		}
+		
 		String pwCriptata = RegisterServlet.toDigest(pw);
-			try {
-				UtenteBean utente = utenteDAO.doRetrieveByEmailPassword(email, pwCriptata);
-				if(utente != null) {
-					session.setAttribute("id_utente", utente.getIdUtente());
-					request.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
-				}else {
-					request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
-				}
-			}catch(SQLException e) {
-				System.out.println(e);
+		
+		try {
+			UtenteBean utente = utenteDAO.doRetrieveByEmailPassword(email, pwCriptata);
+			if(utente != null) {
+				session.setAttribute("id_utente", utente.getIdUtente());
+				request.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
+			}else {
+				request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
 			}
+		}catch(SQLException e) {
+			errors.add(e.toString());
 		}
 	}
+}
 
 
 
