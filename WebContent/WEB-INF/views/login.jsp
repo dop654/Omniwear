@@ -14,6 +14,13 @@
 	<section class="glass" id="form">
 		<h3>Accedi</h3><br>
 		<%
+			String msg = (String) request.getAttribute("msg");
+			if(msg != null && !msg.isEmpty()) { %>
+				<div class="glass msg">
+					<%= msg %>
+				</div>
+		<% } %>
+		<%
 			List<String> errors = (List<String>) request.getAttribute("errors");
 			String email = (String) request.getAttribute("email");
 			if(email == null) { email = ""; }

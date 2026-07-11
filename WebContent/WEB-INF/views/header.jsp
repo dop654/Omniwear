@@ -14,7 +14,13 @@
 			<ul>
 				<li><a href="${request.getContextPath}HomeServlet">Home</a></li>
 				<li><a href="#">Sconti</a></li>
-				<li><a href="${request.getContextPath}LoginServlet">Accedi</a></li>
+				<li>
+					<% if(session.getAttribute("id_utente") == null) { %>
+							<a href="${request.getContextPath}LoginServlet">Accedi</a>
+						<% } else { %>
+							<a href="${request.getContextPath}LogoutServlet">Ciao, ${session.getAttribute("nome_utente")}</a>
+					<% } %>
+				</li>
 				<li><a href="#">Carrello</a></li>
 			</ul>
 		</nav>

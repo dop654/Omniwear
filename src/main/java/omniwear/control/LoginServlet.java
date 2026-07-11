@@ -48,9 +48,12 @@ public class LoginServlet extends HttpServlet {
 		
 		try {
 			UtenteBean utente = utenteDAO.doRetrieveByEmailPassword(email, pwCriptata);
-			if(utente != null) {
+			if(utente.getIdUtente() != 0) {
 				session.setAttribute("id_utente", utente.getIdUtente());
+				session.setAttribute("nome_utente", utente.getNome());
 				request.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
+			}else {
+				errors.add("Credenziali errate");
 			}
 		}catch(SQLException e) {
 			errors.add(e.toString());
