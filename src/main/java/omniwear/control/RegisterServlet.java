@@ -11,12 +11,13 @@ import omniwear.dao.UtenteDAOImpl;
 import omniwear.model.UtenteBean;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -41,6 +42,7 @@ public class RegisterServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<String> errors = new ArrayList<>();
 		
 		if(request.getParameter("email") != null) {
 			UtenteBean user = new UtenteBean();

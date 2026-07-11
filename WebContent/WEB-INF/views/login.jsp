@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,8 +11,18 @@
 <body>
 	<%@ include file="header.jsp" %>
 	
-	<section id="form">
+	<section class="glass" id="form">
 		<h3>Accedi</h3><br>
+		<%List<String> errors = (List<String>) request.getAttribute("errors");%>
+		<% if(errors != null && !errors.isEmpty()) { %>
+			<div class="glass error">
+				<ul>
+					<% for(String e : errors) { %>
+						<li><%= e %></li>
+					<% } %>
+				</ul>
+			</div>
+		<% } %>
 		<form method="POST" action="${request.getContextPath}LoginServlet">
 			<span class="row"><label for="email">E-Mail: </label>
 			<input type="email" name="email" id="email"></span>
