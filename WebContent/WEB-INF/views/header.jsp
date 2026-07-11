@@ -15,6 +15,7 @@
 				<li><a href="${request.getContextPath}HomeServlet">Home</a></li>
 				<li><a href="#">Sconti</a></li>
 				<li>
+				<!-- TODO: Cambiare da scriptlet a taglib -->
 					<% if(session.getAttribute("id_utente") == null) { %>
 							<a href="${request.getContextPath}LoginServlet">Accedi</a>
 						<% } else {%>
