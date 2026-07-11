@@ -43,26 +43,26 @@ public class RegisterServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<String> errors = new ArrayList<>();
+		UtenteBean user = new UtenteBean();
 		
-		if(request.getParameter("email") != null) {
-			UtenteBean user = new UtenteBean();
-			
-			user.setNome(request.getParameter("nome"));
-			user.setCognome(request.getParameter("cognome"));
-			user.setEmail(request.getParameter("email"));
-			user.setPassword(toDigest(request.getParameter("password")));
-			user.setDataNascita(LocalDate.parse(request.getParameter("dataNascita")));
-			
-			try {
-				utenteDAO.doSave(user);
-				System.out.println("Registrazione effettuata con successo");
-				request.getRequestDispatcher("WEB-INF/views/login.jsp").forward(request, response);
-			}catch(SQLException e) {
-				System.out.println("Errore nella registrazione");
-				request.getRequestDispatcher("WEB-INF/views/register.jsp").forward(request, response);
-			}
-		} else {
-			System.out.println("Dati mancanti");
+		user.setNome(validateField(request.getParameter("nome"), "nome", errors));
+		user.setCognome(validateField(request.getParameter("cognome"), "cognome", errors));
+		user.setEmail(validateField(request.getParameter("email"), "email", errors));
+		user.setPassword(toDigest(validateField(request.getParameter("password"), "password", errors)));
+		user.setDataNascita(validateField(request.getParameter("dataNascita"), "data di nascita", errors));
+		
+		if(!errors.isEmpty()) {
+			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("WEB-INF/views/register.jsp").forward(request, response);
+		}
+		
+		try {
+			utenteDAO.doSave(user);
+			request.setAttribute("msg", "Registrazione effettuata con successo");
+			request.getRequestDispatcher("WEB-INF/views/login.jsp").forward(request, response);
+		}catch(SQLException e) {
+			errors.add("Errore nella registrazione");
+			request.setAttribute("errors", errors);
 			request.getRequestDispatcher("WEB-INF/views/register.jsp").forward(request, response);
 		}
 	}
@@ -82,5 +82,13 @@ public class RegisterServlet extends HttpServlet {
 		}catch(NoSuchAlgorithmException e) {
 			throw new RuntimeException("Algoritmo SHA non disponibile", e);
 		}
+	}
+	
+	protected String validateField(String value, String fieldName, List<String> errors) {
+		if(value == null || value.trim().isEmpty()) {
+			errors.add("Campo mancante: " + fieldName);
+			return "";
+		}
+		return value.trim();
 	}
 }

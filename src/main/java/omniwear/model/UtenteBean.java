@@ -11,7 +11,7 @@ public class UtenteBean implements Serializable{
 	private String cognome;
 	private String email;
 	private String password_hash;
-	private LocalDate data_nascita;
+	private String data_nascita;
 	private boolean isAdmin;
 	
 	public UtenteBean() {
@@ -48,11 +48,11 @@ public class UtenteBean implements Serializable{
 	public void setPassword(String password) {
 		password_hash = password;
 	}
-	public LocalDate getDataNascita() {
+	public String getDataNascita() {
 		return data_nascita;
 	}
-	public void setDataNascita(LocalDate data) {
-		
+	public void setDataNascita(String data) {
+		data_nascita = data;
 	}
 	public boolean getAdmin() {
 		return isAdmin;
