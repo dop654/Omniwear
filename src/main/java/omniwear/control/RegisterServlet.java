@@ -38,7 +38,7 @@ public class RegisterServlet extends HttpServlet {
 	}
 	
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+    	request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,17 +53,17 @@ public class RegisterServlet extends HttpServlet {
 		
 		if(!errors.isEmpty()) {
 			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("WEB-INF/views/register.jsp").forward(request, response);
+			request.getRequestDispatcher(request.getContextPath() + "RegisterServlet").forward(request, response);
 		}
 		
 		try {
 			utenteDAO.doSave(user);
 			request.setAttribute("msg", "Registrazione effettuata con successo");
-			request.getRequestDispatcher("WEB-INF/views/login.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
 		}catch(SQLException e) {
-			errors.add("Errore nella registrazione");
+			errors.add(e.toString());
 			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("WEB-INF/views/register.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
 		}
 	}
 	

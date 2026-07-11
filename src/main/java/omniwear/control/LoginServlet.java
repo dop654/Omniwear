@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
 	}
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -44,11 +44,6 @@ public class LoginServlet extends HttpServlet {
 		String email = RegisterServlet.validateField(request.getParameter("email"), "email", errors);
 		String pw = RegisterServlet.validateField(request.getParameter("pass"), "password", errors);
 		
-		if(!errors.isEmpty()) {
-			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
-		}
-		
 		String pwCriptata = RegisterServlet.toDigest(pw);
 		
 		try {
@@ -56,14 +51,14 @@ public class LoginServlet extends HttpServlet {
 			if(utente != null) {
 				session.setAttribute("id_utente", utente.getIdUtente());
 				request.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
-			}else {
-				request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
 			}
 		}catch(SQLException e) {
 			errors.add(e.toString());
 		}
+		
+		if(!errors.isEmpty()) {
+			request.setAttribute("errors", errors);
+		}
+		request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
 	}
 }
-
-
-
