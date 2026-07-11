@@ -3,6 +3,9 @@ package omniwear.control;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
+import java.util.ArrayList;
+
 import javax.sql.DataSource;
 
 import jakarta.servlet.ServletException;
@@ -25,6 +28,7 @@ public class AdminProdottiServlet extends HttpServlet {
             throws ServletException, IOException {
  
         DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
+        List<String> errors = new ArrayList<>();
         
         ProdottoDAO prodottoDAO = new ProdottoDAOImpl(ds);
         
@@ -36,9 +40,12 @@ public class AdminProdottiServlet extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/admin/dashboard_prodotti.jsp").forward(request, response);
             
         } catch (SQLException e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore nel recupero dei prodotti");
+            errors.add(e.toString());
         }
+        
+        if(!errors.isEmpty()) {
+			request.setAttribute("errors", errors);
+		}
     }
 
     @Override
