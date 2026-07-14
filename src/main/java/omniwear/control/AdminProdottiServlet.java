@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,15 +23,25 @@ import omniwear.dao.ProdottoDAOImpl;
 @WebServlet("/admin/prodotti")
 public class AdminProdottiServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private ProdottoDAO prodottoDAO;
 
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+       
+        DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
+        if(ds == null) {
+			throw new ServletException("DataSource non disponibile");
+		}
+        this.prodottoDAO = new ProdottoDAOImpl(ds);
+    }
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
- 
-        DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
+
         List<String> errors = new ArrayList<>();
         
-        ProdottoDAO prodottoDAO = new ProdottoDAOImpl(ds);
         
         try {
             Collection<ProdottoBean> catalogo = prodottoDAO.doRetrieveAll(null);
@@ -52,11 +63,7 @@ public class AdminProdottiServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
     	String action = request.getParameter("action");
-    	
-    	 DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
-			
-		ProdottoDAOImpl prodDAO = new ProdottoDAOImpl(ds);
-    	
+   
     	if(action!=null) {
     		if(action.equalsIgnoreCase("inserisci")) {
     			 	String nome = request.getParameter("nomeProdotto");
@@ -73,7 +80,7 @@ public class AdminProdottiServlet extends HttpServlet {
     		        prodotto.setIdUtente(idAdmin);
     		        
     		        try {
-    					prodDAO.doSave(prodotto);
+    					prodottoDAO.doSave(prodotto);
     					response.sendRedirect(request.getContextPath() + "/admin/prodotti");
     				} catch (SQLException e) {
     					e.printStackTrace();
@@ -85,7 +92,7 @@ public class AdminProdottiServlet extends HttpServlet {
     			int idProdDel = Integer.parseInt(idDel);
     			
     			try {
-    				prodDAO.doDelete(idProdDel);
+    				prodottoDAO.doDelete(idProdDel);
     				response.sendRedirect(request.getContextPath() + "/admin/prodotti");
     			} catch(SQLException e) {
     				e.printStackTrace();
@@ -107,7 +114,7 @@ public class AdminProdottiServlet extends HttpServlet {
 		        prodottoAggiornato.setNomeProdotto(nome);
 		        
     			try {
-    				prodDAO.doUpdate(prodottoAggiornato);
+    				prodottoDAO.doUpdate(prodottoAggiornato);
     				response.sendRedirect(request.getContextPath() + "/admin/prodotti");
     			} catch(SQLException e) {
     				e.printStackTrace();

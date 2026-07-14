@@ -1,5 +1,6 @@
 package omniwear.control;
 
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,8 +19,20 @@ import java.util.List;
 import javax.sql.DataSource;
 
 @WebServlet("/user_page")
-public class UserPageServlet extends HttpServlet{
+public class UserServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
+	private UtenteDAO utenteDAO;
+	
+	@Override
+	public void init(ServletConfig servletConfig) throws ServletException {
+		super.init(servletConfig);
+		
+		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
+		if(ds == null) {
+			throw new ServletException("DataSource non disponibile");
+		}
+		utenteDAO = new UtenteDAOImpl(ds);
+	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
@@ -36,9 +49,6 @@ public class UserPageServlet extends HttpServlet{
 			response.sendRedirect(request.getContextPath() + "/login.jsp");
 			return;
 		}
-
-		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
-		UtenteDAO utenteDAO = new UtenteDAOImpl(ds);
 		
 		try {
 			UtenteBean currentUser = utenteDAO.doRetrieveByKey(userId);
@@ -69,9 +79,6 @@ public class UserPageServlet extends HttpServlet{
 			response.sendRedirect(request.getContextPath() + "/LoginServlet");
 			return;
 		}
-		
-		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
-		UtenteDAO utenteDAO = new UtenteDAOImpl(ds);
 		
 		try {
 			UtenteBean currentUser = utenteDAO.doRetrieveByKey(userId);

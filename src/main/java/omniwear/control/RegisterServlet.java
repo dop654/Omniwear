@@ -27,8 +27,9 @@ public class RegisterServlet extends HttpServlet {
 	private UtenteDAO utenteDAO;
 	
 	@Override
-	public void init(ServletConfig servletConfig) throws ServletException	 {
+	public void init(ServletConfig servletConfig) throws ServletException {
 		super.init(servletConfig);
+		
 		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
 		if(ds == null) {
 			throw new ServletException("DataSource non disponibile");
