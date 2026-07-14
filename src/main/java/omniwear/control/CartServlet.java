@@ -1,0 +1,103 @@
+package omniwear.control;
+
+
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import omniwear.dao.UtenteDAO;
+import omniwear.dao.UtenteDAOImpl;
+import omniwear.model.UtenteBean;
+import omniwear.dao.ProdottoDAO;
+import omniwear.dao.ProdottoDAOImpl;
+import omniwear.model.ProdottoBean;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.sql.DataSource;
+
+@WebServlet("/Carrello")
+public class CartServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private ProdottoDAO prodottoDAO;
+	
+	@Override
+	public void init(ServletConfig servletConfig) throws ServletException {
+		super.init(servletConfig);
+		
+		DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
+		if(ds == null) {
+			throw new ServletException("DataSource non disponibile");
+		}
+		prodottoDAO = new ProdottoDAOImpl(ds);
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+		HttpSession session = request.getSession();
+	
+		List<ProdottoBean> cart = (List<ProdottoBean>) session.getAttribute("carrello");
+			
+			if(cart==null) {
+				cart = new ArrayList<>();
+				session.setAttribute("carrello", cart);
+			}
+			request.getRequestDispatcher("/WEB-INF/views/cart.jsp").forward(request, response);
+	
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		List<String> errors = new ArrayList<>();
+		String action = request.getParameter("action");
+	 
+		List<ProdottoBean> cart = (List<ProdottoBean>) session.getAttribute("carrello");
+			
+		if(action!=null) {
+	    	if(action.equalsIgnoreCase("aggiungi")) {
+	    			 String grabProdId= request.getParameter("id_prodotto");
+	    			 int prodID = Integer.parseInt(grabProdId);
+	    		        
+	    		     try {
+	    		    	 ProdottoBean product = prodottoDAO.doRetrieveByKey(prodID);
+		    		     cart.add(product);	    					
+		    		     response.sendRedirect(request.getContextPath() + "/Carrello");
+	    			} catch(SQLException e) {
+	    				 errors.add(e.toString());
+	    			}
+	    	}
+	    	else if(action.equalsIgnoreCase("rimuovi")) {
+	    		if(cart==null) {
+	    			response.sendRedirect(request.getContextPath() + "/Carrello");
+	    		}
+	    			
+	    		String idDel = request.getParameter("id_prodotto");
+	    		int idProdDel = Integer.parseInt(idDel);
+	    	
+	    		for (int i=0; i<cart.size(); i++) {
+	    			if(cart.get(i).getIdProdotto() == idProdDel) { 
+	    				cart.remove(i);
+	    				break; 
+	    			}
+	    		}
+	    		response.sendRedirect(request.getContextPath() + "/Carrello");
+	    	}
+	    		
+	    	if(!errors.isEmpty()) {
+	    		request.setAttribute("errors", errors);
+	    	}
+	    }
+		else {
+			response.sendRedirect(request.getContextPath() + "/Carrello");
+		}
+    	
+	}
+		
+}
