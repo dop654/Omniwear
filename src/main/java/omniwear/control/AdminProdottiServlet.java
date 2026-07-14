@@ -63,6 +63,7 @@ public class AdminProdottiServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
     	String action = request.getParameter("action");
+    	List<String> errors = new ArrayList<>();
    
     	if(action!=null) {
     		if(action.equalsIgnoreCase("inserisci")) {
@@ -82,10 +83,9 @@ public class AdminProdottiServlet extends HttpServlet {
     		        try {
     					prodottoDAO.doSave(prodotto);
     					response.sendRedirect(request.getContextPath() + "/admin/prodotti");
-    				} catch (SQLException e) {
-    					e.printStackTrace();
-    					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore fatale del Database");
-    				}
+    		        } catch(SQLException e) {
+    		            errors.add(e.toString());
+    		        }
     		}
     		else if(action.equalsIgnoreCase("elimina")) {
     			String idDel = request.getParameter("id_prodotto");
@@ -95,9 +95,8 @@ public class AdminProdottiServlet extends HttpServlet {
     				prodottoDAO.doDelete(idProdDel);
     				response.sendRedirect(request.getContextPath() + "/admin/prodotti");
     			} catch(SQLException e) {
-    				e.printStackTrace();
-    				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore fatale del Database");
-    			}
+		            errors.add(e.toString());
+		        }
     		}
     		else if(action.equalsIgnoreCase("aggiorna")) {
     			String idProd = request.getParameter("idProdotto");
@@ -117,11 +116,13 @@ public class AdminProdottiServlet extends HttpServlet {
     				prodottoDAO.doUpdate(prodottoAggiornato);
     				response.sendRedirect(request.getContextPath() + "/admin/prodotti");
     			} catch(SQLException e) {
-    				e.printStackTrace();
-    				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore fatale del Database");
-    			}
+		            errors.add(e.toString());
+		        }
     		}
     	}
+    	if(!errors.isEmpty()) {
+			request.setAttribute("errors", errors);
+		}
        
     }
 }
