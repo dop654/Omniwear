@@ -220,7 +220,14 @@ nav ul li {
 }
 
 #msg {
-	padding: 5px;
+	background-color: rgba(44, 217, 56, 0.10);
+	color: rgba(0, 198, 13, 1);
+	margin: auto;
+	margin-bottom: 20px;
+	padding: 10px;
+}
+#msg ul{
+	list-style-type: none;
 }
 
 #riepilogo {
@@ -230,15 +237,25 @@ nav ul li {
 	box-shadow: 5px 5px 20px rgba(10, 10, 10, 0.5);
 	padding: 10px;
 	margin: 10px;
-	float: right;
+	display: inline-block;
+	-webkit-transform:  translateY(-10%) rotate(5deg) ;
+    transform:  translateY(-10%) rotate(5deg);
+    -webkit-transform-origin: left bottom;
+    transform-origin: left bottom;
 }
 
 #elenco_prodotti {
-	float: left;
+	display: inline-block;
+	width: 75%;
 }
 
-#container {
+#cart_container {
 	margin: auto;
 	margin-bottom: 20px;
-	padding: 10px;
+	padding: 20px;
+	max-width: 80%;
+}
+#cart_container h2, #cart_container h3 {
+	font-family: Les_Flos;
+	font-style: italic;
 }

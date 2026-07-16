@@ -13,7 +13,9 @@ import omniwear.dao.UtenteDAOImpl;
 import omniwear.model.UtenteBean;
 import omniwear.dao.ProdottoDAO;
 import omniwear.dao.ProdottoDAOImpl;
+import omniwear.model.Carrello;
 import omniwear.model.ProdottoBean;
+import omniwear.model.ProdottoCarrello;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -42,10 +44,10 @@ public class CartServlet extends HttpServlet {
     	
 		HttpSession session = request.getSession();
 	
-		List<ProdottoBean> cart = (List<ProdottoBean>) session.getAttribute("carrello");
+		Carrello cart = (Carrello) session.getAttribute("carrello");
 			
 			if(cart==null) {
-				cart = new ArrayList<>();
+				cart = new Carrello();
 				session.setAttribute("carrello", cart);
 			}
 			request.getRequestDispatcher("/WEB-INF/views/cart.jsp").forward(request, response);
@@ -58,22 +60,24 @@ public class CartServlet extends HttpServlet {
 		List<String> errors = new ArrayList<>();
 		String action = request.getParameter("action");
 	 
-		List<ProdottoBean> cart = (List<ProdottoBean>) session.getAttribute("carrello");
+		Carrello cart = (Carrello) session.getAttribute("carrello");
 			
 		if(action!=null) {
 	    	if(action.equalsIgnoreCase("aggiungi")) {
-	    			 String grabProdId= request.getParameter("id_prodotto");
-	    			 int prodID = Integer.parseInt(grabProdId);
-	    		        
-	    		     try {
-	    		    	 ProdottoBean product = prodottoDAO.doRetrieveByKey(prodID);
-		    		     cart.add(product);	    					
-		    		     response.sendRedirect(request.getContextPath() + "/CartServlet");
-	    			} catch(SQLException e) {
-	    				 errors.add(e.toString());
-	    			}
-	    	}
-	    	else if(action.equalsIgnoreCase("rimuovi")) {
+    			 String grabProdId= request.getParameter("id_prodotto");
+    			 int prodID = Integer.parseInt(grabProdId);
+    			 
+    			 String grabProdQuantity= request.getParameter("quantita");
+    			 int prodQuantity = Integer.parseInt(grabProdQuantity);
+    		        
+    		     try {
+    		    	 ProdottoCarrello product = new ProdottoCarrello(prodottoDAO.doRetrieveByKey(prodID), prodQuantity);
+	    		     cart.aggiungiProdotto(product);
+	    		     response.sendRedirect(request.getContextPath() + "/CartServlet");
+    			} catch(SQLException e) {
+    				 errors.add(e.toString());
+    			}
+	    	} else if(action.equalsIgnoreCase("rimuovi")) {
 	    		if(cart==null) {
 	    			response.sendRedirect(request.getContextPath() + "/CartServlet");
 	    		}
@@ -81,18 +85,27 @@ public class CartServlet extends HttpServlet {
 	    		String idDel = request.getParameter("id_prodotto");
 	    		int idProdDel = Integer.parseInt(idDel);
 	    	
-	    		for (int i=0; i<cart.size(); i++) {
-	    			if(cart.get(i).getIdProdotto() == idProdDel) { 
-	    				cart.remove(i);
-	    				break; 
-	    			}
+	    		cart.rimuoviProdotto(idProdDel);
+	    		response.sendRedirect(request.getContextPath() + "/CartServlet");
+	    		
+	    	} else if(action.equalsIgnoreCase("modifica")) {
+	    		if(cart==null) {
+	    			response.sendRedirect(request.getContextPath() + "/CartServlet");
 	    		}
+	    		
+	    		String grabProdId= request.getParameter("id_prodotto");
+	   			int prodID = Integer.parseInt(grabProdId);
+	   			 
+	   			String grabProdQuantity= request.getParameter("quantita");
+	   			int prodQuantity = Integer.parseInt(grabProdQuantity);
+	    	
+	    		cart.modificaQuantita(prodID, prodQuantity);
 	    		response.sendRedirect(request.getContextPath() + "/CartServlet");
 	    	}
 	    		
 	    	if(!errors.isEmpty()) {
 	    		request.setAttribute("errors", errors);
-	    	}
+	    	} 
 	    }
 		else {
 			response.sendRedirect(request.getContextPath() + "/CartServlet");

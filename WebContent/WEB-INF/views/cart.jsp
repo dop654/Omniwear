@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
+<%@page import="omniwear.model.Carrello"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,19 +13,43 @@
 </head>
 <body>
 	<%@ include file="header.jsp" %>
-	<section id="container">
-		<section class="glass" id="elenco_prodotti">
-			<h1>CIAO</h1>
-		</section>
-		<aside id="riepilogo">
-			<h3>Riepilogo ordine:</h3><br>
-			<ul id="prezzi_prodotti">
-			
+	<%	String msg = (String) request.getAttribute("msg");
+		if(msg != null && !msg.isEmpty()) { %>
+			<div class="glass" id="msg">
+				<%= msg %>
+			</div>
+	<% } %>
+	<%	List<String> errors = (List<String>) request.getAttribute("errors");
+		if(errors != null && !errors.isEmpty()) { %>
+		<div class="glass" id="error">
+			<ul>
+				<% for(String e : errors) { %>
+					<li><%= e %></li>
+				<% } %>
 			</ul>
-			<hr>
-			<p id="n_prodotti">Numero prodotti: 0</p>
-			<h4 id="totale">Totale: 0,00€</h4>
-		</aside>
+		</div>
+	<% } %>
+	
+	<section class="glass" id="cart_container">
+		<%	Carrello cart = (Carrello) request.getAttribute("carrello");
+			if(cart != null) { %>
+			<h2>Prodotti:</h2>
+			<section id="elenco_prodotti">
+					
+			</section>
+			<aside id="riepilogo">
+				<h3>Riepilogo ordine:</h3><br>
+				<ul id="prezzi_prodotti">
+					
+				</ul>
+				<hr>
+				<p id="n_prodotti">Numero prodotti: <%= cart.getNProdotti() %></p>
+				<h4 id="totale">Totale: <%= cart.getTotale() %>>€</h4>
+			</aside>
+		<%	} else { %>
+			<h2>Il carrello è vuoto</h2><br>
+			<a>Torna alla home</a>
+		<%	} %>
 	</section>
 	<%@ include file="footer.jsp" %>
 </body>
