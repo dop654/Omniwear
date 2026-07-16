@@ -32,7 +32,7 @@
 	
 	<section class="glass" id="cart_container">
 		<%	Carrello cart = (Carrello) request.getAttribute("carrello");
-			if(cart != null) { %>
+			if(cart != null && cart.getNProdotti() > 0) { %>
 			<h2>Prodotti:</h2>
 			<section id="elenco_prodotti">
 					
@@ -47,8 +47,8 @@
 				<h4 id="totale">Totale: <%= cart.getTotale() %>>€</h4>
 			</aside>
 		<%	} else { %>
-			<h2>Il carrello è vuoto</h2><br>
-			<a>Torna alla home</a>
+			<h1>Il carrello è vuoto</h1><br>
+			<a href="${request.getContextPath}HomeServlet">Torna alla home</a>
 		<%	} %>
 	</section>
 	<%@ include file="footer.jsp" %>

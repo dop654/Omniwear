@@ -22,7 +22,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
         String insertSQL = "INSERT INTO " + TABLE_NAME + " (nome_categoria) VALUES (?)";
 
         try (Connection connection = ds.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+            PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
              
             preparedStatement.setString(1, categoria.getNomeCat());         
             
@@ -36,7 +36,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
         	String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome_categoria = ?";
 
         try (Connection connection = ds.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
              
             preparedStatement.setString(1, nome_categoria);
 
@@ -53,7 +53,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
     public synchronized boolean doDelete(String nome_categoria) throws SQLException {
         String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE nome_categoria = ?";
         try (Connection connection = ds.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
              
             preparedStatement.setString(1, nome_categoria);
             int result = preparedStatement.executeUpdate();
@@ -79,6 +79,24 @@ public class CategoriaDAOImpl implements CategoriaDAO{
                 bean.setNomeCat(rs.getString("nome_categoria"));
                 
                 categorie.add(bean);
+            }
+        }
+        return categorie;
+    }
+    
+    public synchronized Collection<CategoriaBean> doRetrieveProductCategories(int id_prodotto) throws SQLException {
+        Collection<CategoriaBean> categorie = new LinkedList<>();
+        String selectSQL = "SELECT * FROM prodotto_categoria WHERE id_prodotto = ?";
+
+        try (Connection connection = ds.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)){
+        	preparedStatement.setInt(1, id_prodotto);
+    		ResultSet rs = preparedStatement.executeQuery();
+    		
+    		while (rs.next()) {
+    			CategoriaBean bean = new CategoriaBean();
+    			bean.setNomeCat(rs.getString("nome_categoria"));     
+    			categorie.add(bean);
             }
         }
         return categorie;

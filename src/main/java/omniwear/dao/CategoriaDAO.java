@@ -13,4 +13,6 @@ public interface CategoriaDAO {
 	    public CategoriaBean doRetrieveByKey(String nome_categoria) throws SQLException;
 	    
 	    public Collection<CategoriaBean> doRetrieveAll(String order) throws SQLException;
+	    
+	    public Collection<CategoriaBean> doRetrieveProductCategories(int id_prodotto) throws SQLException;
 }

@@ -254,8 +254,25 @@ nav ul li {
 	margin-bottom: 20px;
 	padding: 20px;
 	max-width: 80%;
+	min-height: 20em;
 }
 #cart_container h2, #cart_container h3 {
 	font-family: Les_Flos;
 	font-style: italic;
+}
+#cart_container h1 {
+	font-family: Les_Flos;
+	font-style: oblique;
+	text-align: center;
+}
+#cart_container a {
+	background-color: #003285;
+	color: #FAFAFA;
+	padding: 5px 15px;
+	border-radius: 30px;
+	border-style: none;
+	text-decoration: none;
+}
+#cart_container a:hover {
+	background-color: #FF7F3E;
 }
