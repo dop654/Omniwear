@@ -209,12 +209,12 @@ nav ul li {
 	background-color: #003285;
 }
 
-.error {
+#error {
 	background-color: rgba(217, 44, 56, 0.10);
 	color: rgba(198, 0, 13, 1);
 	margin: auto;
 	margin-bottom: 20px;
 }
-.error ul{
+#error ul{
 	list-style-type: none;
 }

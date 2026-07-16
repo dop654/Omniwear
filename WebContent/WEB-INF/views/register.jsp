@@ -15,7 +15,7 @@
 		<h3>Registrazione</h3><br>
 		<%List<String> errors = (List<String>) request.getAttribute("errors");%>
 		<% if(errors != null && !errors.isEmpty()) { %>
-			<div class="glass error">
+			<div class="glass" id="error">
 				<ul>
 					<% for(String e : errors) { %>
 						<li><%= e %></li>

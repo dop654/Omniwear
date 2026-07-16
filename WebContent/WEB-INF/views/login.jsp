@@ -16,7 +16,7 @@
 		<%
 			String msg = (String) request.getAttribute("msg");
 			if(msg != null && !msg.isEmpty()) { %>
-				<div class="glass msg">
+				<div class="glass" id="msg">
 					<%= msg %>
 				</div>
 		<% } %>
@@ -28,7 +28,7 @@
 			if(pass == null) { pass = ""; }
 		%>
 		<% if(errors != null && !errors.isEmpty()) { %>
-			<div class="glass error">
+			<div class="glass" id="error">
 				<ul>
 					<% for(String e : errors) { %>
 						<li><%= e %></li>
