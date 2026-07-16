@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,14 +17,14 @@
 				<li>
 					<c:choose>
 						<c:when test="${session.getAttribute('id_utente') != null}">
-							<a href="${request.getContextPath}UserServlet">Ciao, <c:out>${session.getAttribute("nome_utente")}</c:out></a>
+							<a href="${request.getContextPath}UserServlet">Ciao, <c:out value="${session.getAttribute('nome_utente')}"/></a>
 						</c:when>
 						<c:otherwise>
 							<a href="${request.getContextPath}LoginServlet">Accedi</a>
 						</c:otherwise>
 					</c:choose>
 				</li>
-				<li><a href="#">Carrello</a></li>
+				<li><a href="${request.getContextPath}CartServlet">Carrello</a></li>
 				<li>
 					<c:if test="${session.getAttribute('id_utente') != null}">
 							<a href="${request.getContextPath}LogoutServlet">Esci</a>

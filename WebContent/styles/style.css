@@ -218,3 +218,27 @@ nav ul li {
 #error ul{
 	list-style-type: none;
 }
+
+#msg {
+	padding: 5px;
+}
+
+#riepilogo {
+	max-width: 20%;
+	background-color: #FAFAFA;
+	font-family: "Lucida Console", "Courier New", monospace;
+	box-shadow: 5px 5px 20px rgba(10, 10, 10, 0.5);
+	padding: 10px;
+	margin: 10px;
+	float: right;
+}
+
+#elenco_prodotti {
+	float: left;
+}
+
+#container {
+	margin: auto;
+	margin-bottom: 20px;
+	padding: 10px;
+}
