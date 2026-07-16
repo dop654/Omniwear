@@ -16,7 +16,13 @@
 </head>
 <body>
 	<%@ include file="header.jsp" %>
-	
+	<section class="glass" id="cart_container">
+		<aside id="riepilogo">
+			<h3><%= prodotto.getNomeProdotto() %></h3><br>
+			<hr>
+			<h4><%= prodotto.getPrezzo() %> €</h4>
+		</aside>
+	</section>
 	<%@ include file="footer.jsp" %>
 </body>
 </html>
