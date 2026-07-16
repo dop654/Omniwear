@@ -22,7 +22,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-@WebServlet("/Carrello")
+@WebServlet("/CartServlet")
 public class CartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProdottoDAO prodottoDAO;
@@ -49,7 +49,7 @@ public class CartServlet extends HttpServlet {
 				session.setAttribute("carrello", cart);
 			}
 			request.getRequestDispatcher("/WEB-INF/views/cart.jsp").forward(request, response);
-	
+			return;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -68,14 +68,14 @@ public class CartServlet extends HttpServlet {
 	    		     try {
 	    		    	 ProdottoBean product = prodottoDAO.doRetrieveByKey(prodID);
 		    		     cart.add(product);	    					
-		    		     response.sendRedirect(request.getContextPath() + "/Carrello");
+		    		     response.sendRedirect(request.getContextPath() + "/CartServlet");
 	    			} catch(SQLException e) {
 	    				 errors.add(e.toString());
 	    			}
 	    	}
 	    	else if(action.equalsIgnoreCase("rimuovi")) {
 	    		if(cart==null) {
-	    			response.sendRedirect(request.getContextPath() + "/Carrello");
+	    			response.sendRedirect(request.getContextPath() + "/CartServlet");
 	    		}
 	    			
 	    		String idDel = request.getParameter("id_prodotto");
@@ -87,7 +87,7 @@ public class CartServlet extends HttpServlet {
 	    				break; 
 	    			}
 	    		}
-	    		response.sendRedirect(request.getContextPath() + "/Carrello");
+	    		response.sendRedirect(request.getContextPath() + "/CartServlet");
 	    	}
 	    		
 	    	if(!errors.isEmpty()) {
@@ -95,8 +95,9 @@ public class CartServlet extends HttpServlet {
 	    	}
 	    }
 		else {
-			response.sendRedirect(request.getContextPath() + "/Carrello");
+			response.sendRedirect(request.getContextPath() + "/CartServlet");
 		}
+		return;
     	
 	}
 		

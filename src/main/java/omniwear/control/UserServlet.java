@@ -63,6 +63,7 @@ public class UserServlet extends HttpServlet{
 		if(!errors.isEmpty()) {
 			request.setAttribute("errors", errors);
 		}
+		return;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -102,6 +103,7 @@ public class UserServlet extends HttpServlet{
 		}catch(SQLException err) {
 			errors.add(err.toString());
 		}
+		return;
 	}
 		
 }

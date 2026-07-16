@@ -36,6 +36,7 @@ public class LoginServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+		return;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,6 +54,7 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("id_utente", utente.getIdUtente());
 				session.setAttribute("nome_utente", utente.getNome());
 				request.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
+				return;
 			}else {
 				errors.add("Credenziali errate");
 			}
@@ -64,5 +66,6 @@ public class LoginServlet extends HttpServlet {
 			request.setAttribute("errors", errors);
 		}
 		request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+		return;
 	}
 }

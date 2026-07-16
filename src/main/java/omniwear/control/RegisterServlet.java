@@ -39,6 +39,7 @@ public class RegisterServlet extends HttpServlet {
 	
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+		return;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -65,6 +66,7 @@ public class RegisterServlet extends HttpServlet {
 			request.setAttribute("errors", errors);
 			request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
 		}
+		return;
 	}
 	
 	protected static String toDigest(String pw) {

@@ -57,6 +57,7 @@ public class AdminProdottiServlet extends HttpServlet {
         if(!errors.isEmpty()) {
 			request.setAttribute("errors", errors);
 		}
+		return;
     }
 
     @Override
@@ -123,6 +124,6 @@ public class AdminProdottiServlet extends HttpServlet {
     	if(!errors.isEmpty()) {
 			request.setAttribute("errors", errors);
 		}
-       
+		return;
     }
 }
