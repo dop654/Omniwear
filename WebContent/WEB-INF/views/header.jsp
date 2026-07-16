@@ -16,8 +16,8 @@
 				<li><a href="#">Sconti</a></li>
 				<li>
 					<c:choose>
-						<c:when test="${session.getAttribute('id_utente') != null}">
-							<a href="${request.getContextPath}UserServlet">Ciao, <c:out value="${session.getAttribute('nome_utente')}"/></a>
+						<c:when test="${sessionScope.id_utente != null}">
+							<a href="${request.getContextPath}UserServlet">Ciao, <c:out value="${sessionScope.nome_utente}"/></a>
 						</c:when>
 						<c:otherwise>
 							<a href="${request.getContextPath}LoginServlet">Accedi</a>
@@ -26,7 +26,7 @@
 				</li>
 				<li><a href="${request.getContextPath}CartServlet">Carrello</a></li>
 				<li>
-					<c:if test="${session.getAttribute('id_utente') != null}">
+					<c:if test="${sessionScope.id_utente != null}">
 							<a href="${request.getContextPath}LogoutServlet">Esci</a>
 					</c:if>
 				</li>

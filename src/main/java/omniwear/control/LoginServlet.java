@@ -53,7 +53,8 @@ public class LoginServlet extends HttpServlet {
 			if(utente.getIdUtente() != 0) {
 				session.setAttribute("id_utente", utente.getIdUtente());
 				session.setAttribute("nome_utente", utente.getNome());
-				request.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
+				//request.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
+				response.sendRedirect(request.getContextPath() + "/HomeServlet");
 				return;
 			}else {
 				errors.add("Credenziali errate");
