@@ -58,6 +58,7 @@ public class CheckoutServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		HttpSession session = request.getSession(false);
 		List<String> errors = new ArrayList<>();
 		
 		String numeroCarta = RegisterServlet.validateField(request.getParameter("numero_carta"), "numero carta", errors);
@@ -97,5 +98,13 @@ public class CheckoutServlet extends HttpServlet {
 		newOrder.setIndirizzoDestinazione(address);
 		newOrder.setStatoOrdine(0);
 		
+		Carrello cart = (Carrello) session.getAttribute("carrello");
+		newOrder.setTotale(cart.getTotale());
+		
+	/*	try {
+			ordineDAO.doSave(newOrder);
+			
+		}
+	*/	
 	}
 }
