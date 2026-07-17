@@ -12,6 +12,7 @@ public class OrdineBean implements Serializable {
 	private int stato_ordine;
 	private Integer id_utente;
 	private UtenteBean utente;
+	private double totale;
 	
 	public OrdineBean() {
 	
@@ -57,5 +58,13 @@ public class OrdineBean implements Serializable {
 	}
 	public void setUtente(UtenteBean utente) {
 		this.utente = utente;
+	}
+	
+	public double getTotale() {
+	    return totale;
+	}
+
+	public void setTotale(double totale) {
+	    this.totale = totale;
 	}
 }

@@ -13,6 +13,9 @@ import javax.sql.DataSource;
 import omniwear.model.OrdineBean;
 import omniwear.model.ProdottoBean;
 import omniwear.model.UtenteBean;
+import omniwear.dao.UtenteDAO;
+import omniwear.model.UtenteBean;
+
 
 public class OrdineDAOImpl implements OrdineDAO {
 
@@ -25,7 +28,7 @@ public class OrdineDAOImpl implements OrdineDAO {
 
     @Override
     public synchronized void doSave(OrdineBean ordine) throws SQLException {
-        String insertSQL = "INSERT INTO " + TABLE_NAME + " (indirizzo_destinazione, stato_ordine, id_utente) VALUES (?, ?, ?)";
+        String insertSQL = "INSERT INTO " + TABLE_NAME + " (indirizzo_destinazione, stato_ordine, id_utente, totale) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = ds.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
@@ -38,7 +41,9 @@ public class OrdineDAOImpl implements OrdineDAO {
             } else {
                 preparedStatement.setNull(3, Types.INTEGER);
             }
-
+            
+            preparedStatement.setDouble(4, ordine.getTotale());
+            
             preparedStatement.executeUpdate();
         }
     }
@@ -62,9 +67,10 @@ public class OrdineDAOImpl implements OrdineDAO {
                 if (rs.next()) {
                     ordine = new OrdineBean();
                     ordine.setIdOrdine(rs.getInt("id_ordine"));
-                    ordine.setDataOrdine(rs.getString("data"));
+                    ordine.setDataOrdine(rs.getString("data_ordine"));
                     ordine.setIndirizzoDestinazione(rs.getString("indirizzo_destinazione"));
                     ordine.setStatoOrdine(rs.getInt("stato_ordine"));
+                    ordine.setTotale(rs.getDouble("totale"));
                     
                     int idUtente = rs.getInt("id_utente");
                     if (!rs.wasNull()) {
@@ -87,7 +93,9 @@ public class OrdineDAOImpl implements OrdineDAO {
     @Override
     public synchronized Collection<OrdineBean> doRetrieveAll(String order) throws SQLException {
         Collection<OrdineBean> ordini = new LinkedList<>();
-        String selectSQL = "SELECT * FROM " + TABLE_NAME;
+        String selectSQL = "SELECT o.*, u.nome, u.cognome, u.email " +
+                "FROM " + TABLE_NAME + " o " +
+                "LEFT JOIN Utente u ON o.id_utente = u.id_utente";
 
         if (order != null && !order.isEmpty()) {
             selectSQL += " ORDER BY " + order;
@@ -104,6 +112,7 @@ public class OrdineDAOImpl implements OrdineDAO {
                 ordine.setIndirizzoDestinazione(rs.getString("indirizzo"));
                 ordine.setStatoOrdine(rs.getInt("stato"));
                 ordine.setUtente((UtenteBean) rs.getObject("utente"));
+                ordine.setTotale(rs.getDouble("totale"));
                 
                 int idUtente = rs.getInt("id_utente");
                 if (!rs.wasNull()) {
@@ -128,6 +137,9 @@ public class OrdineDAOImpl implements OrdineDAO {
     public synchronized Collection<OrdineBean> doRetrieveByUtente(int id_utente) throws SQLException {
         Collection<OrdineBean> ordini = new LinkedList<>();
         String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id_utente = ? ORDER BY data_ordine DESC";
+        
+        UtenteDAO utenteDAO = new UtenteDAOImpl(ds);
+        UtenteBean utenteCorrente = utenteDAO.doRetrieveByKey(id_utente);
 
         try (Connection connection = ds.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
@@ -138,10 +150,13 @@ public class OrdineDAOImpl implements OrdineDAO {
                 while (rs.next()) {
                     OrdineBean ordine = new OrdineBean();
                     ordine.setIdOrdine(rs.getInt("id_ordine"));
-                    ordine.setDataOrdine(rs.getString("data"));
+                    ordine.setDataOrdine(rs.getString("data_ordine"));
                     ordine.setIndirizzoDestinazione(rs.getString("indirizzo_destinazione"));
                     ordine.setStatoOrdine(rs.getInt("stato_ordine"));
                     ordine.setIdUtente(id_utente);
+                    ordine.setTotale(rs.getDouble("totale"));
+                    
+                    ordine.setUtente(utenteCorrente);
                     
                     ordini.add(ordine);
                 }
