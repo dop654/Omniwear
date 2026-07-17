@@ -7,7 +7,7 @@ public class OrdineBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private int id_ordine;
-	private LocalDateTime data_ordine;
+	private String data_ordine;
 	private String indirizzo_destinazione;
 	private int stato_ordine;
 	private Integer id_utente;
@@ -24,10 +24,10 @@ public class OrdineBean implements Serializable {
 		id_ordine = idOrdine;
 	}
 	
-	public LocalDateTime getDataOrdine() {
+	public String getDataOrdine() {
 		return data_ordine;
 	}
-	public void setDataOrdine(LocalDateTime data) {
+	public void setDataOrdine(String data) {
 		data_ordine = data;
 	}
 	

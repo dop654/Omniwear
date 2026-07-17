@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import javax.sql.DataSource;
 
 import omniwear.model.OrdineBean;
+import omniwear.model.ProdottoBean;
 import omniwear.model.UtenteBean;
 
 public class OrdineDAOImpl implements OrdineDAO {
@@ -61,12 +62,7 @@ public class OrdineDAOImpl implements OrdineDAO {
                 if (rs.next()) {
                     ordine = new OrdineBean();
                     ordine.setIdOrdine(rs.getInt("id_ordine"));
-                    
-                    Timestamp timestamp = rs.getTimestamp("data_ordine");
-                    if (timestamp != null) {
-                        ordine.setDataOrdine(timestamp.toLocalDateTime());
-                    }
-                    
+                    ordine.setDataOrdine(rs.getString("data"));
                     ordine.setIndirizzoDestinazione(rs.getString("indirizzo_destinazione"));
                     ordine.setStatoOrdine(rs.getInt("stato_ordine"));
                     
@@ -89,6 +85,46 @@ public class OrdineDAOImpl implements OrdineDAO {
     }
 
     @Override
+    public synchronized Collection<OrdineBean> doRetrieveAll(String order) throws SQLException {
+        Collection<OrdineBean> ordini = new LinkedList<>();
+        String selectSQL = "SELECT * FROM " + TABLE_NAME;
+
+        if (order != null && !order.isEmpty()) {
+            selectSQL += " ORDER BY " + order;
+        }
+
+        try (Connection connection = ds.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+             ResultSet rs = preparedStatement.executeQuery()) {
+
+            while (rs.next()) {
+                OrdineBean ordine = new OrdineBean();
+                ordine.setIdOrdine(rs.getInt("id_ordine"));
+                ordine.setDataOrdine(rs.getString("data"));
+                ordine.setIndirizzoDestinazione(rs.getString("indirizzo"));
+                ordine.setStatoOrdine(rs.getInt("stato"));
+                ordine.setUtente((UtenteBean) rs.getObject("utente"));
+                
+                int idUtente = rs.getInt("id_utente");
+                if (!rs.wasNull()) {
+                    ordine.setIdUtente(idUtente);
+                    
+                    UtenteBean utente = new UtenteBean();
+                    utente.setIdUtente(idUtente);
+                    utente.setNome(rs.getString("nome"));
+                    utente.setCognome(rs.getString("cognome"));
+                    utente.setEmail(rs.getString("email"));
+                    
+                    ordine.setUtente(utente);
+                }
+                
+                ordini.add(ordine);
+            }
+        }
+        return ordini;
+    }
+    
+    @Override
     public synchronized Collection<OrdineBean> doRetrieveByUtente(int id_utente) throws SQLException {
         Collection<OrdineBean> ordini = new LinkedList<>();
         String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id_utente = ? ORDER BY data_ordine DESC";
@@ -102,12 +138,7 @@ public class OrdineDAOImpl implements OrdineDAO {
                 while (rs.next()) {
                     OrdineBean ordine = new OrdineBean();
                     ordine.setIdOrdine(rs.getInt("id_ordine"));
-                    
-                    Timestamp timestamp = rs.getTimestamp("data_ordine");
-                    if(timestamp != null) {
-                        ordine.setDataOrdine(timestamp.toLocalDateTime());
-                    }
-                    
+                    ordine.setDataOrdine(rs.getString("data"));
                     ordine.setIndirizzoDestinazione(rs.getString("indirizzo_destinazione"));
                     ordine.setStatoOrdine(rs.getInt("stato_ordine"));
                     ordine.setIdUtente(id_utente);
