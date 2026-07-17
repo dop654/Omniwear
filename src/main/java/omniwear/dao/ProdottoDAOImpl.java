@@ -118,7 +118,7 @@ public class ProdottoDAOImpl implements ProdottoDAO {
                 prodotto.setIdUtente(rs.getInt("id_utente"));
                 
                 prodotti.add(prodotto);
-            }
+            }	
         }
         return prodotti;
     }
