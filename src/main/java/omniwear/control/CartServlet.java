@@ -8,13 +8,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import omniwear.dao.UtenteDAO;
-import omniwear.dao.UtenteDAOImpl;
-import omniwear.model.UtenteBean;
 import omniwear.dao.ProdottoDAO;
 import omniwear.dao.ProdottoDAOImpl;
 import omniwear.model.Carrello;
-import omniwear.model.ProdottoBean;
 import omniwear.model.ProdottoCarrello;
 
 import java.io.IOException;
