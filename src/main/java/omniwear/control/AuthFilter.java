@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 
 @WebFilter(urlPatterns = {"/admin/home", "/admin/prodotti", "/user_page", "/admin/ordini"})
 public class AuthFilter extends HttpFilter {
+	private static final long serialVersionUID = 1L;	
 	
 	@Override
 	protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
