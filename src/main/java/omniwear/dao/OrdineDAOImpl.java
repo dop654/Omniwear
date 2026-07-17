@@ -42,7 +42,7 @@ public class OrdineDAOImpl implements OrdineDAO {
                 preparedStatement.setNull(3, Types.INTEGER);
             }
             
-            preparedStatement.setDouble(4, ordine.getTotale());
+            preparedStatement.setFloat(4, ordine.getTotale());
             
             preparedStatement.executeUpdate();
         }
@@ -70,7 +70,7 @@ public class OrdineDAOImpl implements OrdineDAO {
                     ordine.setDataOrdine(rs.getString("data_ordine"));
                     ordine.setIndirizzoDestinazione(rs.getString("indirizzo_destinazione"));
                     ordine.setStatoOrdine(rs.getInt("stato_ordine"));
-                    ordine.setTotale(rs.getDouble("totale"));
+                    ordine.setTotale(rs.getFloat("totale"));
                     
                     int idUtente = rs.getInt("id_utente");
                     if (!rs.wasNull()) {
@@ -112,7 +112,7 @@ public class OrdineDAOImpl implements OrdineDAO {
                 ordine.setIndirizzoDestinazione(rs.getString("indirizzo"));
                 ordine.setStatoOrdine(rs.getInt("stato"));
                 ordine.setUtente((UtenteBean) rs.getObject("utente"));
-                ordine.setTotale(rs.getDouble("totale"));
+                ordine.setTotale(rs.getFloat("totale"));
                 
                 int idUtente = rs.getInt("id_utente");
                 if (!rs.wasNull()) {
@@ -154,7 +154,7 @@ public class OrdineDAOImpl implements OrdineDAO {
                     ordine.setIndirizzoDestinazione(rs.getString("indirizzo_destinazione"));
                     ordine.setStatoOrdine(rs.getInt("stato_ordine"));
                     ordine.setIdUtente(id_utente);
-                    ordine.setTotale(rs.getDouble("totale"));
+                    ordine.setTotale(rs.getFloat("totale"));
                     
                     ordine.setUtente(utenteCorrente);
                     
