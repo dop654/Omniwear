@@ -36,19 +36,10 @@ public class UserServlet extends HttpServlet{
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		List<String> errors = new ArrayList<>();
 		
-		Integer grabId = (Integer) session.getAttribute("id_utente");
-		int userId;
-		
-		if(grabId != null && grabId>0) {
-			userId = grabId;
-		}
-		else {
-			response.sendRedirect(request.getContextPath() + "/login.jsp");
-			return;
-		}
+		int userId = (Integer) session.getAttribute("id_utente");
 		
 		try {
 			UtenteBean currentUser = utenteDAO.doRetrieveByKey(userId);
