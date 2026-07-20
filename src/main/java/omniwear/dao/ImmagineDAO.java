@@ -12,4 +12,6 @@ public interface ImmagineDAO {
     public ImmagineBean doRetrieveByKey(String path_immagine) throws SQLException;
     
     public Collection<ImmagineBean> doRetrieveAll(String order) throws SQLException;
+
+    public Collection<ImmagineBean> doRetrieveAllByProduct(int id_prodotto) throws SQLException;
 }
