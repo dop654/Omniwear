@@ -55,7 +55,6 @@ public class SchedaProdottoServlet extends HttpServlet {
 				}else {
 					request.setAttribute("prodotto", prodotto);
 					request.setAttribute("categorie", categorie);
-					//TODO aggiungere categorie a cookie per personalizzazione
 					request.getRequestDispatcher("/WEB-INF/views/prodotto.jsp").forward(request, response);
 					return;
 				}

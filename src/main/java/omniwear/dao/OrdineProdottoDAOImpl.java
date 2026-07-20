@@ -22,15 +22,14 @@ public class OrdineProdottoDAOImpl implements OrdineProdottoDAO {
     }
 
     public void doSave(OrdineProdottoBean ord) throws SQLException {
-        String insertSQL = "INSERT INTO" + TABLE_NAME + "(id_ordine, id_prodotto, quantita, prezzo_vendita) VALUES (?, ?, ?, ?)";
+        String insertSQL = "INSERT INTO" + TABLE_NAME + "(id_prodotto, quantita, prezzo_vendita) VALUES (?, ?, ?)";
 
         try (Connection connection = ds.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
 
-            preparedStatement.setInt(1, ord.getIdOrdine());
-            preparedStatement.setInt(2, ord.getIdProdotto());
-            preparedStatement.setInt(3, ord.getQuantita());
-            preparedStatement.setDouble(4, ord.getPrezzo());
+            preparedStatement.setInt(1, ord.getIdProdotto());
+            preparedStatement.setInt(2, ord.getQuantita());
+            preparedStatement.setDouble(3, ord.getPrezzo());
 
             preparedStatement.executeUpdate();
         }

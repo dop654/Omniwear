@@ -12,6 +12,8 @@ import omniwear.dao.OrdineDAOImpl;
 import omniwear.dao.UtenteDAO;
 import omniwear.dao.UtenteDAOImpl;
 import omniwear.model.OrdineBean;
+import omniwear.model.OrdineProdottoBean;
+import omniwear.model.ProdottoCarrello;
 import omniwear.model.UtenteBean;
 import omniwear.model.Carrello;
 
@@ -79,7 +81,7 @@ public class CheckoutServlet extends HttpServlet {
 		
 		OrdineBean newOrder = new OrdineBean();
 		
-		if(grabIdUser!=null) {
+		if(grabIdUser != null) {
 			
 			idUser = Integer.parseInt(grabIdUser);
 			
@@ -91,8 +93,9 @@ public class CheckoutServlet extends HttpServlet {
 			} catch (SQLException e) {
 				errors.add(e.toString());
 			}
-		} else
-			newOrder.setUtente(null);
+		} else {
+			errors.add("Errore con i dati utente - ID utente non valido");
+		}
 		
 		newOrder.setIdUtente(idUser);
 		newOrder.setIndirizzoDestinazione(address);
@@ -101,10 +104,31 @@ public class CheckoutServlet extends HttpServlet {
 		Carrello cart = (Carrello) session.getAttribute("carrello");
 		newOrder.setTotale(cart.getTotale());
 		
-	/*	try {
+		
+		try {
 			ordineDAO.doSave(newOrder);
+			int id_ordine = (Integer)(ordineDAO.doRetrieveByUtente(idUser).toArray()[0]);
 			
+			ArrayList<ProdottoCarrello> prodotti = cart.getProdotti();
+			for(ProdottoCarrello p : prodotti) {
+				OrdineProdottoBean op = new OrdineProdottoBean();
+				op.setIdOrdine(id_ordine);
+				op.setIdProdotto(p.getId_prodotto());
+				op.setPrezzo(p.getPrezzo());
+				op.setQuantita(p.getQuantita());
+			}
+		} catch (SQLException e) {
+			errors.add(e.toString());
 		}
-	*/	
+		
+		if(!errors.isEmpty()) {
+			request.setAttribute("errors", errors);
+		} else {
+			request.setAttribute("msg", "Ordine effettuato con successo!");
+		}
+		
+		cart = new Carrello();
+		session.setAttribute("carrello", cart);
+		response.sendRedirect(request.getContextPath() + "/CartServlet");
 	}
 }

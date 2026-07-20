@@ -42,12 +42,12 @@ public class CartServlet extends HttpServlet {
 	
 		Carrello cart = (Carrello) session.getAttribute("carrello");
 			
-			if(cart==null) {
-				cart = new Carrello();
-				session.setAttribute("carrello", cart);
-			}
-			request.getRequestDispatcher("/WEB-INF/views/cart.jsp").forward(request, response);
-			return;
+		if(cart==null) {
+			cart = new Carrello();
+			session.setAttribute("carrello", cart);
+		}
+		request.getRequestDispatcher("/WEB-INF/views/cart.jsp").forward(request, response);
+		return;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
