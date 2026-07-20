@@ -31,27 +31,28 @@
 			</div>
 	<% } %>
 	<section class="glass" id="add_prodotto">
-		<form method="POST" action="${pageContext.request.contextPath}/admin/prodotti">
-			<input type="hidden" value="inserisci" name="action">
+		<form method="POST" action="${pageContext.request.contextPath}/admin/prodotti" id="interface">
+			<input type="hidden" value="aggiungi" name="action" id="action">
+			<input type="hidden" value="" name="id_prodotto" id="id_prodotto">
 			<label for="nomeProdotto">Nome prodotto: </label>
-			<input type="text" name="nomeProdotto" id="nomeProdotto" required>
+			<input type="text" value="" placeholder="Nome prodotto" name="nomeProdotto" id="nomeProdotto" required>
 			<label for="prezzo">Prezzo: </label>
-			<input type="number" min="0.0" step="0.01" name="prezzo" id="prezzo" required>
-			<input type="submit" value="Aggiungi">
+			<input type="number" value="" placeholder="Prezzo" min="0.0" step="0.01" name="prezzo" id="prezzo" required>
+			<input type="submit" value="Aggiungi" id="submit">
+			<button value="elimina" id="elimina" onClick="eliminaProdotto(this)">Elimina</button>
 		</form>
 	</section>
 	<section class="glass" id="catalogo">
-		<%	Collection<ProdottoBean> catalogo = (Collection<ProdottoBean>) request.getAttribute("listaProdotti"); 
-			for(ProdottoBean p : catalogo) { %>
-				<form method="POST" action="${pageContext.request.contextPath}/admin/prodotti">
-					<input type="hidden" value="" name="action" id="action">
-					<input type="hidden" value="<%= p.getIdProdotto() %>" name="id_prodotto">
-					<input type="text" value="<%= p.getNomeProdotto() %>" name="nomeProdotto" id="nomeProdotto" required>
-					<input type="number" value="<%= p.getPrezzo() %>" min="0.0" step="0.01" name="prezzo" id="prezzo" required>
-					<input type="submit" value="Modifica" onClick="aggiornaProdotto()">
-					<input type="submit" value="Elimina" onClick="eliminaProdotto()">
-				</form>
-		<%	} %>
+		<%	Collection<ProdottoBean> prodotti = (Collection<ProdottoBean>) request.getAttribute("listaProdotti");
+			if(prodotti != null) {
+				for(ProdottoBean p : prodotti) { %>
+					<section class="glass" id="scheda_prodotto">
+						<h6><%= p.getNomeProdotto() %></h6>
+						<p><%= p.getPrezzo() %></p>
+						<button value="modifica" onClick="caricaProdotto(<%= p.getIdProdotto() %>,'<%= p.getNomeProdotto() %>', <%= p.getPrezzo() %>)">Modifica</button>
+					</section>
+		<%		} 
+			}		%>
 	</section>
 	<%@ include file="../footer.jsp" %>
 </body>

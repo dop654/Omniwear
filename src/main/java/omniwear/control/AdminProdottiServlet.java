@@ -45,10 +45,7 @@ public class AdminProdottiServlet extends HttpServlet {
         
         try {
             Collection<ProdottoBean> catalogo = prodottoDAO.doRetrieveAll(null);
-            
             request.setAttribute("listaProdotti", catalogo);
-            
-            
         } catch (SQLException e) {
             errors.add(e.toString());
         }

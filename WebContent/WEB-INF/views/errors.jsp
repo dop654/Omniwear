@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Omniwear - Errori</title>
+	<title>Omniwear - Errore</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/style.css">
 	<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images/favicons/favicon.ico">
 	<script src="scripts/utils.js"></script>
@@ -15,18 +15,20 @@
 	<section class="glass" id="cart_container" style="text-align: center;">
 	
 	<h1>Oops! Qualcosa è andato storto</h1>
-	<div id="error">
+	<div class="glass" id="error">
 	<% List<String> errors = (List<String>) request.getAttribute("errors");
 	   if(errors != null && !errors.isEmpty()) {
 		   
 		   for(String e : errors) { 
 	%>
 			<p><%= e %></p>
-	<% }
-	}else { 
-		%>
+			<% } %>
+	<% } else if(exception != null) { %>
+		<p>Si è verificato un'eccezione: <%= exception.toString() %></p><br>
+		<p> <%= exception.getMessage() %></p>
+	<% } else { %>
 		<p>Si è verificato un errore inaspettato o la pagina non esiste.</p>
-	<% }%> 
+	<% }%>  
 	</div>
 	</section>
 	<%@ include file="footer.jsp" %>
