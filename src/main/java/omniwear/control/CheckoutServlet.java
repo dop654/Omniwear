@@ -99,7 +99,7 @@ public class CheckoutServlet extends HttpServlet {
 		
 		newOrder.setIdUtente(idUser);
 		newOrder.setIndirizzoDestinazione(address);
-		newOrder.setStatoOrdine(0);
+		newOrder.setStatoOrdine(1);
 		
 		Carrello cart = (Carrello) session.getAttribute("carrello");
 		newOrder.setTotale(cart.getTotale());
