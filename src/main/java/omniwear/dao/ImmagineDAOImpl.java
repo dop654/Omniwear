@@ -88,4 +88,24 @@ public class ImmagineDAOImpl implements ImmagineDAO{
         }
         return immagini;
     }
+    
+    @Override
+    public synchronized Collection<ImmagineBean> doRetrieveAllByProduct(int id_prodotto) throws SQLException {
+        Collection<ImmagineBean> immagini = new LinkedList<>();
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id_prodotto = " + id_prodotto;
+
+        try (Connection connection = ds.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+             ResultSet rs = preparedStatement.executeQuery()) {
+
+            while (rs.next()) {
+                ImmagineBean bean = new ImmagineBean();
+                bean.setPath(rs.getString("path_immagine"));
+                bean.setIdProdotto(rs.getInt("id_prodotto"));
+                
+                immagini.add(bean);
+            }
+        }
+        return immagini;
+    }
 }

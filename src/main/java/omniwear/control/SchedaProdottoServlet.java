@@ -9,9 +9,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import omniwear.dao.CategoriaDAO;
 import omniwear.dao.CategoriaDAOImpl;
+import omniwear.dao.ImmagineDAO;
+import omniwear.dao.ImmagineDAOImpl;
 import omniwear.dao.ProdottoDAO;
 import omniwear.dao.ProdottoDAOImpl;
 import omniwear.model.CategoriaBean;
+import omniwear.model.ImmagineBean;
 import omniwear.model.ProdottoBean;
 
 import java.io.IOException;
@@ -27,6 +30,7 @@ public class SchedaProdottoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProdottoDAO prodottoDAO;
 	private CategoriaDAO categoriaDAO;
+	private ImmagineDAO immagineDAO;
 	
 	@Override
 	public void init(ServletConfig servletConfig) throws ServletException {
@@ -38,6 +42,7 @@ public class SchedaProdottoServlet extends HttpServlet {
 		}
 		prodottoDAO = new ProdottoDAOImpl(ds);
 		categoriaDAO = new CategoriaDAOImpl(ds);
+		immagineDAO = new ImmagineDAOImpl(ds);
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -49,12 +54,14 @@ public class SchedaProdottoServlet extends HttpServlet {
 			try {
 				ProdottoBean prodotto = prodottoDAO.doRetrieveByKey(id_prodotto);
 				Collection<CategoriaBean> categorie = categoriaDAO.doRetrieveProductCategories(id_prodotto);
+				Collection<ImmagineBean> immagini = immagineDAO.doRetrieveAllByProduct(id_prodotto);
 				
 				if(prodotto == null) {
 					errors.add("Prodotto non trovato");
 				}else {
 					request.setAttribute("prodotto", prodotto);
 					request.setAttribute("categorie", categorie);
+					request.setAttribute("immagini", immagini);
 					request.getRequestDispatcher("/WEB-INF/views/prodotto.jsp").forward(request, response);
 					return;
 				}
