@@ -48,7 +48,6 @@ public class AdminProdottiServlet extends HttpServlet {
             
             request.setAttribute("listaProdotti", catalogo);
             
-            request.getRequestDispatcher("/WEB-INF/views/admin/dashboard_prodotti.jsp").forward(request, response);
             
         } catch (SQLException e) {
             errors.add(e.toString());
@@ -57,6 +56,8 @@ public class AdminProdottiServlet extends HttpServlet {
         if(!errors.isEmpty()) {
 			request.setAttribute("errors", errors);
 		}
+        
+        request.getRequestDispatcher("/WEB-INF/views/admin/dashboard_prodotti.jsp").forward(request, response);
 		return;
     }
 
@@ -85,6 +86,7 @@ public class AdminProdottiServlet extends HttpServlet {
     					prodottoDAO.doSave(prodotto);
     					request.setAttribute("msg", "Prodotto aggiunto con successo");
     					response.sendRedirect(request.getContextPath() + "/admin/prodotti");
+    					return;
     		        } catch(SQLException e) {
     		            errors.add(e.toString());
     		        }
@@ -96,6 +98,7 @@ public class AdminProdottiServlet extends HttpServlet {
     			try {
     				prodottoDAO.doDelete(idProdDel);
     				response.sendRedirect(request.getContextPath() + "/admin/prodotti");
+    				return;
     			} catch(SQLException e) {
 		            errors.add(e.toString());
 		        }
@@ -117,6 +120,7 @@ public class AdminProdottiServlet extends HttpServlet {
     			try {
     				prodottoDAO.doUpdate(prodottoAggiornato);
     				response.sendRedirect(request.getContextPath() + "/admin/prodotti");
+    				return;
     			} catch(SQLException e) {
 		            errors.add(e.toString());
 		        }
@@ -125,6 +129,7 @@ public class AdminProdottiServlet extends HttpServlet {
     	if(!errors.isEmpty()) {
 			request.setAttribute("errors", errors);
 		}
+    	request.getRequestDispatcher("/WEB-INF/views/admin/dashboard_prodotti.jsp").forward(request, response);
 		return;
     }
 }

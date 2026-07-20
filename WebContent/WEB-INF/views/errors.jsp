@@ -6,8 +6,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Omniwear - Errori</title>
-	<link rel="stylesheet" type="text/css" href="styles/style.css">
-	<link rel="icon" type="image/x-icon" href="images/favicons/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/style.css">
+	<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images/favicons/favicon.ico">
 	<script src="scripts/utils.js"></script>
 </head>
 <body>
