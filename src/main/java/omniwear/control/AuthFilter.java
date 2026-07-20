@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebFilter(urlPatterns = {"/admin/home", "/admin/prodotti", "/user_page", "/admin/ordini"})
+@WebFilter(urlPatterns = {"/admin/home", "/admin/prodotti", "/user_page", "/admin/ordini", "/user_ordini"})
 public class AuthFilter extends HttpFilter {
 	private static final long serialVersionUID = 1L;	
 	
