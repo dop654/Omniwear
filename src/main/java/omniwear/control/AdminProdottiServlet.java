@@ -48,7 +48,7 @@ public class AdminProdottiServlet extends HttpServlet {
             
             request.setAttribute("listaProdotti", catalogo);
             
-            request.getRequestDispatcher("/WEB-INF/admin/dashboard_prodotti.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/admin/dashboard_prodotti.jsp").forward(request, response);
             
         } catch (SQLException e) {
             errors.add(e.toString());
@@ -83,6 +83,7 @@ public class AdminProdottiServlet extends HttpServlet {
     		        
     		        try {
     					prodottoDAO.doSave(prodotto);
+    					request.setAttribute("msg", "Prodotto aggiunto con successo");
     					response.sendRedirect(request.getContextPath() + "/admin/prodotti");
     		        } catch(SQLException e) {
     		            errors.add(e.toString());

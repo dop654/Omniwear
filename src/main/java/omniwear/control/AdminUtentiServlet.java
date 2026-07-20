@@ -43,7 +43,7 @@ public class AdminUtentiServlet extends HttpServlet {
 			
 			request.setAttribute("listaUtenti", utenti);
             
-            request.getRequestDispatcher("/WEB-INF/admin/dashboard_utenti.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/admin/dashboard_utenti.jsp").forward(request, response);
 		} catch(SQLException e) {
 			errors.add(e.toString());
 		}

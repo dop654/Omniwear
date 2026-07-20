@@ -43,7 +43,7 @@ public class AdminOrdiniServlet extends HttpServlet {
 			
 			request.setAttribute("listaOrdini", ordini);
             
-            request.getRequestDispatcher("/WEB-INF/admin/dashboard_ordini.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/admin/dashboard_ordini.jsp").forward(request, response);
 		} catch(SQLException e) {
 			errors.add(e.toString());
 		}
