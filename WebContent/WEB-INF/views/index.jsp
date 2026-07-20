@@ -5,8 +5,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Omniwear - Homepage</title>
-	<link rel="stylesheet" type="text/css" href="styles/style.css">
-	<link rel="icon" type="image/x-icon" href="images/favicons/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/style.css">
+	<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images/favicons/favicon.ico">
 </head>
 <body>
 	<%@ include file="header.jsp" %>

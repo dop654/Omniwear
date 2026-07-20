@@ -13,8 +13,8 @@
 			<%= prodotto.getNomeProdotto() %>
 		<%	} %>
 	</title>
-	<link rel="stylesheet" type="text/css" href="styles/style.css">
-	<link rel="icon" type="image/x-icon" href="images/favicons/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/style.css">
+	<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images/favicons/favicon.ico">
 	<script src="scripts/utils.js"></script>
 </head>
 <body>
@@ -23,14 +23,14 @@
 	
 		<%	Collection<ImmagineBean> img = (Collection<ImmagineBean>) request.getAttribute("immagini"); 
 			int count = 0;%>
-		<div>
+		<div id="box_immagine">
 			<div class="slideshow-container">
 			<%	for(ImmagineBean i : img) { %>
 				<div class="mySlides fade">
-	    			<img src="${ i.getPath }" style="width:100%">
+	    			<img src="${ i.getPath }">
 	    		</div>
 	    	<%	} %>
-
+				
 			  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
 			  <a class="next" onclick="plusSlides(1)">&#10095;</a>
 			</div>

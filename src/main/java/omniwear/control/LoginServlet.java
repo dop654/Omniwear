@@ -53,6 +53,7 @@ public class LoginServlet extends HttpServlet {
 			if(utente.getIdUtente() != 0) {
 				session.setAttribute("id_utente", utente.getIdUtente());
 				session.setAttribute("nome_utente", utente.getNome());
+				session.setAttribute("role", utente.getAdmin() ? "admin" : "user");
 				response.sendRedirect(request.getContextPath() + "/HomeServlet");
 				return;
 			}else {

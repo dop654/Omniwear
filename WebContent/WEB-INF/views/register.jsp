@@ -5,8 +5,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Omniwear - Registrazione</title>
-	<link rel="stylesheet" type="text/css" href="styles/style.css">
-	<link rel="icon" type="image/x-icon" href="images/favicons/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/style.css">
+	<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images/favicons/favicon.ico">
 </head>
 <body>
 	<%@ include file="header.jsp" %>
@@ -23,7 +23,7 @@
 				</ul>
 			</div>
 		<% } %>
-		<form method="POST" action="${request.getContextPath}RegisterServlet">
+		<form method="POST" action="${pageContext.request.contextPath}/RegisterServlet">
 			<span class="row"><label for="nome">Nome: </label>
 			<input type="text" name="nome" id="nome" required></span>
 			<span class="row"><label for="cognome">Cognome: </label>
@@ -37,7 +37,7 @@
 			<input type="submit" value="Registrati">
 		</form>
 		<br>
-		Già registrato? <a href="${request.getContextPath}LoginServlet">Accedi!</a>
+		Già registrato? <a href="${pageContext.request.contextPath}/LoginServlet">Accedi!</a>
 	</section>
 	
 	<%@ include file="footer.jsp" %>

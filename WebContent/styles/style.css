@@ -277,7 +277,29 @@ nav ul li {
 	background-color: #FF7F3E;
 }
 
+#dash {
+	margin: auto;
+	max-width: 80%;
+	margin-bottom: 5em;
+	margin-top: 3em;
+	text-align: center;
+	padding: 5em;
+}
+#dash a {
+	background-color: #003285;
+    color: #FAFAFA;
+    padding: 1em;
+    border-radius: 30px;
+    border-style: none;
+    text-decoration: none;
+    margin: auto;
+    display: block;
+}
+#dash a:hover {
+	background-color: #FF7F3E;
+}
 
+/* CSS slideshow */
 .slideshow-container {
   max-width: 1000px;
   position: relative;

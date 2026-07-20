@@ -6,10 +6,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Omniwear - Carrello</title>
-	<link rel="stylesheet" type="text/css" href="styles/style.css">
-	<link rel="icon" type="image/x-icon" href="images/favicons/favicon.ico">
-	<script src="scripts/ajax.js"></script>
-	<script src="scripts/cart.js"></script>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/style.css">
+	<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images/favicons/favicon.ico">
+	<script src="${pageContext.request.contextPath}/scripts/ajax.js"></script>
+	<script src="${pageContext.request.contextPath}/scripts/cart.js"></script>
 </head>
 <body>
 	<%@ include file="header.jsp" %>
@@ -48,7 +48,7 @@
 			</aside>
 		<%	} else { %>
 			<h1>Il carrello è vuoto</h1><br>
-			<a href="${request.getContextPath}HomeServlet">Torna alla home</a>
+			<a href="${pageContext.request.contextPath}/HomeServlet">Torna alla home</a>
 		<%	} %>
 	</section>
 	<%@ include file="footer.jsp" %>
