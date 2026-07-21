@@ -14,6 +14,10 @@ public class ProdottoCarrello implements Serializable{
 		return prod.getIdProdotto();
 	}
 	
+	public ProdottoBean getProd() {
+		return prod;
+	}
+	
 	public float getPrezzo() {
 		return prod.getPrezzo();
 	}

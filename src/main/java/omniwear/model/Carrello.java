@@ -13,7 +13,7 @@ public class Carrello implements Serializable{
     public void aggiungiProdotto(ProdottoCarrello prod) {
     	for(ProdottoCarrello p : prodotti) {
     		if(p.getId_prodotto() == prod.getId_prodotto()) {
-    			p.setQuantita(p.getQuantita() + prod.getQuantita());
+    			p.setQuantita(prod.getQuantita());
     			return;
     		}
     	}
@@ -33,8 +33,14 @@ public class Carrello implements Serializable{
     public void rimuoviProdotto(int id_prodotto) {
     	for(int i = 0; i < prodotti.size(); i++) {
     		if(prodotti.get(i).getId_prodotto() == id_prodotto) {
-    			prodotti.remove(i);
-    			return;
+    			if(prodotti.get(i).getId_prodotto() == id_prodotto) {
+        			if(prodotti.get(i).getQuantita()>1)
+        				prodotti.get(i).setQuantita(prodotti.get(i).getQuantita()-1);
+        			else
+        				prodotti.remove(i);
+        			
+        				return;
+    				}
     		}
     	}
     }

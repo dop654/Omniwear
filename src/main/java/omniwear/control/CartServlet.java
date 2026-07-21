@@ -57,7 +57,12 @@ public class CartServlet extends HttpServlet {
 		String action = request.getParameter("action");
 	 
 		Carrello cart = (Carrello) session.getAttribute("carrello");
-			
+		
+		if (cart == null) {
+		    cart = new Carrello();
+		    session.setAttribute("carrello", cart);
+		}
+		
 		if(action!=null) {
 	    	if(action.equalsIgnoreCase("aggiungi")) {
     			 String grabProdId= request.getParameter("id_prodotto");
