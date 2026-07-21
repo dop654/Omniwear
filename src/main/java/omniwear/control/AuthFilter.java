@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import omniwear.model.UtenteBean;
 
 @WebFilter(urlPatterns = {"/admin/home", "/admin/prodotti", "/user_page", "/admin/ordini", "/user_ordini"})
 public class AuthFilter extends HttpFilter {
@@ -25,14 +26,14 @@ public class AuthFilter extends HttpFilter {
 		}
 		
 		HttpSession session = request.getSession(false);
-		String role = (session != null) ? (String) session.getAttribute("role") : null;
-		
+		UtenteBean utenteSession = (session!=null) ? (UtenteBean) session.getAttribute("utente") : null; 
+				
 		boolean autorizzato = false;
-		if(role!=null) {
+		if(utenteSession!=null) {
 			if(path.startsWith("/admin/")) {
-				autorizzato = role.equals("admin");
+				autorizzato = utenteSession.getAdmin();
 			} else if(path.startsWith("/common/")) {
-				autorizzato = role.equals("admin") || role.equals("user");
+				autorizzato = true;
 			}
 		}
 		if(autorizzato) {

@@ -11,8 +11,13 @@
 </head>
 <body>
 	<%@ include file="header.jsp" %>
-	<h3>I tuoi ordini</h3>
+	<section class="glass">
 	
-	<section class="glass" id="">
+		<h3>I tuoi ordini</h3>
+		<hr><br>
+		
+		
+	
+	
 </body>
 </html>
