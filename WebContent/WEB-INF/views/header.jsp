@@ -12,15 +12,15 @@
 		</div>
 		<nav>
 			<ul>
-				<li><a href="${pageContext.request.contextPath}/HomeServlet">Home</a></li>
+				<li><a href="${pageContext.request.contextPath}/index">Home</a></li>
 				<li><a href="#">Sconti</a></li>
 				<li>
 					<c:choose>
-						<c:when test="${sessionScope.role == 'admin'}">
-							<a href="${pageContext.request.contextPath}/admin/home">Ciao, <c:out value="${sessionScope.nome_utente}"/></a>
+						<c:when test="${sessionScope.utente != null && sessionScope.utente.admin == true}">
+							<a href="${pageContext.request.contextPath}/admin/home">Ciao, <c:out value="${sessionScope.utente.nome}"/></a>
 						</c:when>
-						<c:when test="${sessionScope.role == 'user'}">
-							<a href="${pageContext.request.contextPath}/UserServlet">Ciao, <c:out value="${sessionScope.nome_utente}"/></a>
+						<c:when test="${sessionScope.utente != null && sessionScope.utente.admin == false}">
+							<a href="${pageContext.request.contextPath}/user_page">Ciao, <c:out value="${sessionScope.utente.nome}"/></a>
 						</c:when>
 						<c:otherwise>
 							<a href="${pageContext.request.contextPath}/LoginServlet">Accedi</a>
@@ -29,7 +29,7 @@
 				</li>
 				<li><a href="${pageContext.request.contextPath}/CartServlet">Carrello</a></li>
 				<li>
-					<c:if test="${sessionScope.id_utente != null}">
+					<c:if test="${sessionScope.utente != null}">
 							<a href="${pageContext.request.contextPath}/LogoutServlet">Esci</a>
 					</c:if>
 				</li>

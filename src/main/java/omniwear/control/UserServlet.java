@@ -39,13 +39,13 @@ public class UserServlet extends HttpServlet{
 		HttpSession session = request.getSession(false);
 		List<String> errors = new ArrayList<>();
 		
-		int userId = (Integer) session.getAttribute("id_utente");
+		UtenteBean utenteSession = (UtenteBean) session.getAttribute("utente");
+		int userId = utenteSession.getIdUtente();
 		
 		try {
 			UtenteBean currentUser = utenteDAO.doRetrieveByKey(userId);
 			
-			request.setAttribute("id_utente", currentUser.getIdUtente());
-			request.setAttribute("nome_utente", currentUser.getNome());
+			request.setAttribute("utente", currentUser);
 			request.getRequestDispatcher("/WEB-INF/views/user.jsp").forward(request, response);
 		}catch(SQLException e) {
 			errors.add(e.toString());
@@ -53,6 +53,7 @@ public class UserServlet extends HttpServlet{
 		
 		if(!errors.isEmpty()) {
 			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/WEB-INF/views/user.jsp").forward(request, response);
 		}
 		return;
 	}
@@ -61,33 +62,37 @@ public class UserServlet extends HttpServlet{
 		HttpSession session = request.getSession();
 		List<String> errors = new ArrayList<>();
 		
-		Integer grabId = (Integer) session.getAttribute("id_utente");
-		int userId;
+		UtenteBean utenteSession = (UtenteBean) session.getAttribute("utente");
 		
-		if(grabId!=null && grabId>0) {
-			userId = grabId;
+		if(utenteSession == null) {
+		    response.sendRedirect(request.getContextPath() + "/LoginServlet");
+		    return;
 		}
-		else {
-			response.sendRedirect(request.getContextPath() + "/LoginServlet");
-			return;
-		}
+		
+		int userId = utenteSession.getIdUtente();
 		
 		try {
 			UtenteBean currentUser = utenteDAO.doRetrieveByKey(userId);
 			
-			String newPass = RegisterServlet.validateField(request.getParameter("varPassword"), "password", errors); 
-			String newName = RegisterServlet.validateField(request.getParameter("varName"), "nome", errors);
-			String newSurname = RegisterServlet.validateField(request.getParameter("varSurname"), "cognome", errors);
-			String newBirth = RegisterServlet.validateField(request.getParameter("varData"), "data di nascita", errors);
+			String newName = RegisterServlet.validateField(request.getParameter("nome"), "nome", errors);
+			String newSurname = RegisterServlet.validateField(request.getParameter("cognome"), "cognome", errors);
+			String newBirth = RegisterServlet.validateField(request.getParameter("data_nascita"), "data di nascita", errors);
 			
 			currentUser.setNome(newName);
 			currentUser.setCognome(newSurname);
 			currentUser.setDataNascita(newBirth);
-			currentUser.setPassword(RegisterServlet.toDigest(newPass));
+			
+			String newPass = request.getParameter("password");
+			
+			if (newPass != null && !newPass.trim().isEmpty()) {
+		        String validPass = RegisterServlet.validateField(newPass, "password", errors); 
+		        currentUser.setPassword(RegisterServlet.toDigest(validPass));
+		    }
 			
 			try {
 				utenteDAO.doUpdate(currentUser);
-				response.sendRedirect(request.getContextPath() + "/user_page");
+				session.setAttribute("utente", currentUser);
+				response.sendRedirect(request.getContextPath() + "/index");
 			}catch(SQLException e) {
 				errors.add(e.toString());
 			}

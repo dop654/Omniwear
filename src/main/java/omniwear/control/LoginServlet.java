@@ -51,9 +51,7 @@ public class LoginServlet extends HttpServlet {
 		try {
 			UtenteBean utente = utenteDAO.doRetrieveByEmailPassword(email, pwCriptata);
 			if(utente.getIdUtente() != 0) {
-				session.setAttribute("id_utente", utente.getIdUtente());
-				session.setAttribute("nome_utente", utente.getNome());
-				session.setAttribute("role", utente.getAdmin() ? "admin" : "user");
+				session.setAttribute("utente", utente);
 				response.sendRedirect(request.getContextPath() + "/HomeServlet");
 				return;
 			}else {

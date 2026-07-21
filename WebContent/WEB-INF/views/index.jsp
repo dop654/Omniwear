@@ -10,7 +10,7 @@
 </head>
 <body>
 	<%@ include file="header.jsp" %>
-	
+	<section id = "catalogo"></section>
 	<%@ include file="footer.jsp" %>
 </body>
 </html>

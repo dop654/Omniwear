@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="java.sun.com/xml/ns/javaee" xmlns:xsi="w3.org/2001/XMLSchema-instance" xsi:schemaLocation="java.sun.com/xml/ns/javaee web-app_3_0.xsd" version="3.0">	
-<display-name>Omniwear</display-name>
-	<welcome-file-list>
-		<welcome-file>HomeServlet</welcome-file>
-	</welcome-file-list>
-	<resource-ref>
-		<res-ref-name>jdbc/Omniwear</res-ref-name>
-		<res-type>javax.sql.DataSource</res-type>
-		<res-auth>Container</res-auth>
-	</resource-ref>
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee">
+         
+	<display-name>Omniwear</display-name>
+
 	<filter>
 		<filter-name>httpHeaderSecurity</filter-name>
 		<filter-class>org.apache.catalina.filters.HttpHeaderSecurityFilter</filter-class>
@@ -21,18 +15,31 @@
 			<param-value>DENY</param-value>
 		</init-param>
 	</filter>
+	
 	<filter-mapping>
 		<filter-name>httpHeaderSecurity</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
 	<session-config>
 		<cookie-config>
 			<http-only>true</http-only>
 			<secure>true</secure>
 		</cookie-config>
 	</session-config>
+
+	<welcome-file-list>
+		<welcome-file>HomeServlet</welcome-file>
+	</welcome-file-list>
+	
 	<error-page>
         <location>/WEB-INF/views/errors.jsp</location>
     </error-page>
+    
+	<resource-ref>
+		<res-ref-name>jdbc/Omniwear</res-ref-name>
+		<!-- Questo rimane javax.sql perché fa parte di Java Standard Edition, non Enterprise -->
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
 </web-app>
-
