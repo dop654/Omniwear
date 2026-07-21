@@ -56,7 +56,7 @@ public class CatalogoServlet extends HttpServlet {
 	
 	protected void processaRichiesta(HttpServletRequest request, HttpServletResponse response, List<String> errors) throws SQLException {
 		String[] categorie = request.getParameterValues("categorie");
-		String search = RegisterServlet.validateField(request.getParameter("cerca"), "cerca", errors);
+		String search = request.getParameter("cerca");
 		List<ProdottoBean> prodotti;
 		
     	if(categorie != null && categorie.length > 0) {
