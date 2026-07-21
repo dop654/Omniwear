@@ -14,23 +14,7 @@
 </head>
 <body>
 	<%@ include file="header.jsp" %>
-	<%	String msg = (String) request.getAttribute("msg");
-		if(msg != null && !msg.isEmpty()) { %>
-			<div class="glass" id="msg">
-				<%= msg %>
-			</div>
-	<% } %>
-	<%	List<String> errors = (List<String>) request.getAttribute("errors");
-		if(errors != null && !errors.isEmpty()) { %>
-		<div class="glass" id="error">
-			<ul>
-				<% for(String e : errors) { %>
-					<li><%= e %></li>
-				<% } %>
-			</ul>
-		</div>
-	<% } %>
-	
+	<%@ include file="errorHandler.jsp" %>
 	
 	<section class="glass" id="cart_container">
 		<%	

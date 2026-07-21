@@ -12,6 +12,9 @@
 </head>
 <body>
 	<%@ include file="header.jsp" %>
+	
+	<%@ include file="errorHandler.jsp" %>
+	
 	<section class="glass">
 	
 		<h3>I tuoi ordini</h3>

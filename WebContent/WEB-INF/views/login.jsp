@@ -13,29 +13,14 @@
 	
 	<section class="glass" id="form">
 		<h3>Accedi</h3><br>
-		<%
-			String msg = (String) request.getAttribute("msg");
-			if(msg != null && !msg.isEmpty()) { %>
-				<div class="glass" id="msg">
-					<%= msg %>
-				</div>
-		<% } %>
-		<%
-			List<String> errors = (List<String>) request.getAttribute("errors");
-			String email = (String) request.getAttribute("email");
+		
+		<%@ include file="errorHandler.jsp" %>
+		
+		<%	String email = (String) request.getAttribute("email");
 			if(email == null) { email = ""; }
 			String pass = (String) request.getAttribute("pass");
 			if(pass == null) { pass = ""; }
 		%>
-		<% if(errors != null && !errors.isEmpty()) { %>
-			<div class="glass" id="error">
-				<ul>
-					<% for(String e : errors) { %>
-						<li><%= e %></li>
-					<% } %>
-				</ul>
-			</div>
-		<% } %>
 		<form method="POST" action="${pageContext.request.contextPath}/LoginServlet">
 			<span class="row"><label for="email">E-Mail: </label>
 			<input type="email" name="email" id="email"></span>

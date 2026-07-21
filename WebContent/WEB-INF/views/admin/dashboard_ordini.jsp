@@ -34,7 +34,7 @@
 										<label for="stato">Stato:</label>
 										<select name="stato" id="stato">
 											<% for(int i = 0; i<statoOrd.length; i++) { %>
-												<option value="<%= i %>"><%= statoOrd[i] %></option>
+												<option value="<%= i %>" <%= (o.getStatoOrdine() == i)?"selected='selected'" : ""%>><%= statoOrd[i] %></option>
 											<% } %>
 										</select>
 										<input type="submit" value="Aggiorna stato">

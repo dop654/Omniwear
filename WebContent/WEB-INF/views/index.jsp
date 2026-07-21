@@ -13,29 +13,32 @@
 </head>
 <body>
 	<%@ include file="header.jsp" %>
-		<div id="box_immagine">
-			<div class="slideshow-container">
-				<div class="mySlides fade">
-	    			<img src="${pageContext.request.contextPath}/images/carosello1.jpg">
-	    			<div class="text">Stile casual</div>
-	    		</div>
-	    		<div class="mySlides fade">
-	    			<img src="${pageContext.request.contextPath}/images/carosello2.jpg">
-	    			<div class="text">Capi di alta qualità</div>
-	    		</div>
-	    		<div class="mySlides fade">
-	    			<img src="${pageContext.request.contextPath}/images/carosello3.jpg">
-  					<div class="text">Sfoggia chi sei</div>
-	    		</div>
-			</div>
-			<br>
-
-			<div style="text-align:center">
-				<%	for(int i = 0; i < 3; i++) { %>
-					<span class="dot"></span>
-				<%	} %>
-			</div>
+	
+	<%@ include file="errorHandler.jsp" %>
+	
+	<div id="box_immagine">
+		<div class="slideshow-container">
+			<div class="mySlides fade">
+    			<img src="${pageContext.request.contextPath}/images/carosello1.jpg">
+    			<div class="text">Stile casual</div>
+    		</div>
+    		<div class="mySlides fade">
+    			<img src="${pageContext.request.contextPath}/images/carosello2.jpg">
+    			<div class="text">Capi di alta qualità</div>
+    		</div>
+    		<div class="mySlides fade">
+    			<img src="${pageContext.request.contextPath}/images/carosello3.jpg">
+ 					<div class="text">Sfoggia chi sei</div>
+    		</div>
 		</div>
+		<br>
+
+		<div style="text-align:center">
+			<%	for(int i = 0; i < 3; i++) { %>
+				<span class="dot"></span>
+			<%	} %>
+		</div>
+	</div>
 	<section class="glass" id = "catalogo">
 		<%	Collection<ProdottoBean> prodotti = (Collection<ProdottoBean>) request.getAttribute("listaProdotti"); 
 			if(prodotti != null) {

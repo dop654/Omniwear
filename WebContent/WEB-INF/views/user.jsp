@@ -18,6 +18,9 @@
 </head>
 <body>
 	<%@ include file="header.jsp" %>
+	
+	<%@ include file="errorHandler.jsp" %>
+	
 	<section class="glass" id="form">
 			<h3>I tuoi dati</h3>
 			<hr><br>

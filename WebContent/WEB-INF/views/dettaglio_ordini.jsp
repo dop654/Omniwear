@@ -13,6 +13,8 @@
 <body>
 	<%@ include file="header.jsp" %>
 	
+	<%@ include file="errorHandler.jsp" %>
+	
 	<section class="glass">
 		<%
 			OrdineBean ordine = (OrdineBean) request.getAttribute("ordine");

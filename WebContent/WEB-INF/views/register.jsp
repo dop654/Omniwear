@@ -13,16 +13,9 @@
 	
 	<section class="glass" id="form">
 		<h3>Registrazione</h3><br>
-		<%List<String> errors = (List<String>) request.getAttribute("errors");%>
-		<% if(errors != null && !errors.isEmpty()) { %>
-			<div class="glass" id="error">
-				<ul>
-					<% for(String e : errors) { %>
-						<li><%= e %></li>
-					<% } %>
-				</ul>
-			</div>
-		<% } %>
+		
+		<%@ include file="errorHandler.jsp" %>
+		
 		<form method="POST" action="${pageContext.request.contextPath}/RegisterServlet">
 			<span class="row"><label for="nome">Nome: </label>
 			<input type="text" name="nome" id="nome" required></span>
