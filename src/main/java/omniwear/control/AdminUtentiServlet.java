@@ -79,5 +79,6 @@ public class AdminUtentiServlet extends HttpServlet {
 		}
 		
 		response.sendRedirect(request.getContextPath() + "/admin/users");
+		return;
 	}
 }
