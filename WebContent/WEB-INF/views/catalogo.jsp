@@ -1,7 +1,6 @@
-<%@page import="omniwear.model.ProdottoBean"%>
-<%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="omniwear.model.ProdottoBean" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,21 +12,28 @@
 </head>
 <body>
 	<%@ include file="header.jsp" %>
-	<section id = "catalogo">
-		<%	List<ProdottoBean> prodotti = (List<ProdottoBean>) request.getAttribute("listaProdotti"); 
+	<section id="catalogo">
+		<%	
+			List<ProdottoBean> prodotti = (List<ProdottoBean>) request.getAttribute("listaProdotti"); 
 			if(prodotti != null) {
-				for(ProdottoBean p : prodotti) { %>
+				for(ProdottoBean p : prodotti) { 
+		%>
 					<form class="glass" id="schedaP" method="POST" action="${pageContext.request.contextPath}/CartServlet">
-						<input type="hidden" id="action" name="action" value="aggiungi">
-						<input type="hidden" id="id_prodotto" name="id_prodotto" value="<%= p.getIdProdotto() %>">
-						<input type="hidden" id="quantita" name="quantita" value="1">
-						<label id="nomeProdotto" name="nomeProdotto"><%= p.getNomeProdotto() %></label><br>
-						<label id="prezzo" name="prezzo"><%= p.getPrezzo() %></label><br>
-						<a href="${pageContext.request.contextPath}/SchedaProdottoServlet">Dettagli</a>
-						<input type="submit" value="Aggungi al carrello">
+						<input type="hidden" name="action" value="aggiungi">
+						<input type="hidden" name="id_prodotto" value="<%= p.getIdProdotto() %>">
+						<input type="hidden" name="quantita" value="1">
+						
+						<label class="nomeProdotto"><%= p.getNomeProdotto() %></label><br>
+						<label class="prezzo"><%= p.getPrezzo() %> €</label><br>
+						
+						<a href="${pageContext.request.contextPath}/SchedaProdottoServlet?id=<%= p.getIdProdotto() %>">Dettagli</a>
+						
+						<input type="submit" value="Aggiungi al carrello">
 					</form>
-			<%	}
-			} %>
+		<%	
+				}
+			} 
+		%>
 	</section>
 	<%@ include file="footer.jsp" %>
 </body>
