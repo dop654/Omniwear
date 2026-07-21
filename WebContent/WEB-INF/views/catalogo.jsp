@@ -9,11 +9,32 @@
 	<title>Omniwear - Catalogo</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/style.css">
 	<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images/favicons/favicon.ico">
-	<script src="${pageContext.request.contextPath}/scripts/ajax.js"></script>
 </head>
 <body>
 	<%@ include file="header.jsp" %>
-	<section id = "catalogo">
+	<%	String msg = (String) request.getAttribute("msg");
+			if(msg != null && !msg.isEmpty()) { %>
+				<div class="glass" id="msg">
+					<%= msg %>
+				</div>
+		<% } %>
+		<%
+			List<String> errors = (List<String>) request.getAttribute("errors");
+			String email = (String) request.getAttribute("email");
+			if(email == null) { email = ""; }
+			String pass = (String) request.getAttribute("pass");
+			if(pass == null) { pass = ""; }
+		%>
+		<% if(errors != null && !errors.isEmpty()) { %>
+			<div class="glass" id="error">
+				<ul>
+					<% for(String e : errors) { %>
+						<li><%= e %></li>
+					<% } %>
+				</ul>
+			</div>
+		<% } %>
+	<section class="glass" id = "catalogo">
 		<%	List<ProdottoBean> prodotti = (List<ProdottoBean>) request.getAttribute("listaProdotti"); 
 			if(prodotti != null) {
 				for(ProdottoBean p : prodotti) { %>
