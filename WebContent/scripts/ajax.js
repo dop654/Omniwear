@@ -96,3 +96,7 @@ function aggiornaCatalogo(search, categorie) {
 		}
 	});
 }
+
+window.onload = function() {
+  aggiornaCatalogo(null, null);
+};

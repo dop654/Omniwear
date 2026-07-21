@@ -13,7 +13,7 @@
 		<nav>
 			<ul>
 				<li><a href="${pageContext.request.contextPath}/index">Home</a></li>
-				<li><a href="#">Sconti</a></li>
+				<li><a href="${pageContext.request.contextPath}/catalogo">Catalogo</a></li>
 				<li>
 					<c:choose>
 						<c:when test="${sessionScope.utente != null && sessionScope.utente.admin == true}">

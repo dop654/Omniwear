@@ -34,36 +34,12 @@ public class CatalogoServlet extends HttpServlet {
 	}
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     	List<String> errors = new ArrayList<>();
-		String[] categorie = request.getParameterValues("categorie");
-		String search = RegisterServlet.validateField(request.getParameter("cerca"), "cerca", errors);
 		
-    	if(categorie != null && categorie.length > 0) {
-			 	
-			 	try {
-    			 	List<ProdottoBean> prodotti = (List<ProdottoBean>) prodottoDAO.doRetrieveByCategoria(categorie);
-    			 	
-    			 	request.setAttribute("listaProdotti", prodotti);
-			 	} catch(SQLException e) {
-			 		errors.add(e.toString());
-			 	}
-		} else if(search != null) {
-				try {
-					List<ProdottoBean> prodotti = (List<ProdottoBean>) prodottoDAO.doRetrieveByNome(search);
-					
-					request.setAttribute("listaProdotti", prodotti);
-			 	} catch(SQLException e) {
-			 		errors.add(e.toString());
-			 	}
-		} else {
-    		try {
-	    		List<ProdottoBean> prodotti = (List<ProdottoBean>) prodottoDAO.doRetrieveAll(null);
-	    		
-	    		request.setAttribute("listaProdotti", prodotti);
-    		} catch(SQLException e) {
-    			errors.add(e.toString());
-    		}
+    	try {
+    		processaRichiesta(request, response, errors);
+    	}catch (SQLException e) {
+    		errors.add(e.toString());
     	}
     	
     	if(!errors.isEmpty()) {
@@ -76,5 +52,21 @@ public class CatalogoServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
+	}
+	
+	protected void processaRichiesta(HttpServletRequest request, HttpServletResponse response, List<String> errors) throws SQLException {
+		String[] categorie = request.getParameterValues("categorie");
+		String search = RegisterServlet.validateField(request.getParameter("cerca"), "cerca", errors);
+		List<ProdottoBean> prodotti;
+		
+    	if(categorie != null && categorie.length > 0) {
+		 	prodotti = (List<ProdottoBean>) prodottoDAO.doRetrieveByCategoria(categorie);
+		} else if(search != null) {
+			prodotti = (List<ProdottoBean>) prodottoDAO.doRetrieveByNome(search);
+		} else {
+    		prodotti = (List<ProdottoBean>) prodottoDAO.doRetrieveAll(null);
+    	}
+
+		request.setAttribute("listaProdotti", prodotti);
 	}
 }
