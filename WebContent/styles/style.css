@@ -369,3 +369,14 @@ nav ul li {
   from {opacity: .4}
   to {opacity: 1}
 }
+
+#elenco_prodotti {
+	margin: auto;
+	margin-bottom: 3em;
+	max-width: 80%;
+	padding: 2em;
+}
+#elenco_prodotti form{
+	margin: 1em;
+	padding: 1em;
+}
