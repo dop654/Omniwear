@@ -133,18 +133,19 @@ public class UtenteDAOImpl implements UtenteDAO{
              ResultSet rs = preparedStatement.executeQuery()) {
 
             while (rs.next()) {
-                UtenteBean bean = new UtenteBean();
-                bean.setIdUtente(rs.getInt("id_utente"));
-                bean.setNome(rs.getString("nome"));
-                bean.setCognome(rs.getString("cognome"));
-                bean.setEmail(rs.getString("email"));
-                bean.setPassword(rs.getString("password_hash"));
+                UtenteBean utente = new UtenteBean();
+                utente.setIdUtente(rs.getInt("id_utente"));
+                utente.setNome(rs.getString("nome"));
+                utente.setCognome(rs.getString("cognome"));
+                utente.setEmail(rs.getString("email"));
+                utente.setPassword(rs.getString("password_hash"));
+                utente.setAdmin(rs.getBoolean("isAdmin"));
                 
                 java.sql.Date sqlDate = rs.getDate("data_nascita");
                 if (sqlDate != null) {
-                    bean.setDataNascita(sqlDate.toString());
+                    utente.setDataNascita(sqlDate.toString());
                 }
-                utenti.add(bean);
+                utenti.add(utente);
             }
         }
         return utenti;

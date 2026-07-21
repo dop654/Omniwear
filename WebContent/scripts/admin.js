@@ -1,6 +1,5 @@
-function eliminaProdotto(form){
-	let i = form.closest("#action");
-	i.value = "elimina";
+function eliminaProdotto(btn){
+	document.getElementById("action").value = "elimina";
 	document.getElementById("interface").submit();
 }
 
@@ -11,5 +10,5 @@ function caricaProdotto(idProdotto, nome, prezzo, quantita){
 	document.getElementById("nomeProdotto").value = nome;
 	document.getElementById("prezzo").value = prezzo;
 	document.getElementById("quantita").value = quantita;
-	document.getElementById("submit").value = "Modifica";
+	document.getElementById("aggiungi").value = "Modifica";
 }

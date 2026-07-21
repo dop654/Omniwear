@@ -44,7 +44,7 @@
 			<label for="quantita">Quantità: </label>
 			<input type="number" value="1" min="0" step="1" name="quantita" id="quantita" required>
 			
-			<input type="submit" value="Aggiungi" id="submit">
+			<input type="submit" value="Aggiungi" id="aggiungi">
 			<button type="button" value="elimina" id="elimina" onClick="eliminaProdotto(this)">Elimina</button>
 		</form>
 	</section>
