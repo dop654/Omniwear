@@ -17,15 +17,15 @@
 			<div class="slideshow-container">
 				<div class="mySlides fade">
 	    			<img src="${pageContext.request.contextPath}/images/carosello1.jpg">
-	    			<div class="text">Caption Text</div>
+	    			<div class="text">Stile casual</div>
 	    		</div>
 	    		<div class="mySlides fade">
 	    			<img src="${pageContext.request.contextPath}/images/carosello2.jpg">
-	    			<div class="text">Caption Text</div>
+	    			<div class="text">Capi di alta qualità</div>
 	    		</div>
 	    		<div class="mySlides fade">
 	    			<img src="${pageContext.request.contextPath}/images/carosello3.jpg">
-  					<div class="text">Caption Three</div>
+  					<div class="text">Sfoggia chi sei</div>
 	    		</div>
 			</div>
 			<br>
