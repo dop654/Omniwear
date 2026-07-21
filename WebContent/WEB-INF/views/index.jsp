@@ -40,16 +40,19 @@
 		</div>
 	</div>
 	<section class="glass" id = "catalogo">
-		<%	Collection<ProdottoBean> prodotti = (Collection<ProdottoBean>) request.getAttribute("listaProdotti"); 
+		<h3>Ultimi arrivi:</h3><br>
+		<%	Collection<ProdottoBean> prodotti = (Collection<ProdottoBean>) request.getAttribute("listaProdotti");
+			int i = 0;
 			if(prodotti != null) {
-				for(ProdottoBean p : prodotti) { %>
-					<form class="glass" id="schedaP" method="POST" action="${pageContext.request.contextPath}/CartServlet">
+				for(ProdottoBean p : prodotti) { 
+					if(i++ > 5) {break;} %>
+					<form class="glass" id="scheda_prodotto" method="POST" action="${pageContext.request.contextPath}/CartServlet">
 						<input type="hidden" name="action" value="aggiungi">
 						<input type="hidden" name="id_prodotto" value="<%= p.getIdProdotto() %>">
 						<input type="hidden" name="quantita" value="1">
 						<label id="nomeProdotto" name="nomeProdotto"><%= p.getNomeProdotto() %></label><br>
 						<label id="prezzo" name="prezzo"><%= p.getPrezzo() %></label><br>
-						<a href="${pageContext.request.contextPath}/SchedaProdottoServlet">Dettagli</a>
+						<a href="${pageContext.request.contextPath}/SchedaProdottoServlet?id_prodotto=<%= p.getIdProdotto() %>">Dettagli</a>
 						<input type="submit" value="Aggungi al carrello">
 					</form>
 			<%	}
