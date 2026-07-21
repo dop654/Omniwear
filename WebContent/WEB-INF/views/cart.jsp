@@ -70,6 +70,13 @@
 				<hr>
 				<p id="n_prodotti">Numero prodotti: <%= cart.getNProdotti() %></p>
 				<h4 id="totale">Totale: <%= cart.getTotale() %>€</h4>
+				
+				<% if(session.getAttribute("utente") != null) { %>
+					<a href="${pageContext.request.contextPath}/checkout">Procedi all'ordine</a>
+				<% } else { %>
+					<p>Devi effettuare l'accesso per completare l'ordine.</p>
+					<a href="${pageContext.request.contextPath}/LoginServlet">Accedi per ordinare!</a>
+				<% } %>
 			</aside>
 		<%	} else { %>
 			<h1>Il carrello è vuoto</h1><br>

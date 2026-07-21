@@ -24,7 +24,6 @@
 				<div id="msg">
 					Nessun dettaglio trovato per questo ordine.
 					<hr><br>
-					<%-- Link corretto senza la parentesi di troppo --%>
 					<a href="<%= request.getContextPath() %>/user_ordini">Torna ai tuoi ordini</a>
 				</div>
 		<%
