@@ -17,6 +17,7 @@
 <script src="scripts/utils.js"></script>
 </head>
 <body>
+	<%@ include file="header.jsp" %>
 	<section class="glass" id="form">
 			<h3>I tuoi dati</h3>
 			<hr><br>
@@ -52,5 +53,6 @@
 	<section id="dash">
 			<a href="user_ordini">I miei Ordini</a>
 	</section>
+	<%@ include file="footer.jsp" %>
 </body>
 </html>

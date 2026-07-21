@@ -34,10 +34,10 @@ public class CatalogoServlet extends HttpServlet {
 	}
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
+    	List<String> errors = new ArrayList<>();
 		String[] categorie = request.getParameterValues("categorie");
 		String search = RegisterServlet.validateField(request.getParameter("cerca"), "cerca", errors);
-    	List<String> errors = new ArrayList<>();
 		
     	if(categorie != null && categorie.length > 0) {
 			 	

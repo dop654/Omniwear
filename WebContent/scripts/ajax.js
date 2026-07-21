@@ -67,3 +67,32 @@ function loadDoc(url, methodIsGET, param, func) {
 		}
 	}
 }
+
+function aggiornaCatalogo(search, categorie) {
+	let url = "/catalogo";
+	let parametri;
+	
+	if(search != null) {
+		parametri = "search=" + search;
+	}else if(categorie != null){
+		parametri = "categorie=" + categorie[0];
+		for(let i = 1; i<categorie.length; i++){
+			parametri += "&categorie=" + categorie[i];
+		}
+	}
+	
+	loadDoc(url, 1, parametri, function(request) {
+		
+		let risposta = request.responseText;
+		let prodotti = JSON.parse(risposta);
+		let catalogo = document.getElementById("catalogo");
+		
+		catalogo.innerHTML = "";
+		
+		for(let i=0; i<prodotti.length; i++){
+			let prodotto = prodotti[i];
+			
+			catalogo.innerHTML += ("<p>" + prodotto + "</p><br>");
+		}
+	});
+}
