@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import omniwear.model.ProdottoBean;
+import omniwear.model.UtenteBean;
 import omniwear.dao.ProdottoDAO;
 import omniwear.dao.ProdottoDAOImpl;
 
@@ -66,16 +67,17 @@ public class AdminProdottiServlet extends HttpServlet {
    
         if(action != null) {
             if(action.equalsIgnoreCase("inserisci")) {
-                String nome = request.getParameter("nomeProdotto");
-                String prezzo = request.getParameter("prezzo");
-                String quantita = request.getParameter("quantita");
+                String nome = RegisterServlet.validateField(request.getParameter("nomeProdotto"), "nome prodotto", errors);
+                String prezzo = RegisterServlet.validateField(request.getParameter("prezzo"), "prezzo", errors);
+                String quantita = RegisterServlet.validateField(request.getParameter("quantita"), "quantità", errors);
                 
                 float price = Float.parseFloat(prezzo);
                 int qt = Integer.parseInt(quantita);
                 
                 ProdottoBean prodotto = new ProdottoBean();
                 HttpSession session = request.getSession();
-                int idAdmin = (int) session.getAttribute("id_utente");
+                UtenteBean user = (UtenteBean)session.getAttribute("utente");
+                int idAdmin = user.getIdUtente();
                 
                 prodotto.setNomeProdotto(nome);
                 prodotto.setPrezzo(price);
@@ -92,7 +94,7 @@ public class AdminProdottiServlet extends HttpServlet {
                 }
             }
             else if(action.equalsIgnoreCase("elimina")) {
-                String idDel = request.getParameter("id_prodotto");
+                String idDel = RegisterServlet.validateField(request.getParameter("id_prodotto"), "id_prodotto", errors);
                 int idProdDel = Integer.parseInt(idDel);
                 
                 try {
@@ -104,10 +106,10 @@ public class AdminProdottiServlet extends HttpServlet {
                 }
             }
             else if(action.equalsIgnoreCase("aggiorna")) {
-                String idProd = request.getParameter("id_prodotto"); 
-                String nome = request.getParameter("nomeProdotto");
-                String prezzo = request.getParameter("prezzo");
-                String quantita = request.getParameter("quantita");
+                String idProd = RegisterServlet.validateField(request.getParameter("id_prodotto"), "id_prodotto", errors); 
+                String nome = RegisterServlet.validateField(request.getParameter("nomeProdotto"), "nome prodotto", errors);
+                String prezzo = RegisterServlet.validateField(request.getParameter("prezzo"), "prezzo", errors);
+                String quantita = RegisterServlet.validateField(request.getParameter("quantita"), "quantità", errors);
                 
                 int idProduct = Integer.parseInt(idProd);
                 float price = Float.parseFloat(prezzo);

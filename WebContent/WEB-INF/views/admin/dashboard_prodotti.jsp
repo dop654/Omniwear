@@ -53,7 +53,7 @@
 			if(prodotti != null) {
 				for(ProdottoBean p : prodotti) { %>
 					<section class="glass" id="scheda_prodotto">
-						<h6><%= p.getNomeProdotto() %></h6>
+						<h4><%= p.getNomeProdotto() %></h4>
 						<p>Prezzo: <%= p.getPrezzo() %> €</p>
 						<p>Qt. in magazzino: <%= p.getQt() %></p>
 			

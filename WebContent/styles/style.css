@@ -370,14 +370,13 @@ nav ul li {
   to {opacity: 1}
 }
 
-#prodotti {
+#prodotti, #ordini, #add_prodotto, #catalogo{
 	margin: auto;
 	margin-bottom: 3em;
 	max-width: 80%;
 	padding: 2em;
 }
-#prodotti form{
+#prodotti form, #scheda_prodotto{
 	margin: 1em;
 	padding: 1em;
 }
-
