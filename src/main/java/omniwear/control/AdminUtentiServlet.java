@@ -61,9 +61,14 @@ public class AdminUtentiServlet extends HttpServlet {
 		int idUser = Integer.parseInt(RegisterServlet.validateField(request.getParameter("id_utente"), "id utente", errors));
 		
 		try {
-			utenteDAO.doDelete(idUser);
+			UtenteBean currentUser = utenteDAO.doRetrieveByKey(idUser);
 			
-			response.sendRedirect(request.getContextPath() + "/admin/users");
+			if(currentUser.getAdmin()) {
+				errors.add("Non puoi rimuovere un amministratore!");
+			}
+			else {
+				utenteDAO.doDelete(idUser);
+			}
 
 		} catch(SQLException e) {
 			errors.add(e.toString());
@@ -72,6 +77,7 @@ public class AdminUtentiServlet extends HttpServlet {
 		if(!errors.isEmpty()) {
 			request.setAttribute("errors", errors);
 		}
-		return;
+		
+		response.sendRedirect(request.getContextPath() + "/admin/users");
 	}
 }
