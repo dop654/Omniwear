@@ -247,6 +247,7 @@ nav ul li {
 #elenco_prodotti {
 	display: inline-block;
 	width: 75%;
+	margin-bottom: 4em;
 }
 
 #cart_container {
@@ -301,9 +302,13 @@ nav ul li {
 
 /* CSS slideshow */
 .slideshow-container {
-  max-width: 1000px;
+  max-width: 100%;
   position: relative;
   margin: auto;
+}
+
+.slideshow-container img {
+	width:100%;
 }
 
 /* Hide the images by default */
