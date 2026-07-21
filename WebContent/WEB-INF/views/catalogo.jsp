@@ -34,7 +34,7 @@
 				</ul>
 			</div>
 		<% } %>
-	<section class="glass" id = "elenco_prodotti">
+	<section class="glass" id = "prodotti">
 		<%	List<ProdottoBean> prodotti = (List<ProdottoBean>) request.getAttribute("listaProdotti"); 
 			if(prodotti != null) {
 				for(ProdottoBean p : prodotti) { 

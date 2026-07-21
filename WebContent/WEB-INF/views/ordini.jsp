@@ -22,7 +22,7 @@
 			String[] statoOrd = {"Annullato", "Ricevuto", "Spedito", "Consegnato"};	
 			if(ordini == null || ordini.isEmpty()){
 		%>
-				<div id="msg">
+				<div class="glass" id="msg">
 					Non hai ancora effettuato alcun ordine!
 					<hr><br>
 					<a href="${pageContext.request.contextPath}/index">Torna alla home</a>

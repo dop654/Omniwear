@@ -1,3 +1,5 @@
+<%@page import="omniwear.model.OrdineBean"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,7 +13,37 @@
 <body>
 	<%@ include file="../header.jsp" %>
 	<section class="glass" id="ordini">
-	
+		<%	List<OrdineBean> ordini = (List<OrdineBean>) request.getAttribute("listaOrdini");
+			String[] statoOrd = {"Annullato", "Ricevuto", "Spedito", "Consegnato"};
+			if(ordini == null || ordini.isEmpty()) { %>
+				<div class="glass" id="msg">
+					Non ci sono ordini
+					<hr><br>
+					<a href="${pageContext.request.contextPath}/admin/home">Torna alla Dashboard</a>
+				</div>
+		<%	} else {
+				for(OrdineBean o : ordini) { %>
+					<ul>
+						<li>ID Ordine: <%= o.getIdOrdine() %></li>
+						<li>Totale: <%= o.getTotale() %>€</li>
+						
+						<li>
+							<div id="form">
+								<form action="${pageContext.request.contextPath}/admin/ordini" method="POST">
+									<input type="hidden" name="id_ordine" value="<%= o.getIdOrdine() %>">
+									<label for="stato">Stato:</label>
+									<select name="stato" id="stato">
+										<% for(int i = 0; i<statoOrd.length; i++) { %>
+											<option value="${ i }"><%= statoOrd[i] %></option>
+										<% } %>
+									</select>
+									<input type="submit" value="Aggiorna stato">
+								</form>
+							</div>
+						</li>
+					</ul>
+		<%		} 
+			} %>
 	</section>
 	<%@ include file="../footer.jsp" %>
 </body>

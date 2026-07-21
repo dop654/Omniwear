@@ -42,8 +42,6 @@ public class AdminOrdiniServlet extends HttpServlet {
 			List<OrdineBean> ordini = (List<OrdineBean>) ordineDAO.doRetrieveAll(null);
 			
 			request.setAttribute("listaOrdini", ordini);
-            
-            request.getRequestDispatcher("/WEB-INF/views/admin/dashboard_ordini.jsp").forward(request, response);
 		} catch(SQLException e) {
 			errors.add(e.toString());
 		}
@@ -51,6 +49,8 @@ public class AdminOrdiniServlet extends HttpServlet {
 		 if(!errors.isEmpty()) {
 			request.setAttribute("errors", errors);
 		}
+		 
+        request.getRequestDispatcher("/WEB-INF/views/admin/dashboard_ordini.jsp").forward(request, response);
 		return;
 	}
 
@@ -65,7 +65,7 @@ public class AdminOrdiniServlet extends HttpServlet {
 			ordineDAO.doUpdateStato(idOrder, newStato);
 			
 			response.sendRedirect(request.getContextPath() + "/admin/ordini");
-			
+			return;
 		} catch(SQLException e) {
 			errors.add(e.toString());
 		}
@@ -73,6 +73,8 @@ public class AdminOrdiniServlet extends HttpServlet {
 		if(!errors.isEmpty()) {
 			request.setAttribute("errors", errors);
 		}
+		
+		request.getRequestDispatcher("/WEB-INF/views/admin/dashboard_ordini.jsp").forward(request, response);
 		return;
 	}
 
