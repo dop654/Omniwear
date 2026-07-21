@@ -32,14 +32,20 @@
 	<% } %>
 	<section class="glass" id="add_prodotto">
 		<form method="POST" action="${pageContext.request.contextPath}/admin/prodotti" id="interface">
-			<input type="hidden" value="aggiungi" name="action" id="action">
+			<input type="hidden" value="inserisci" name="action" id="action">
 			<input type="hidden" value="" name="id_prodotto" id="id_prodotto">
+			
 			<label for="nomeProdotto">Nome prodotto: </label>
 			<input type="text" value="" placeholder="Nome prodotto" name="nomeProdotto" id="nomeProdotto" required>
+			
 			<label for="prezzo">Prezzo: </label>
 			<input type="number" value="" placeholder="Prezzo" min="0.0" step="0.01" name="prezzo" id="prezzo" required>
+			
+			<label for="quantita">Quantità: </label>
+			<input type="number" value="1" min="0" step="1" name="quantita" id="quantita" required>
+			
 			<input type="submit" value="Aggiungi" id="submit">
-			<button value="elimina" id="elimina" onClick="eliminaProdotto(this)">Elimina</button>
+			<button type="button" value="elimina" id="elimina" onClick="eliminaProdotto(this)">Elimina</button>
 		</form>
 	</section>
 	<section class="glass" id="catalogo">
@@ -48,8 +54,10 @@
 				for(ProdottoBean p : prodotti) { %>
 					<section class="glass" id="scheda_prodotto">
 						<h6><%= p.getNomeProdotto() %></h6>
-						<p><%= p.getPrezzo() %></p>
-						<button value="modifica" onClick="caricaProdotto(<%= p.getIdProdotto() %>,'<%= p.getNomeProdotto() %>', <%= p.getPrezzo() %>)">Modifica</button>
+						<p>Prezzo: <%= p.getPrezzo() %> €</p>
+						<p>Qt. in magazzino: <%= p.getQt() %></p>
+			
+						<button type="button" value="modifica" onClick="caricaProdotto(<%= p.getIdProdotto() %>,'<%= p.getNomeProdotto() %>', <%= p.getPrezzo() %>, <%= p.getQt() %>)">Modifica</button>
 					</section>
 		<%		} 
 			}		%>

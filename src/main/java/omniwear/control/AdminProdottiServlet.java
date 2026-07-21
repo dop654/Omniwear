@@ -61,72 +61,79 @@ public class AdminProdottiServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-    	String action = request.getParameter("action");
-    	List<String> errors = new ArrayList<>();
+        String action = request.getParameter("action");
+        List<String> errors = new ArrayList<>();
    
-    	if(action!=null) {
-    		if(action.equalsIgnoreCase("inserisci")) {
-    			 	String nome = request.getParameter("nomeProdotto");
-    		        String prezzo = request.getParameter("prezzo");
-    		        
-    		        float price = Float.parseFloat(prezzo);
-    		        
-    		        ProdottoBean prodotto = new ProdottoBean();
-    		        HttpSession session = request.getSession();
-    		        int idAdmin = (int) session.getAttribute("id_utente");
-    		        
-    		        prodotto.setNomeProdotto(nome);
-    		        prodotto.setPrezzo(price);
-    		        prodotto.setIdUtente(idAdmin);
-    		        
-    		        try {
-    					prodottoDAO.doSave(prodotto);
-    					request.setAttribute("msg", "Prodotto aggiunto con successo");
-    					response.sendRedirect(request.getContextPath() + "/admin/prodotti");
-    					return;
-    		        } catch(SQLException e) {
-    		            errors.add(e.toString());
-    		        }
-    		}
-    		else if(action.equalsIgnoreCase("elimina")) {
-    			String idDel = request.getParameter("id_prodotto");
-    			int idProdDel = Integer.parseInt(idDel);
-    			
-    			try {
-    				prodottoDAO.doDelete(idProdDel);
-    				response.sendRedirect(request.getContextPath() + "/admin/prodotti");
-    				return;
-    			} catch(SQLException e) {
-		            errors.add(e.toString());
-		        }
-    		}
-    		else if(action.equalsIgnoreCase("aggiorna")) {
-    			String idProd = request.getParameter("idProdotto");
-    			String nome = request.getParameter("nomeProdotto");
-		        String prezzo = request.getParameter("prezzo");
-		        
-		        int idProduct = Integer.parseInt(idProd);
-		        float price = Float.parseFloat(prezzo);
-		        
-		        ProdottoBean prodottoAggiornato = new ProdottoBean();
-		        
-		        prodottoAggiornato.setIdProdotto(idProduct);
-		        prodottoAggiornato.setPrezzo(price);
-		        prodottoAggiornato.setNomeProdotto(nome);
-		        
-    			try {
-    				prodottoDAO.doUpdate(prodottoAggiornato);
-    				response.sendRedirect(request.getContextPath() + "/admin/prodotti");
-    				return;
-    			} catch(SQLException e) {
-		            errors.add(e.toString());
-		        }
-    		}
-    	}
-    	if(!errors.isEmpty()) {
-			request.setAttribute("errors", errors);
-		}
-    	request.getRequestDispatcher("/WEB-INF/views/admin/dashboard_prodotti.jsp").forward(request, response);
-		return;
+        if(action != null) {
+            if(action.equalsIgnoreCase("inserisci")) {
+                String nome = request.getParameter("nomeProdotto");
+                String prezzo = request.getParameter("prezzo");
+                String quantita = request.getParameter("quantita");
+                
+                float price = Float.parseFloat(prezzo);
+                int qt = Integer.parseInt(quantita);
+                
+                ProdottoBean prodotto = new ProdottoBean();
+                HttpSession session = request.getSession();
+                int idAdmin = (int) session.getAttribute("id_utente");
+                
+                prodotto.setNomeProdotto(nome);
+                prodotto.setPrezzo(price);
+                prodotto.setQt(qt);
+                prodotto.setIdUtente(idAdmin);
+                
+                try {
+                    prodottoDAO.doSave(prodotto);
+                    request.setAttribute("msg", "Prodotto aggiunto con successo");
+                    response.sendRedirect(request.getContextPath() + "/admin/prodotti");
+                    return;
+                } catch(SQLException e) {
+                    errors.add(e.toString());
+                }
+            }
+            else if(action.equalsIgnoreCase("elimina")) {
+                String idDel = request.getParameter("id_prodotto");
+                int idProdDel = Integer.parseInt(idDel);
+                
+                try {
+                    prodottoDAO.doDelete(idProdDel);
+                    response.sendRedirect(request.getContextPath() + "/admin/prodotti");
+                    return;
+                } catch(SQLException e) {
+                    errors.add(e.toString());
+                }
+            }
+            else if(action.equalsIgnoreCase("aggiorna")) {
+                String idProd = request.getParameter("id_prodotto"); 
+                String nome = request.getParameter("nomeProdotto");
+                String prezzo = request.getParameter("prezzo");
+                String quantita = request.getParameter("quantita");
+                
+                int idProduct = Integer.parseInt(idProd);
+                float price = Float.parseFloat(prezzo);
+                int qt = Integer.parseInt(quantita);
+                
+                ProdottoBean prodottoAggiornato = new ProdottoBean();
+                
+                prodottoAggiornato.setIdProdotto(idProduct);
+                prodottoAggiornato.setPrezzo(price);
+                prodottoAggiornato.setNomeProdotto(nome);
+                prodottoAggiornato.setQt(qt);
+                
+                try {
+                    prodottoDAO.doUpdate(prodottoAggiornato);
+                    response.sendRedirect(request.getContextPath() + "/admin/prodotti");
+                    return;
+                } catch(SQLException e) {
+                    errors.add(e.toString());
+                }
+            }
+        }
+        
+        if(!errors.isEmpty()) {
+            request.setAttribute("errors", errors);
+        }
+        request.getRequestDispatcher("/WEB-INF/views/admin/dashboard_prodotti.jsp").forward(request, response);
+        return;
     }
 }
