@@ -48,7 +48,7 @@
 			</aside>
 		<%	} else { %>
 			<h1>Il carrello è vuoto</h1><br>
-			<a href="${pageContext.request.contextPath}/HomeServlet">Torna alla home</a>
+			<a href="${pageContext.request.contextPath}/index">Torna alla home</a>
 		<%	} %>
 	</section>
 	<%@ include file="footer.jsp" %>

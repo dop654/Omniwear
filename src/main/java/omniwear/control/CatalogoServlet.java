@@ -35,48 +35,32 @@ public class CatalogoServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String action = request.getParameter("action");
+		String[] categorie = request.getParameterValues("categorie");
+		String search = RegisterServlet.validateField(request.getParameter("cerca"), "cerca", errors);
     	List<String> errors = new ArrayList<>();
 		
-    	if(action!=null) {
-    		if(action.equalsIgnoreCase("categoria")) {
-    			 	String category = RegisterServlet.validateField(request.getParameter("categoria"), "categoria", errors);
+    	if(categorie != null && categorie.length > 0) {
+			 	
+			 	try {
+    			 	List<ProdottoBean> prodotti = (List<ProdottoBean>) prodottoDAO.doRetrieveByCategoria(categorie);
     			 	
-    			 	try {
-	    			 	List<ProdottoBean> prodotti = (List<ProdottoBean>) prodottoDAO.doRetrieveByCategoria(category);
-	    			 	
-	    			 	request.setAttribute("listaProdotti", prodotti);
-	    			 	
-	    			 	request.getRequestDispatcher("/WEB-INF/views/catalogo.jsp").forward(request, response);
-	    			 	
-    			 	} catch(SQLException e) {
-    			 		errors.add(e.toString());
-    			 	}
-    		}
-    		else if(action.equalsIgnoreCase("cerca")) {
-    				String search = RegisterServlet.validateField(request.getParameter("cerca"), "cerca", errors);
-    				
-    				try {
-    					List<ProdottoBean> prodotti = (List<ProdottoBean>) prodottoDAO.doRetrieveByNome(search);
-    					
-    					request.setAttribute("listaProdotti", prodotti);
-    					
-    					request.getRequestDispatcher("/WEB-INF/views/catalogo.jsp").forward(request, response);
-    					
-    			 	} catch(SQLException e) {
-    			 		errors.add(e.toString());
-    			 	}
-    		}
-		
-    	}
-    	else {
+    			 	request.setAttribute("listaProdotti", prodotti);
+			 	} catch(SQLException e) {
+			 		errors.add(e.toString());
+			 	}
+		} else if(search != null) {
+				try {
+					List<ProdottoBean> prodotti = (List<ProdottoBean>) prodottoDAO.doRetrieveByNome(search);
+					
+					request.setAttribute("listaProdotti", prodotti);
+			 	} catch(SQLException e) {
+			 		errors.add(e.toString());
+			 	}
+		} else {
     		try {
 	    		List<ProdottoBean> prodotti = (List<ProdottoBean>) prodottoDAO.doRetrieveAll(null);
 	    		
 	    		request.setAttribute("listaProdotti", prodotti);
-				
-				request.getRequestDispatcher("/WEB-INF/views/catalogo.jsp").forward(request, response);
-				
     		} catch(SQLException e) {
     			errors.add(e.toString());
     		}
@@ -85,6 +69,8 @@ public class CatalogoServlet extends HttpServlet {
     	if(!errors.isEmpty()) {
 			request.setAttribute("errors", errors);
 		}
+    	
+		request.getRequestDispatcher("/WEB-INF/views/catalogo.jsp").forward(request, response);
 		return;
 	}
 	

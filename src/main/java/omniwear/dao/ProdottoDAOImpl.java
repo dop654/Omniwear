@@ -149,14 +149,22 @@ public class ProdottoDAOImpl implements ProdottoDAO {
     }
     
     @Override
-    public synchronized Collection<ProdottoBean> doRetrieveByCategoria(String nome_categoria) throws SQLException {
+    public synchronized Collection<ProdottoBean> doRetrieveByCategoria(String[] categorie) throws SQLException {
         Collection<ProdottoBean> prodotti = new LinkedList<>();
         String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome_categoria = ?";
+        
+        for(int i = 1; i<categorie.length; i++) {
+        	selectSQL += " AND nome_categoria = ?";
+        }
 
         try (Connection connection = ds.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
-             
-            preparedStatement.setString(1, nome_categoria);
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+            int i = 1;
+        	
+        	for(String c : categorie) {
+        		preparedStatement.setString(i, c);
+        		i++;
+        	}
 
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 while (rs.next()) {

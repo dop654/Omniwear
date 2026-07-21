@@ -17,7 +17,7 @@ public interface ProdottoDAO {
     
     Collection<ProdottoBean> doRetrieveByNome(String nomeParziale) throws SQLException;
     
-    Collection<ProdottoBean> doRetrieveByCategoria(String nome_categoria) throws SQLException;
+    Collection<ProdottoBean> doRetrieveByCategoria(String[] categorie) throws SQLException;
     
     void doSaveCategoria(int id_prodotto, String nome_categoria) throws SQLException;
 
