@@ -35,6 +35,7 @@ CREATE TABLE Prodotto (
     nome_prodotto VARCHAR(100) NOT NULL,
     prezzo DECIMAL(10, 2) NOT NULL,
     id_utente INT NOT NULL,
+    quantita INT DEFAULT 0,
     FOREIGN KEY (id_utente) REFERENCES Utente(id_utente) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 

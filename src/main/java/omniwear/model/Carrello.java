@@ -22,6 +22,11 @@ public class Carrello implements Serializable{
     }
     
     public void modificaQuantita(int id_prodotto, int quantita) {
+    	if(quantita <= 0) {
+    		rimuoviProdotto(id_prodotto);
+    		return;
+    	}
+    	
     	for(ProdottoCarrello p : prodotti) {
     		if(p.getId_prodotto() == id_prodotto) {
     			p.setQuantita(quantita);

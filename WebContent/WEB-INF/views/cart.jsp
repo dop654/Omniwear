@@ -31,8 +31,8 @@
 		</div>
 	<% } %>
 	
+	
 	<section class="glass" id="cart_container">
-		<section class="glass" id="cart_container">
 		<%	
 			Carrello cart = (Carrello) session.getAttribute("carrello");
 			if(cart != null && cart.getNProdotti() > 0) { 
@@ -50,7 +50,7 @@
 						<input type="hidden" name="action" value="modifica">
 						<input type="hidden" name="id_prodotto" value="<%= p.getId_prodotto() %>">
 						<label>Quantità:</label>
-						<input type="number" name="quantita" value="<%= p.getQuantita() %>">
+						<input type="number" name="quantita" value="<%= p.getQuantita() %>" min="0">
 						<input type="submit" value="Aggiorna">
 					</form>
 					<form action="${pageContext.request.contextPath}/CartServlet" method="POST">
@@ -76,6 +76,7 @@
 			<a href="${pageContext.request.contextPath}/index">Torna alla home</a>
 		<%	} %>
 	</section>
+	
 	<%@ include file="footer.jsp" %>
 </body>
 </html>
