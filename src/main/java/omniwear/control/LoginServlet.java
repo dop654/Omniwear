@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
 			UtenteBean utente = utenteDAO.doRetrieveByEmailPassword(email, pwCriptata);
 			if(utente.getIdUtente() != 0) {
 				session.setAttribute("utente", utente);
-				response.sendRedirect(request.getContextPath() + "/HomeServlet");
+				response.sendRedirect(request.getContextPath() + "/index");
 				return;
 			}else {
 				errors.add("Credenziali errate");

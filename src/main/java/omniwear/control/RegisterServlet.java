@@ -71,7 +71,7 @@ public class RegisterServlet extends HttpServlet {
 	
 	protected static String toDigest(String pw) {
 		try {
-			MessageDigest md = MessageDigest.getInstance("SHA-256"); // TODO aggiorna a SHA-512
+			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			StringBuilder sb = new StringBuilder();
 			
 			byte[] digestBytes = md.digest(pw.getBytes(StandardCharsets.UTF_8));

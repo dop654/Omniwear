@@ -24,7 +24,7 @@ public class LogoutServlet extends HttpServlet {
 			session.invalidate();
 			request.setAttribute("msg", "Logout effettuato con successo");
 		}
-		response.sendRedirect(request.getContextPath() + "/HomeServlet");
+		response.sendRedirect(request.getContextPath() + "/index");
 		return;
 	}
 }

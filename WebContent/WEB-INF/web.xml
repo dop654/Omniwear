@@ -29,7 +29,7 @@
 	</session-config>
 
 	<welcome-file-list>
-		<welcome-file>HomeServlet</welcome-file>
+		<welcome-file>index</welcome-file>
 	</welcome-file-list>
 	
 	<error-page>
