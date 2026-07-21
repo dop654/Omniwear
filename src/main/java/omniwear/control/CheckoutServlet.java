@@ -67,6 +67,9 @@ public class CheckoutServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		List<String> errors = new ArrayList<>();
 		
+		UtenteBean utenteSession = (session!=null) ? (UtenteBean) session.getAttribute("utente") : null;
+		
+		int idUser = utenteSession.getIdUtente();
 		String numeroCarta = RegisterServlet.validateField(request.getParameter("numero_carta"), "numero carta", errors);
 		String cvc = RegisterServlet.validateField(request.getParameter("cvc"), "cvc", errors);
 		String titolare = RegisterServlet.validateField(request.getParameter("titolare"), "titolare", errors);
@@ -79,17 +82,11 @@ public class CheckoutServlet extends HttpServlet {
 		    return;
 		}
 		
-		String grabIdUser = request.getParameter("id_utente");
 		String address = RegisterServlet.validateField(request.getParameter("indirizzo"), "indirizzo", errors);
-		Integer idUser = null;
 		
 		OrdineBean newOrder = new OrdineBean();
 		
-		if(grabIdUser != null) {
-			
-			idUser = Integer.parseInt(grabIdUser);
-			
-			try {
+		try {
 				UtenteBean user = utenteDAO.doRetrieveByKey(idUser);
 				
 				newOrder.setUtente(user);
@@ -97,9 +94,6 @@ public class CheckoutServlet extends HttpServlet {
 			} catch (SQLException e) {
 				errors.add(e.toString());
 			}
-		} else {
-			errors.add("Errore con i dati utente - ID utente non valido");
-		}
 		
 		newOrder.setIdUtente(idUser);
 		newOrder.setIndirizzoDestinazione(address);
@@ -111,10 +105,15 @@ public class CheckoutServlet extends HttpServlet {
 		
 		try {
 			ordineDAO.doSave(newOrder);
-			int id_ordine = (Integer)(ordineDAO.doRetrieveByUtente(idUser).toArray()[0]);
+			Object[] ordiniUtente = ordineDAO.doRetrieveByUtente(idUser).toArray();
+			
+			OrdineBean ordineSaved = (OrdineBean) ordiniUtente[0];
+			
+			int id_ordine = ordineSaved.getIdOrdine();
 			
 			ArrayList<ProdottoCarrello> prodotti = cart.getProdotti();
 			for(ProdottoCarrello p : prodotti) {
+				
 				OrdineProdottoBean op = new OrdineProdottoBean();
 				op.setIdOrdine(id_ordine);
 				op.setIdProdotto(p.getId_prodotto());
@@ -134,6 +133,6 @@ public class CheckoutServlet extends HttpServlet {
 		
 		cart = new Carrello();
 		session.setAttribute("carrello", cart);
-		response.sendRedirect(request.getContextPath() + "/CartServlet");
+		request.getRequestDispatcher("/WEB-INF/views/checkout.jsp").forward(request, response);
 	}
 }
