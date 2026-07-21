@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import omniwear.dao.OrdineDAO;
 import omniwear.dao.OrdineDAOImpl;
 import omniwear.model.OrdineBean;
+import omniwear.model.UtenteBean;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -38,7 +39,8 @@ public class OrdiniUtenteServlet extends HttpServlet{
     	
 		HttpSession session = request.getSession(false);
 		List<String> errors = new ArrayList<>();
-		int userId = (Integer) session.getAttribute("id_utente");
+		UtenteBean utenteSession = (UtenteBean) session.getAttribute("utente");
+		int userId = utenteSession.getIdUtente();
 		
 		try {
 			List<OrdineBean> ordini = (List<OrdineBean>) ordineDAO.doRetrieveByUtente(userId);

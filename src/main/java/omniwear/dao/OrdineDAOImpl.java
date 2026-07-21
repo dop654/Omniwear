@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import javax.sql.DataSource;
 
 import omniwear.model.OrdineBean;
+import omniwear.model.OrdineProdottoBean;
 import omniwear.model.ProdottoBean;
 import omniwear.model.UtenteBean;
 import omniwear.dao.UtenteDAO;
@@ -164,7 +165,30 @@ public class OrdineDAOImpl implements OrdineDAO {
         }
         return ordini;
     }
+    
+    @Override
+    public synchronized Collection<OrdineProdottoBean> doRetrieveProdottiByOrdine(int id_ordine) throws SQLException {
+        Collection<OrdineProdottoBean> lista = new LinkedList<>();
+        String selectSQL = "SELECT * FROM Ordine_Prodotto WHERE id_ordine = ?";
 
+        try (Connection connection = ds.getConnection();
+             PreparedStatement ps = connection.prepareStatement(selectSQL)) {
+             
+            ps.setInt(1, id_ordine);
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    OrdineProdottoBean op = new OrdineProdottoBean();
+                    op.setIdOrdine(rs.getInt("id_ordine"));
+                    op.setIdProdotto(rs.getInt("id_prodotto"));
+                    op.setQuantita(rs.getInt("quantita"));
+                    op.setPrezzo(rs.getFloat("prezzo_vendita")); 
+                    lista.add(op);
+                }
+            }
+        }
+        return lista;
+    }
     @Override
     public synchronized boolean doUpdateStato(int id_ordine, int nuovoStato) throws SQLException {
         String updateSQL = "UPDATE " + TABLE_NAME + " SET stato_ordine = ? WHERE id_ordine = ?";

@@ -22,28 +22,30 @@ public class ProdottoDAOImpl implements ProdottoDAO {
 
     @Override
     public synchronized void doSave(ProdottoBean prodotto) throws SQLException {
-        String insertSQL = "INSERT INTO " + TABLE_NAME + " (nome_prodotto, prezzo, id_utente) VALUES (?, ?, ?)";
+        String insertSQL = "INSERT INTO " + TABLE_NAME + " (nome_prodotto, prezzo, quantita, id_utente) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = ds.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
              
             preparedStatement.setString(1, prodotto.getNomeProdotto());
             preparedStatement.setFloat(2, prodotto.getPrezzo());
-            preparedStatement.setInt(3, prodotto.getIdUtente());
+            preparedStatement.setInt(3, prodotto.getQt()); 
+            preparedStatement.setInt(4, prodotto.getIdUtente());
 
             preparedStatement.executeUpdate();
         }
     }
     
     public synchronized void doUpdate(ProdottoBean prodotto) throws SQLException {
-    	String updateSQL = "UPDATE Prodotto SET nome = ?, prezzo = ? WHERE id_prodotto = ?";
+    	String updateSQL = "UPDATE Prodotto SET nome_prodotto = ?, prezzo = ?, quantita = ? WHERE id_prodotto = ?";
     	
     	try (Connection connection = ds.getConnection();
     		PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
     		
     		preparedStatement.setString(1, prodotto.getNomeProdotto());
     		preparedStatement.setFloat(2, prodotto.getPrezzo());
-    		preparedStatement.setInt(3, prodotto.getIdProdotto());
+    		preparedStatement.setInt(3, prodotto.getQt()); 
+    		preparedStatement.setInt(4, prodotto.getIdProdotto());
     		
     		preparedStatement.executeUpdate();
     	}
@@ -70,6 +72,7 @@ public class ProdottoDAOImpl implements ProdottoDAO {
                     prodotto.setIdProdotto(rs.getInt("id_prodotto"));
                     prodotto.setNomeProdotto(rs.getString("nome_prodotto"));
                     prodotto.setPrezzo(rs.getFloat("prezzo"));
+                    prodotto.setQt(rs.getInt("quantita")); 
                     prodotto.setIdUtente(rs.getInt("id_utente"));
                     
                     UtenteBean admin = new UtenteBean();
@@ -78,7 +81,6 @@ public class ProdottoDAOImpl implements ProdottoDAO {
                     admin.setCognome(rs.getString("cognome"));
                     admin.setEmail(rs.getString("email"));
                     
-
                     prodotto.setAdmin(admin);
                 }
             }
@@ -115,6 +117,7 @@ public class ProdottoDAOImpl implements ProdottoDAO {
                 prodotto.setIdProdotto(rs.getInt("id_prodotto"));
                 prodotto.setNomeProdotto(rs.getString("nome_prodotto"));
                 prodotto.setPrezzo(rs.getFloat("prezzo"));
+                prodotto.setQt(rs.getInt("quantita")); 
                 prodotto.setIdUtente(rs.getInt("id_utente"));
                 
                 prodotti.add(prodotto);
@@ -139,6 +142,7 @@ public class ProdottoDAOImpl implements ProdottoDAO {
                     prodotto.setIdProdotto(rs.getInt("id_prodotto"));
                     prodotto.setNomeProdotto(rs.getString("nome_prodotto"));
                     prodotto.setPrezzo(rs.getFloat("prezzo"));
+                    prodotto.setQt(rs.getInt("quantita")); 
                     prodotto.setIdUtente(rs.getInt("id_utente"));
                     
                     prodotti.add(prodotto);
@@ -151,12 +155,21 @@ public class ProdottoDAOImpl implements ProdottoDAO {
     @Override
     public synchronized Collection<ProdottoBean> doRetrieveByCategoria(String[] categorie) throws SQLException {
         Collection<ProdottoBean> prodotti = new LinkedList<>();
+<<<<<<< Updated upstream
         String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome_categoria = ?";
         
         for(int i = 1; i<categorie.length; i++) {
         	selectSQL += " AND nome_categoria = ?";
         }
+=======
+>>>>>>> Stashed changes
 
+        String selectSQL = 
+                "SELECT p.* " +
+                "FROM " + TABLE_NAME + " p " +
+                "JOIN Prodotto_Categoria pc ON p.id_prodotto = pc.id_prodotto " +
+                "WHERE pc.nome_categoria = ?";
+        
         try (Connection connection = ds.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
             int i = 1;
@@ -172,6 +185,7 @@ public class ProdottoDAOImpl implements ProdottoDAO {
                     prodotto.setIdProdotto(rs.getInt("id_prodotto"));
                     prodotto.setNomeProdotto(rs.getString("nome_prodotto"));
                     prodotto.setPrezzo(rs.getFloat("prezzo"));
+                    prodotto.setQt(rs.getInt("quantita"));
                     prodotto.setIdUtente(rs.getInt("id_utente"));
                     
                     prodotti.add(prodotto);
@@ -211,7 +225,7 @@ public class ProdottoDAOImpl implements ProdottoDAO {
     
     @Override
     public synchronized void doSaveMisura(int id_prodotto, String valore_misura) throws SQLException {
-        String insertSQL = "INSERT INTO Prodotto_Categoria (id_prodotto, valore_misura) VALUES (?, ?)";
+        String insertSQL = "INSERT INTO Prodotto_Misura (id_prodotto, valore_misura) VALUES (?, ?)";
 
         try (Connection connection = ds.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
@@ -225,7 +239,7 @@ public class ProdottoDAOImpl implements ProdottoDAO {
 
     @Override
     public synchronized boolean doDeleteMisura(int id_prodotto, String valore_misura) throws SQLException {
-        String deleteSQL = "DELETE FROM Prodotto_Categoria WHERE id_prodotto = ? AND valore_misura = ?";
+        String deleteSQL = "DELETE FROM Prodotto_Misura WHERE id_prodotto = ? AND valore_misura = ?";
 
         try (Connection connection = ds.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {

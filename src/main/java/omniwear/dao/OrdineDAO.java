@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 import omniwear.model.OrdineBean;
+import omniwear.model.OrdineProdottoBean;
 import omniwear.model.ProdottoBean;
 
 public interface OrdineDAO {
@@ -20,6 +21,8 @@ public interface OrdineDAO {
     Collection<OrdineBean> doRetrieveAll(String order) throws SQLException;
     
     Collection<OrdineBean> doRetrieveByUtente(int id_utente) throws SQLException;
+    
+    Collection<OrdineProdottoBean> doRetrieveProdottiByOrdine(int id_ordine) throws SQLException; 
     
     boolean doUpdateStato(int id_ordine, int nuovoStato) throws SQLException;
 }

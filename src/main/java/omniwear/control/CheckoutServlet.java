@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import omniwear.dao.OrdineDAO;
 import omniwear.dao.OrdineDAOImpl;
+import omniwear.dao.OrdineProdottoDAO;
+import omniwear.dao.OrdineProdottoDAOImpl;
 import omniwear.dao.UtenteDAO;
 import omniwear.dao.UtenteDAOImpl;
 import omniwear.model.OrdineBean;
@@ -29,6 +31,7 @@ public class CheckoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private OrdineDAO ordineDAO;
 	private UtenteDAO utenteDAO;
+	private OrdineProdottoDAO ordDAO;
 
 	@Override
 	public void init(ServletConfig servletConfig) throws ServletException {
@@ -40,6 +43,7 @@ public class CheckoutServlet extends HttpServlet {
 		}
 		ordineDAO = new OrdineDAOImpl(ds);
 		utenteDAO = new UtenteDAOImpl(ds);
+		ordDAO = new OrdineProdottoDAOImpl(ds);
 	}
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -116,6 +120,7 @@ public class CheckoutServlet extends HttpServlet {
 				op.setIdProdotto(p.getId_prodotto());
 				op.setPrezzo(p.getPrezzo());
 				op.setQuantita(p.getQuantita());
+				ordDAO.doSave(op);
 			}
 		} catch (SQLException e) {
 			errors.add(e.toString());

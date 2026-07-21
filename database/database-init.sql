@@ -26,6 +26,7 @@ CREATE TABLE Ordine (
     indirizzo_destinazione VARCHAR(255) NOT NULL,
     stato_ordine SMALLINT NOT NULL DEFAULT 0,
     id_utente INT,
+    totale DECIMAL(10, 2),
     FOREIGN KEY (id_utente) REFERENCES Utente(id_utente) ON UPDATE CASCADE ON DELETE SET NULL
 );
 
