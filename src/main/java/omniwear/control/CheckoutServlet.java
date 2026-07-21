@@ -133,6 +133,6 @@ public class CheckoutServlet extends HttpServlet {
 		
 		cart = new Carrello();
 		session.setAttribute("carrello", cart);
-		request.getRequestDispatcher("/WEB-INF/views/checkout.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/ordini.jsp").forward(request, response);
 	}
 }

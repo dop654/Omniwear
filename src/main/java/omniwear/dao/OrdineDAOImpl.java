@@ -109,10 +109,9 @@ public class OrdineDAOImpl implements OrdineDAO {
             while (rs.next()) {
                 OrdineBean ordine = new OrdineBean();
                 ordine.setIdOrdine(rs.getInt("id_ordine"));
-                ordine.setDataOrdine(rs.getString("data"));
-                ordine.setIndirizzoDestinazione(rs.getString("indirizzo"));
-                ordine.setStatoOrdine(rs.getInt("stato"));
-                ordine.setUtente((UtenteBean) rs.getObject("utente"));
+                ordine.setDataOrdine(rs.getString("data_ordine"));
+                ordine.setIndirizzoDestinazione(rs.getString("indirizzo_destinazione"));
+                ordine.setStatoOrdine(rs.getInt("stato_ordine"));
                 ordine.setTotale(rs.getFloat("totale"));
                 
                 int idUtente = rs.getInt("id_utente");
