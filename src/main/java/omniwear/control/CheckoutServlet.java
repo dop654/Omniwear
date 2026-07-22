@@ -11,10 +11,13 @@ import omniwear.dao.OrdineDAO;
 import omniwear.dao.OrdineDAOImpl;
 import omniwear.dao.OrdineProdottoDAO;
 import omniwear.dao.OrdineProdottoDAOImpl;
+import omniwear.dao.ProdottoDAO;
+import omniwear.dao.ProdottoDAOImpl;
 import omniwear.dao.UtenteDAO;
 import omniwear.dao.UtenteDAOImpl;
 import omniwear.model.OrdineBean;
 import omniwear.model.OrdineProdottoBean;
+import omniwear.model.ProdottoBean;
 import omniwear.model.ProdottoCarrello;
 import omniwear.model.UtenteBean;
 import omniwear.model.Carrello;
@@ -32,6 +35,7 @@ public class CheckoutServlet extends HttpServlet {
 	private OrdineDAO ordineDAO;
 	private UtenteDAO utenteDAO;
 	private OrdineProdottoDAO ordDAO;
+	private ProdottoDAO prodottoDAO;
 
 	@Override
 	public void init(ServletConfig servletConfig) throws ServletException {
@@ -44,6 +48,7 @@ public class CheckoutServlet extends HttpServlet {
 		ordineDAO = new OrdineDAOImpl(ds);
 		utenteDAO = new UtenteDAOImpl(ds);
 		ordDAO = new OrdineProdottoDAOImpl(ds);
+		prodottoDAO = new ProdottoDAOImpl(ds);
 	}
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -67,7 +72,7 @@ public class CheckoutServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		List<String> errors = new ArrayList<>();
 		
-		UtenteBean utenteSession = (session!=null) ? (UtenteBean) session.getAttribute("utente") : null;
+		UtenteBean utenteSession = (UtenteBean) session.getAttribute("utente");
 		
 		int idUser = utenteSession.getIdUtente();
 		String numeroCarta = RegisterServlet.validateField(request.getParameter("numero_carta"), "numero carta", errors);
@@ -115,13 +120,22 @@ public class CheckoutServlet extends HttpServlet {
 			for(ProdottoCarrello p : prodotti) {
 				
 				OrdineProdottoBean op = new OrdineProdottoBean();
+				
+				ProdottoBean check = (ProdottoBean) prodottoDAO.doRetrieveByKey(p.getId_prodotto());
+				
 				op.setIdOrdine(id_ordine);
 				op.setIdProdotto(p.getId_prodotto());
 				op.setPrezzo(p.getPrezzo());
 				op.setQuantita(p.getQuantita());
+				
+				if(p.getQuantita() > check.getQt()) {
+					//errors.add("Disponibilità in magazzino non sufficiente per: " + check.getNomeProdotto());
+					throw new Exception("Disponibilità in magazzino non sufficiente per: " + check.getNomeProdotto());
+				}
+				
 				ordDAO.doSave(op);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			errors.add(e.toString());
 		}
 		
