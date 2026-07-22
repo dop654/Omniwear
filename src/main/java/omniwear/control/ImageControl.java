@@ -20,7 +20,7 @@ import omniwear.model.ProdottoBean;
 import javax.sql.DataSource;
 
 
-@WebServlet("/image")
+@WebServlet("/admin/image")
 @MultipartConfig(maxFileSize = 5 * 1024 * 1024, // max 5 MB per file
 	maxRequestSize = 10 * 1024 * 1024, // max 10 MB per request
 	fileSizeThreshold = 2* 1024 * 1024) // 2 MB after which the file will be temporarily stored on disk
@@ -87,8 +87,8 @@ public class ImageControl extends HttpServlet {
 		List<String> errors = new ArrayList<>();
 		String action = request.getParameter("action");
 		
-		if ("inserisci".equalsIgnoreCase(action)) {
-			int productCode = Integer.parseInt(request.getParameter("id_prodotto"));
+		if ("upload".equalsIgnoreCase(action)) {
+			int productCode = Integer.parseInt(request.getParameter("id_prodotto_img"));
 			Part part = request.getPart("image");
 			
 			if (part != null) {

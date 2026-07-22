@@ -1,3 +1,5 @@
+<%@page import="omniwear.model.ImmagineBean"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="omniwear.model.ProdottoBean"%>
 <%@page import="java.util.Collection"%>
 <%@page import="java.util.List"%>
@@ -45,11 +47,15 @@
 			<label for="quantita">Quantità: </label>
 			<input type="number" value="1" min="0" step="1" name="quantita" id="quantita" required>
 			
-			
-			
 			<input type="submit" value="Aggiungi" id="aggiungi">
 			<button type="button" value="elimina" id="elimina" onClick="eliminaProdotto(this)">Elimina</button>
 		</form>
+		<form method="post" action="${pageContext.request.contextPath}/admin/image" enctype="multipart/form-data">
+	        <input type="hidden" name="action"  value="upload"/>
+			<input type="hidden" value="" name="id_prodotto_img" id="id_prodotto_img">
+	        <label for="image">Carica Immagine:</label><br><input type="file" name="image" id="image" accept="image/*"/>
+	        <input type="submit" value="Carica">
+	    </form>
 	</section>
 	<section class="glass" id="catalogo">
 		<%	Collection<ProdottoBean> prodotti = (Collection<ProdottoBean>) request.getAttribute("listaProdotti");
@@ -59,6 +65,9 @@
 						<h4><%= p.getNomeProdotto() %></h4>
 						<p>Prezzo: <%= p.getPrezzo() %> €</p>
 						<p>Qt. in magazzino: <%= p.getQt() %></p>
+						<% for(ImmagineBean i : p.getImmagini()) {%>
+								<image src="<%= i.getPath() %>">
+						<% } %>
 			
 						<button type="button" value="modifica" onClick="caricaProdotto(<%= p.getIdProdotto() %>,'<%= p.getNomeProdotto() %>', <%= p.getPrezzo() %>, <%= p.getQt() %>)">Modifica</button>
 					</section>
