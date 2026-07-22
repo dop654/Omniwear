@@ -114,7 +114,7 @@ public class ImageControl extends HttpServlet {
 		if(!errors.isEmpty()) {
 			request.setAttribute("errors", errors);
 		}
-		response.sendRedirect("/admin/prodotti");
+        request.getRequestDispatcher("/admin/prodotti").forward(request, response);
 	}
 
 	private String buildUniqueFileName(Part part) {

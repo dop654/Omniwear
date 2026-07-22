@@ -96,7 +96,7 @@ public class AdminProdottiServlet extends HttpServlet {
                 try {
                     prodottoDAO.doSave(prodotto);
                     request.setAttribute("msg", "Prodotto aggiunto con successo");
-                    response.sendRedirect(request.getContextPath() + "/image");
+                    response.sendRedirect(request.getContextPath() + "/admin/prodotti");
                     return;
                 } catch(SQLException e) {
                     errors.add(e.toString());
