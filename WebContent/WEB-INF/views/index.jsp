@@ -17,7 +17,7 @@
 	
 	<%@ include file="errorHandler.jsp" %>
 	
-	<div id="box_immagine">
+	<div id="box_immagine_home">
 		<div class="slideshow-container">
 			<div class="mySlides fade">
     			<img src="${pageContext.request.contextPath}/images/carosello1.jpg">

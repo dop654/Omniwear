@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="omniwear.model.ProdottoBean" %>
+<%@ page import="omniwear.model.ImmagineBean" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
@@ -38,6 +39,11 @@
 	        for(ProdottoBean p : prodotti) { 
 		%>
 	    <div class="glass anteprima_prodotto">
+	    	<% 	List<ImmagineBean> immagini = (List<ImmagineBean>) p.getImmagini();
+				if(immagini != null && !immagini.isEmpty()) { 
+			%>
+				<img class="immagine_prodotto" src="<%= immagini.get(0).getPath() %>" alt="<%= p.getNomeProdotto() %>">
+			<% } %>
 		    <input type="hidden" name="action" value="aggiungi">
 		    <input type="hidden" name="id_prodotto" value="<%= p.getIdProdotto() %>">
 		    <input type="hidden" name="quantita" value="1">

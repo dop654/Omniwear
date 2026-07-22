@@ -6,8 +6,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import omniwear.dao.ImmagineDAO;
+import omniwear.dao.ImmagineDAOImpl;
 import omniwear.dao.ProdottoDAO;
 import omniwear.dao.ProdottoDAOImpl;
+import omniwear.model.ImmagineBean;
 import omniwear.model.ProdottoBean;
 
 import org.json.JSONArray;
@@ -25,6 +28,7 @@ import javax.sql.DataSource;
 public class CatalogoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProdottoDAO prodottoDAO;
+	private ImmagineDAO immagineDAO;
 	
 	@Override
 	public void init(ServletConfig servletConfig) throws ServletException {
@@ -35,6 +39,7 @@ public class CatalogoServlet extends HttpServlet {
 			throw new ServletException("DataSource non disponibile");
 		}
 		prodottoDAO = new ProdottoDAOImpl(ds);
+		immagineDAO = new ImmagineDAOImpl(ds);
 	}
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -59,6 +64,10 @@ public class CatalogoServlet extends HttpServlet {
 			} else {
 	    		prodotti = (List<ProdottoBean>) prodottoDAO.doRetrieveAll(null);
 	    	}
+	    	
+	    	for(ProdottoBean p : prodotti) {
+				p.setImmagini(immagineDAO.doRetrieveAllByProduct(p.getIdProdotto()));
+			}
 		} catch (SQLException e) {
 			errors.add(e.toString());
 		}
@@ -86,6 +95,14 @@ public class CatalogoServlet extends HttpServlet {
 			obj.put("id_prodotto", p.getIdProdotto());
 			obj.put("nome_prodotto", p.getNomeProdotto());
 			obj.put("prezzo", p.getPrezzo());
+			
+			List<ImmagineBean> immagini = (List<ImmagineBean>) p.getImmagini();
+			if(immagini != null && !immagini.isEmpty()) {
+				obj.put("immagine", immagini.get(0).getPath());
+			} else {
+				obj.put("immagine", (Object) null);
+			}
+			
 			jsonArray.put(obj);
 		}
 		out.print(jsonArray.toString());

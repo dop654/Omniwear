@@ -30,10 +30,11 @@
 		<div id="box_immagine">
 			<div class="slideshow-container">
 			<%	for(ImmagineBean i : img) { %>
-				<div class="mySlides fade">
-	    			<img src="${ i.getPath }">
+				<div class="mySlides fade" <% if(count == 0) out.print("style='display: block;'"); %>>
+	    			<img src="<%= i.getPath() %>">
 	    		</div>
-	    	<%	} %>
+	    	<%	count++;
+	    			} %>
 				
 			  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
 			  <a class="next" onclick="plusSlides(1)">&#10095;</a>
