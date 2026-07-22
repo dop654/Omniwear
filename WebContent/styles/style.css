@@ -282,7 +282,7 @@ form input[type=submit]:hover, form a:hover{
 	font-style: oblique;
 	text-align: center;
 }
-#cart_container a {
+#cart_container a{
 	background-color: #003285;
 	color: #FAFAFA;
 	padding: 5px 15px;
@@ -292,7 +292,7 @@ form input[type=submit]:hover, form a:hover{
 	margin: auto;
 	text-align: center;
 }
-#cart_container a:hover {
+#cart_container a:hover{
 	background-color: #FF7F3E;
 }
 
@@ -671,4 +671,21 @@ form input[type=submit]:hover, form a:hover{
 	font-size: small;
 	color: red;
 	margin: 0.1em;
+}
+
+.anteprima_prodotto a{
+	background-color: #003285;
+	color: #FAFAFA;
+	padding: 5px 15px;
+	border-radius: 30px;
+	border-style: none;
+	text-decoration: none;
+	display: block;
+	margin: auto;
+	margin-top: 1em;
+	width: 30%;
+	text-align: center;
+}
+.anteprima_prodotto a:hover{
+	background-color: #FF7F3E;
 }

@@ -44,9 +44,6 @@
 			%>
 				<img class="immagine_prodotto" src="<%= immagini.get(0).getPath() %>" alt="<%= p.getNomeProdotto() %>">
 			<% } %>
-		    <input type="hidden" name="action" value="aggiungi">
-		    <input type="hidden" name="id_prodotto" value="<%= p.getIdProdotto() %>">
-		    <input type="hidden" name="quantita" value="1">
 		                
 		    <h3><%= p.getNomeProdotto() %></h3><br>
 		    <label class="prezzo"><%= p.getPrezzo() %> €</label><br>

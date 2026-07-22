@@ -1,3 +1,4 @@
+<%@page import="omniwear.model.ImmagineBean"%>
 <%@page import="java.util.Collection"%>
 <%@page import="omniwear.model.ProdottoBean"%>
 <%@page import="java.util.List"%>
@@ -42,23 +43,24 @@
 	</div>
 	<section class="glass" id = "catalogo">
 		<h3>Ultimi arrivi:</h3><br>
-		<%	Collection<ProdottoBean> prodotti = (Collection<ProdottoBean>) request.getAttribute("listaProdotti");
+		<%  List<ProdottoBean> prodotti = (List<ProdottoBean>) request.getAttribute("listaProdotti"); 
 			int i = 0;
-			if(prodotti != null) {
-				for(ProdottoBean p : prodotti) { 
-					if(i++ > 5) {break;} %>
-					<div class="glass anteprima_prodotto">
-						<form id="scheda_prodotto" method="POST" action="${pageContext.request.contextPath}/CartServlet">
-							<input type="hidden" name="action" value="aggiungi">
-							<input type="hidden" name="id_prodotto" value="<%= p.getIdProdotto() %>">
-							<input type="hidden" name="quantita" value="1">
-							<label id="nomeProdotto" name="nomeProdotto"><%= p.getNomeProdotto() %></label><br>
-							<label id="prezzo" name="prezzo"><%= p.getPrezzo() %></label><br>
-							<a href="${pageContext.request.contextPath}/SchedaProdottoServlet?id_prodotto=<%= p.getIdProdotto() %>">Dettagli</a>
-						</form>
-					</div>
-			<%	}
-			} %>
+	        if(prodotti != null) {
+		        for(ProdottoBean p : prodotti) { 
+					if(i++ > 5) { break; }%>
+				    <div class="glass anteprima_prodotto">
+				    	<% 	List<ImmagineBean> immagini = (List<ImmagineBean>) p.getImmagini();
+							if(immagini != null && !immagini.isEmpty()) { 
+						%>
+							<img class="immagine_prodotto" src="<%= immagini.get(0).getPath() %>" alt="<%= p.getNomeProdotto() %>">
+						<% } %>
+					                
+					    <h3><%= p.getNomeProdotto() %></h3><br>
+					    <label class="prezzo"><%= p.getPrezzo() %> €</label><br>
+					    <a href="${pageContext.request.contextPath}/SchedaProdottoServlet?id_prodotto=<%= p.getIdProdotto() %>">Dettagli</a>
+				    </div>
+			<% }
+		     } %>
 	</section>
 	<%@ include file="footer.jsp" %>
 </body>
