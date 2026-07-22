@@ -46,8 +46,8 @@
 		<%  List<ProdottoBean> prodotti = (List<ProdottoBean>) request.getAttribute("listaProdotti"); 
 			int i = 0;
 	        if(prodotti != null) {
-		        for(ProdottoBean p : prodotti) { 
-					if(i++ > 5) { break; }%>
+		        for(; i<prodotti.size() && i<5; i++) { 
+		        	ProdottoBean p = prodotti.get(i);%>
 				    <div class="glass anteprima_prodotto">
 				    	<% 	List<ImmagineBean> immagini = (List<ImmagineBean>) p.getImmagini();
 							if(immagini != null && !immagini.isEmpty()) { 
