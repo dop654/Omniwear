@@ -51,82 +51,88 @@ public class ImageControl extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<String> errors = new ArrayList<>();
-        String action = request.getParameter("action");
-        
-        if (action.equalsIgnoreCase("show")){
-        	int productCode = Integer.parseInt(request.getParameter("id_prodotto"));
-        	
-        	try {
-        		ProdottoBean bean = prodottoDAO.doRetrieveByKey(productCode);
-        		Collection<ImmagineBean> img = immagineDAO.doRetrieveAllByProduct(bean.getIdProdotto());
-        		
-        		response.setContentType("image");
-        		for(ImmagineBean i : img) {
-        			try (InputStream is = new FileInputStream(i.getPath())) {
-            			OutputStream os = response.getOutputStream();
-            			is.transferTo(os);
-            		} catch (IOException ioe) {
-        				errors.add(ioe.getMessage());
-        			}
-        		}
-  
-        	} catch (SQLException e) {
-				errors.add(e.getMessage());
-			}
-        }
-        
-        if(!errors.isEmpty()) {
-			request.setAttribute("errors", errors);
-		}
-	}
-
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<String> errors = new ArrayList<>();
 		String action = request.getParameter("action");
-		
-		if ("upload".equalsIgnoreCase(action)) {
-			int productCode = Integer.parseInt(request.getParameter("id_prodotto_img"));
-			Part part = request.getPart("image");
-			
-			if (part != null) {
-				String originalFileName = part.getSubmittedFileName();
-				if (originalFileName != null && !originalFileName.isEmpty() && part.getSize() > 0) {
-					String uniqueFileName = buildUniqueFileName(part);
-					String uploadPath = getServletContext().getRealPath(File.separator + UPLOAD_DIR + File.separator + uniqueFileName);
-		
-					ImmagineBean img = new ImmagineBean();
 
-					img.setIdProdotto(productCode);
-					img.setPath(uploadPath);
-					try {
-						part.write(uploadPath);
-						immagineDAO.doSave(img);
-					} catch (SQLException e) {
-						errors.add(e.getMessage());
+		if ("upload".equalsIgnoreCase(action)) {
+			try {
+				int idProdotto = Integer.parseInt(request.getParameter("id_prodotto_img"));
+				Part part = request.getPart("image");
+
+				if (part != null) {
+					String originalFileName = part.getSubmittedFileName();
+					if (originalFileName != null && !originalFileName.isEmpty() && part.getSize() > 0) {
+						String uniqueFileName = buildUniqueFileName(part);
+
+						String filesystemPath = getServletContext().getRealPath(
+								File.separator + UPLOAD_DIR + File.separator + uniqueFileName);
+
+						String webPath = request.getContextPath() + "/" + UPLOAD_DIR + "/" + uniqueFileName;
+
+						ImmagineBean img = new ImmagineBean();
+						img.setIdProdotto(idProdotto);
+						img.setPath(webPath);
+
+						try {
+							part.write(filesystemPath);
+							immagineDAO.doSave(img);
+						} catch (SQLException e) {
+							errors.add(e.toString());
+						}
+					} else {
+						errors.add("Nessun file selezionato!");
 					}
+				}
+			} catch (NumberFormatException e) {
+				errors.add("Seleziona un prodotto prima di caricare un'immagine!");
+			}
+		}
+		else if ("elimina".equalsIgnoreCase(action)) {
+			String path = request.getParameter("path");
+			if (path != null && !path.isEmpty()) {
+				try {
+					immagineDAO.doDelete(path);
+
+					String fileName = path.substring(path.lastIndexOf('/') + 1);
+					String filesystemPath = getServletContext().getRealPath(
+							File.separator + UPLOAD_DIR + File.separator + fileName);
+					File file = new File(filesystemPath);
+					if (file.exists()) {
+						file.delete();
+					}
+				} catch (SQLException e) {
+					errors.add(e.getMessage());
 				}
 			}
 		}
-		
-		if(!errors.isEmpty()) {
+
+		if (!errors.isEmpty()) {
+			try {
+				Collection<ProdottoBean> catalogo = prodottoDAO.doRetrieveAll(null);
+				for (ProdottoBean p : catalogo) {
+					p.setImmagini(immagineDAO.doRetrieveAllByProduct(p.getIdProdotto()));
+				}
+				request.setAttribute("listaProdotti", catalogo);
+			} catch (SQLException e) {
+				errors.add(e.toString());
+			}
 			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/WEB-INF/views/admin/dashboard_prodotti.jsp").forward(request, response);
+			return;
 		}
-        request.getRequestDispatcher("/admin/prodotti").forward(request, response);
+
+		response.sendRedirect(request.getContextPath() + "/admin/prodotti");
 	}
 
 	private String buildUniqueFileName(Part part) {
 		String originalName = part.getSubmittedFileName();
 		String extension;
 		if (originalName.contains(".")) {
-		    extension = originalName.substring(originalName.lastIndexOf("."));
+			extension = originalName.substring(originalName.lastIndexOf("."));
 		} else {
-		    extension = "";
+			extension = "";
 		}
 		return UUID.randomUUID() + extension;
 	}
-
-	
 }

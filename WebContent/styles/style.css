@@ -470,6 +470,41 @@ form input[type=submit]:hover, form a:hover{
     font-size: 0.9em;
 }
 
+.immagini_prodotto {
+    margin: 10px 0;
+}
+
+.anteprima_immagine {
+    display: inline-block;
+    width: 110px;
+    margin-right: 10px; 
+    margin-bottom: 10px;
+    text-align: center;
+    vertical-align: top;
+}
+
+.anteprima_immagine img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+}
+
+.anteprima_immagine form {
+    margin-top: 5px;
+}
+
+.anteprima_immagine .elimina_immagine {
+    font-size: 0.8em;
+    padding: 2px 5px;
+    cursor: pointer;
+}
+
+.anteprima_prodotto img.immagine_prodotto {
+    width: 100%;
+    max-height: 200px; 
+    margin-bottom: 10px;
+}
+
 @media screen and (max-width: 980px) {
 	.footer-col {
 		width: 50%;
@@ -548,6 +583,9 @@ form input[type=submit]:hover, form a:hover{
     	width: 95%;
     	margin: 3%;
     }
+    .immagini_prodotto {
+        text-align: center;
+    }
 }
 
 @media screen and (max-width: 380px) {
@@ -562,4 +600,13 @@ form input[type=submit]:hover, form a:hover{
 	.anteprima_prodotto {
 		padding: 10px;
 	}
+	.anteprima_immagine {
+        width: 80px;
+        margin-right: 5px;
+    }
+    
+    .anteprima_immagine img {
+        width: 80px;
+        height: 80px;
+    }
 }
