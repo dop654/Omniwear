@@ -79,6 +79,8 @@ public class AdminProdottiServlet extends HttpServlet {
                 String nome = RegisterServlet.validateField(request.getParameter("nomeProdotto"), "nome prodotto", errors);
                 String prezzo = RegisterServlet.validateField(request.getParameter("prezzo"), "prezzo", errors);
                 String quantita = RegisterServlet.validateField(request.getParameter("quantita"), "quantità", errors);
+
+        		String[] categorie = request.getParameterValues("categorie");
                 
                 float price = Float.parseFloat(prezzo);
                 int qt = Integer.parseInt(quantita);
@@ -95,6 +97,14 @@ public class AdminProdottiServlet extends HttpServlet {
                 
                 try {
                     prodottoDAO.doSave(prodotto);
+                    prodotto = ((List<ProdottoBean>)prodottoDAO.doRetrieveAll(" id_prodotto DESC")).get(0);
+                    
+                    if(categorie != null && categorie.length > 0) {
+                    	for(String c : categorie) {
+                    		prodottoDAO.doSaveCategoria(prodotto.getIdProdotto(), c);
+                    	}
+                    }
+                    
                     request.setAttribute("msg", "Prodotto aggiunto con successo");
                     response.sendRedirect(request.getContextPath() + "/admin/prodotti");
                     return;
@@ -119,6 +129,7 @@ public class AdminProdottiServlet extends HttpServlet {
                 String nome = RegisterServlet.validateField(request.getParameter("nomeProdotto"), "nome prodotto", errors);
                 String prezzo = RegisterServlet.validateField(request.getParameter("prezzo"), "prezzo", errors);
                 String quantita = RegisterServlet.validateField(request.getParameter("quantita"), "quantità", errors);
+        		String[] categorie = request.getParameterValues("categorie");
                 
                 int idProduct = Integer.parseInt(idProd);
                 float price = Float.parseFloat(prezzo);
@@ -133,6 +144,14 @@ public class AdminProdottiServlet extends HttpServlet {
                 
                 try {
                     prodottoDAO.doUpdate(prodottoAggiornato);
+                    prodottoDAO.doDeleteAllCategoria(idProduct);
+                    
+                    if(categorie != null && categorie.length > 0) {
+                    	for(String c : categorie) {
+                    		prodottoDAO.doSaveCategoria(prodottoAggiornato.getIdProdotto(), c);
+                    	}
+                    }
+                    
                     response.sendRedirect(request.getContextPath() + "/admin/prodotti");
                     return;
                 } catch(SQLException e) {

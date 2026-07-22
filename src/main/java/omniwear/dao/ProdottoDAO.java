@@ -22,6 +22,8 @@ public interface ProdottoDAO {
     void doSaveCategoria(int id_prodotto, String nome_categoria) throws SQLException;
 
     boolean doDeleteCategoria(int id_prodotto, String nome_categoria) throws SQLException;
+    
+    boolean doDeleteAllCategoria(int id_prodotto) throws SQLException;
 
     void doSaveMisura(int id_prodotto, String valore_misura) throws SQLException;
     

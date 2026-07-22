@@ -221,6 +221,19 @@ public class ProdottoDAOImpl implements ProdottoDAO {
     }
     
     @Override
+    public synchronized boolean doDeleteAllCategoria(int id_prodotto) throws SQLException {
+        String deleteSQL = "DELETE FROM Prodotto_Categoria WHERE id_prodotto = ?";
+
+        try (Connection connection = ds.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+             
+            preparedStatement.setInt(1, id_prodotto);
+
+            return (preparedStatement.executeUpdate() != 0);
+        }
+    }
+    
+    @Override
     public synchronized void doSaveMisura(int id_prodotto, String valore_misura) throws SQLException {
         String insertSQL = "INSERT INTO Prodotto_Misura (id_prodotto, valore_misura) VALUES (?, ?)";
 

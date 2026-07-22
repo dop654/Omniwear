@@ -18,23 +18,7 @@
 <body>
 	<%@ include file="../header.jsp" %>
 	
-	<%	String msg = (String) request.getAttribute("msg");
-		if(msg != null && !msg.isEmpty()) { %>
-			<div class="glass" id="msg">
-				<%= msg %>
-			</div>
-	<% } %>
-	
-	<%	List<String> errors = (List<String>) request.getAttribute("errors");
-		if(errors != null && !errors.isEmpty()) { %>
-		<div class="glass" id="error">
-			<ul>
-				<% for(String e : errors) { %>
-					<li><%= e %></li>
-				<% } %>
-			</ul>
-		</div>
-	<% } %>
+	<%@ include file="../errorHandler.jsp" %>
 
 	<div id="catalogo_layout">
 		<aside class="glass" id="filtri_laterali">
@@ -54,6 +38,12 @@
 				<label for="quantita">Quantità: </label><br>
 				<input type="number" value="1" min="0" step="1" name="quantita" id="quantita" required>
 				<br><br>
+				
+				<h3>Seleziona categoria:</h3>
+	            <label><input type="checkbox" name="categorie" value="Felpe"> Felpe</label><br>
+	            <label><input type="checkbox" name="categorie" value="T-Shirt"> T-Shirt</label><br>
+	            <label><input type="checkbox" name="categorie" value="Pantaloni"> Pantaloni</label><br>
+	            <label><input type="checkbox" name="categorie" value="Accessori"> Accessori</label><br><br>
 				
 				<input type="submit" value="Aggiungi" id="aggiungi">
 				<button type="button" value="elimina" id="elimina" onClick="eliminaProdotto(this)">Elimina</button>
