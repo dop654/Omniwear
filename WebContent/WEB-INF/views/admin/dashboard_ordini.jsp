@@ -40,18 +40,18 @@
 					</div>
 			<%	} else {
 					for(OrdineBean o : ordini) { %>
-						<section class="glass scheda_ordine" style="margin-bottom: 20px; padding: 15px;">
+						<section class="glass scheda_ordine">
 							<ul>
-								<li><strong>ID Ordine:</strong> <%= o.getIdOrdine() %></li>
-								<li><strong>Data:</strong> <%= o.getDataOrdine() %></li>
-								<li><strong>Cliente:</strong> 
+								<li>ID Ordine: <%= o.getIdOrdine() %></li>
+								<li>Data: <%= o.getDataOrdine() %></li>
+								<li>Cliente:
 									<% if(o.getUtente() != null) { %>
 										<%= o.getUtente().getNome() %> <%= o.getUtente().getCognome() %> (<%= o.getUtente().getEmail() %>)
 									<% } else { %>
 										Utente ID: <%= o.getIdUtente() %>
 									<% } %>
 								</li>
-								<li><strong>Totale:</strong> <%= o.getTotale() %>€</li>
+								<li>Totale: <%= o.getTotale() %>€</li>
 								
 								<li>
 									<div id="form">
