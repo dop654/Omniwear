@@ -87,7 +87,7 @@ public class ImageControl extends HttpServlet {
 		List<String> errors = new ArrayList<>();
 		String action = request.getParameter("action");
 		
-		if ("upload".equalsIgnoreCase(action)) {
+		if ("inserisci".equalsIgnoreCase(action)) {
 			int productCode = Integer.parseInt(request.getParameter("id_prodotto"));
 			Part part = request.getPart("image");
 			

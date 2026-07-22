@@ -32,7 +32,7 @@
 			</div>
 	<% } %>
 	<section class="glass" id="add_prodotto">
-		<form method="POST" action="${pageContext.request.contextPath}/admin/prodotti" id="interface">
+		<form method="POST" action="${pageContext.request.contextPath}/admin/prodotti" id="interface" enctype="multipart/form-data">
 			<input type="hidden" value="inserisci" name="action" id="action">
 			<input type="hidden" value="" name="id_prodotto" id="id_prodotto">
 			
@@ -44,6 +44,9 @@
 			
 			<label for="quantita">Quantità: </label>
 			<input type="number" value="1" min="0" step="1" name="quantita" id="quantita" required>
+			
+			<label for="image" >Carica immagine:</label>
+			<input type="file" name="image" id="image" accept="image/*"/>
 			
 			<input type="submit" value="Aggiungi" id="aggiungi">
 			<button type="button" value="elimina" id="elimina" onClick="eliminaProdotto(this)">Elimina</button>

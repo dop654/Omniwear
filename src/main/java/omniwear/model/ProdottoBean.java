@@ -13,6 +13,7 @@ public class ProdottoBean implements Serializable {
 	private UtenteBean admin;
 	private Collection<CategoriaBean> categorie;
     private Collection<MisuraBean> misure;
+    private Collection<ImmagineBean> immagini;
 	private int qt;
     
 	public ProdottoBean() {
@@ -66,6 +67,13 @@ public class ProdottoBean implements Serializable {
 	}
 	public void setMisure(Collection<MisuraBean> misure) { 
 		this.misure = misure; 
+	}
+	
+	public Collection<ImmagineBean> getImmagini() {
+		return immagini; 
+	}
+	public void setImmagini(Collection<ImmagineBean> immagini) { 
+		this.immagini = immagini; 
 	}
 	
 	public int getQt() {

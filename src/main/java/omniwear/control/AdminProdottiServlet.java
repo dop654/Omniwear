@@ -17,6 +17,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import omniwear.model.ProdottoBean;
 import omniwear.model.UtenteBean;
+import omniwear.dao.ImmagineDAO;
+import omniwear.dao.ImmagineDAOImpl;
 import omniwear.dao.ProdottoDAO;
 import omniwear.dao.ProdottoDAOImpl;
 
@@ -25,6 +27,7 @@ import omniwear.dao.ProdottoDAOImpl;
 public class AdminProdottiServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ProdottoDAO prodottoDAO;
+    private ImmagineDAO immagineDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -35,6 +38,7 @@ public class AdminProdottiServlet extends HttpServlet {
 			throw new ServletException("DataSource non disponibile");
 		}
         this.prodottoDAO = new ProdottoDAOImpl(ds);
+        this.immagineDAO = new ImmagineDAOImpl(ds);
     }
     
     @Override
@@ -46,6 +50,11 @@ public class AdminProdottiServlet extends HttpServlet {
         
         try {
             Collection<ProdottoBean> catalogo = prodottoDAO.doRetrieveAll(null);
+            
+            for(ProdottoBean p : catalogo) {
+            	p.setImmagini(immagineDAO.doRetrieveAllByProduct(p.getIdProdotto()));
+            }
+            
             request.setAttribute("listaProdotti", catalogo);
         } catch (SQLException e) {
             errors.add(e.toString());
@@ -87,7 +96,7 @@ public class AdminProdottiServlet extends HttpServlet {
                 try {
                     prodottoDAO.doSave(prodotto);
                     request.setAttribute("msg", "Prodotto aggiunto con successo");
-                    response.sendRedirect(request.getContextPath() + "/admin/prodotti");
+                    response.sendRedirect(request.getContextPath() + "/image");
                     return;
                 } catch(SQLException e) {
                     errors.add(e.toString());
