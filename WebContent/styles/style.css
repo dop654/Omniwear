@@ -197,7 +197,7 @@ nav ul li {
 	color: #FF7F3E;
 }
 
-#form input[type=submit], .scheda_ordine input[type=submit] {
+form input[type=submit], form a{
 	background-color: #FF7F3E;
 	color: #FAFAFA;
 	padding: 5px 15px;
@@ -205,7 +205,7 @@ nav ul li {
 	border-style: none;
 }
 
-#form input[type=submit]:hover, .scheda_ordine input[type=submit]:hover {
+form input[type=submit]:hover, form a:hover{
 	background-color: #003285;
 }
 
@@ -379,4 +379,13 @@ nav ul li {
 }
 #schedaP h3 {
 	font-family: Les_Flos;
+}
+
+#checkout_container input {
+	margin: 0.5em;
+}
+
+.anteprima_prodotto {
+	margin: 0.5em;
+	padding: 1em;
 }
