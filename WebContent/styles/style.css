@@ -273,6 +273,8 @@ nav ul li {
 	border-radius: 30px;
 	border-style: none;
 	text-decoration: none;
+	margin: auto;
+	text-align: center;
 }
 #cart_container a:hover {
 	background-color: #FF7F3E;
@@ -310,7 +312,7 @@ nav ul li {
 	width:100%;
 }
 .mySlides {
-  display: none;
+  	display: none;
 }
 .prev, .next {
   cursor: pointer;
@@ -364,4 +366,7 @@ nav ul li {
 #prodotti form, #scheda_prodotto{
 	margin: 1em;
 	padding: 1em;
+}
+#schedaP h3 {
+	font-family: Les_Flos;
 }

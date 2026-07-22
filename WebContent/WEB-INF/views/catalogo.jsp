@@ -22,7 +22,7 @@
 						<input type="hidden" name="action" value="aggiungi">
 						<input type="hidden" name="id_prodotto" value="<%= p.getIdProdotto() %>">
 						<input type="hidden" name="quantita" value="1">
-						<label class="nomeProdotto"><%= p.getNomeProdotto() %></label><br>
+						<h3><%= p.getNomeProdotto() %></h3><br>
 						<label class="prezzo"><%= p.getPrezzo() %> €</label><br>
 						
 						<a href="${pageContext.request.contextPath}/SchedaProdottoServlet?id=<%= p.getIdProdotto() %>">Dettagli</a>
