@@ -455,6 +455,21 @@ form input[type=submit]:hover, form a:hover{
     padding: 20px;
 }
 
+#filtri_laterali .filtra {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+#filtri_laterali .reset {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 6px 15px;
+    font-size: 0.9em;
+}
+
 @media screen and (max-width: 980px) {
 	.footer-col {
 		width: 50%;

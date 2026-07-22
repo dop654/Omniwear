@@ -13,21 +13,45 @@
 	</head>
 	<body>
 		<%@ include file="../header.jsp" %>
-		<section class="glass" id="ordini">
+		<div id="catalogo_layout">
+			<aside class="glass" id="filtri_laterali">
+				<form action="${pageContext.request.contextPath}/admin/ordini" method="GET">
+					<h3>Filtra Ordini</h3>
+					
+					<label for="filtroData">Data Ordine:</label><br>
+					<input type="date" id="filtroData" name="filtroData">
+					<br><br>
+					
+					<label for="filtroEmail">Email Utente:</label><br>
+					<input type="email" id="filtroEmail" name="filtroEmail">
+					<br><br>
+	
+					<input type="submit" value="Filtra" class="filtra">
+					<a href="${pageContext.request.contextPath}/admin/ordini" class="reset">Resetta filtri</a>
+				</form>
+		</aside>
+		<section class="glass" id="prodotti_main">
+			<h2>Gestione Ordini</h2>
 			<%	List<OrdineBean> ordini = (List<OrdineBean>) request.getAttribute("listaOrdini");
 				String[] statoOrd = {"Annullato", "Ricevuto", "Spedito", "Consegnato"};
 				if(ordini == null || ordini.isEmpty()) { %>
-					<div class="glass" id="msg">
-						Non ci sono ordini
-						<hr><br>
-						<a href="${pageContext.request.contextPath}/admin/home">Torna alla Dashboard</a>
+					<div class="glass" id="msg" style="padding: 15px; margin-top: 15px;">
+						Nessun ordine trovato con i filtri selezionati.
 					</div>
 			<%	} else {
 					for(OrdineBean o : ordini) { %>
-						<section class="glass scheda_ordine" >
+						<section class="glass scheda_ordine" style="margin-bottom: 20px; padding: 15px;">
 							<ul>
-								<li>ID Ordine: <%= o.getIdOrdine() %></li>
-								<li>Totale: <%= o.getTotale() %>€</li>
+								<li><strong>ID Ordine:</strong> <%= o.getIdOrdine() %></li>
+								<li><strong>Data:</strong> <%= o.getDataOrdine() %></li>
+								<li><strong>Cliente:</strong> 
+									<% if(o.getUtente() != null) { %>
+										<%= o.getUtente().getNome() %> <%= o.getUtente().getCognome() %> (<%= o.getUtente().getEmail() %>)
+									<% } else { %>
+										Utente ID: <%= o.getIdUtente() %>
+									<% } %>
+								</li>
+								<li><strong>Totale:</strong> <%= o.getTotale() %>€</li>
 								
 								<li>
 									<div id="form">
@@ -48,6 +72,7 @@
 			<%		} 
 				} %>
 		</section>
+		</div>
 		<%@ include file="../footer.jsp" %>
 	</body>
 	</html>

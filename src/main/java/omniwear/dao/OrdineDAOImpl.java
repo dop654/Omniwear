@@ -214,4 +214,59 @@ public class OrdineDAOImpl implements OrdineDAO {
             return (preparedStatement.executeUpdate() != 0);
         }
     }
+    
+    public synchronized Collection<OrdineBean> doRetrieveFiltered(String email_utente, String data_ordine) throws SQLException {
+        Collection<OrdineBean> ordini = new LinkedList<>();
+        String selectSQL =
+            "SELECT o.*, u.nome, u.cognome, u.email " +
+            "FROM " + TABLE_NAME + " o " +
+            "LEFT JOIN Utente u ON o.id_utente = u.id_utente WHERE 1=1";
+        
+        
+
+        if (email_utente != null && !email_utente.isEmpty()) {
+            selectSQL += " AND u.email LIKE ?";
+        }
+        if (data_ordine != null && !data_ordine.isEmpty()) {
+            selectSQL += " AND o.data_ordine LIKE ?";
+        }
+
+        selectSQL += " ORDER BY o.data_ordine DESC";
+
+        try (Connection connection = ds.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL.toString())) {
+            
+            int parametroSQL = 1;
+            if (email_utente != null) {
+            	preparedStatement.setString(parametroSQL++, "%" + email_utente + "%");
+            }
+            if (data_ordine != null && !data_ordine.isEmpty()) {
+            	preparedStatement.setString(parametroSQL++, "%" + data_ordine + "%");
+            }
+
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    OrdineBean ordine = new OrdineBean();
+                    ordine.setIdOrdine(rs.getInt("id_ordine"));
+                    ordine.setDataOrdine(rs.getString("data_ordine"));
+                    ordine.setIndirizzoDestinazione(rs.getString("indirizzo_destinazione"));
+                    ordine.setStatoOrdine(rs.getInt("stato_ordine"));
+                    ordine.setTotale(rs.getFloat("totale"));
+                    
+                    int idUser = rs.getInt("id_utente");
+                    if (!rs.wasNull()) {
+                        ordine.setIdUtente(idUser);
+                        UtenteBean utente = new UtenteBean();
+                        utente.setIdUtente(idUser);
+                        utente.setNome(rs.getString("nome"));
+                        utente.setCognome(rs.getString("cognome"));
+                        utente.setEmail(rs.getString("email"));
+                        ordine.setUtente(utente);
+                    }
+                    ordini.add(ordine);
+                }
+            }
+        }
+        return ordini;
+    }
 }
