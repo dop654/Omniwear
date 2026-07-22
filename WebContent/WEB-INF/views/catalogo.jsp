@@ -9,14 +9,16 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/style.css">
 	<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images/favicons/favicon.ico">
 </head>
+<script src="${pageContext.request.contextPath}/scripts/ajax.js"></script>
+
 <body>
 	<%@ include file="header.jsp" %>
 	<%@ include file="errorHandler.jsp" %>
 	
 <section class="glass" id="ricerca">
 		<div id="form">
-			<form action="${pageContext.request.contextPath}/catalogo" method="GET">
-				<input type="text" name="cerca" placeholder="Cerca prodotto...">
+			<form>
+				<input type="text" id="cerca" name="cerca" placeholder="Cerca prodotto...">
 			
 				<aside class="glass"> 
 					<p>Seleziona la categoria del prodotto</p>
@@ -38,7 +40,7 @@
 					</label>
 					
 					<br><br>
-					<input type="submit" value="Filtra">
+					<input type="button" value="Filtra" onclick="filtraCatalogo();">
 					<a href="${pageContext.request.contextPath}/catalogo">Resetta filtri</a>
 				</aside>
 			</form>

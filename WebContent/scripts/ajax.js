@@ -20,83 +20,86 @@ function createXMLHttpRequest() {
 }
 
 function loadDoc(url, methodIsGET, param, func) {
-	var request = createXMLHttpRequest();
-	var errorDiv = document.getElementById("error");
-	
-	if(request) {
-		request.onreadystatechange = function() {
-			if(this.readyState == 4) {
-				if(this.status == 200) {
-					errorDiv.hide();
-					func(this);
-				} else {
-					msg = "Problemi nell'esecuzione della richiesta: " + this.statuText;
-					if(this.status == 0) {
-						msg = "Nessuna risposta ricevuta in tempo";
-					} else if(this.status == 418) {
-						msg = "Sono una teiera";
-					}
-					errorDiv.innerHTML = msg;
-					errorDiv.show();
-				}
-			}
-		};
-		
-		setTimeout(function() {
-			if(request.readyState < 4){
-				request.abort();
-			}
-		}, 15000);
-		
-		if(methodIsGET == 1){
-			if(param){
-				request.open("GET", url + "?" + param, true);
-			} else {
-				request.open("GET", url, true);
-			}
-			request.setRequestHeader("Connection", "close");
-			request.send(null);
-		} else {
-			request.open("POST", url, true);
-			request.setRequestHeader("Connection", "close");
-			request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			
-			if(param){
-				request.send(param);
-			}
-		}
-	}
+    var request = createXMLHttpRequest();
+    var errorDiv = document.getElementById("error");
+    
+    if(request) {
+        request.onreadystatechange = function() {
+            if(this.readyState == 4) {
+                if(this.status == 200) {
+                    if(errorDiv) errorDiv.style.display = "none";
+                    func(request);
+                } else {
+                    var msg = "Problemi nell'esecuzione della richiesta: " + request.statusText;
+                    if(request.status == 0) {
+                        msg = "Nessuna risposta ricevuta in tempo";
+                    }
+                    if(errorDiv) {
+                        errorDiv.innerHTML = msg;
+                        errorDiv.style.display = "block";
+                    }
+                }
+            }
+        };
+        
+        setTimeout(function() {
+            if(request.readyState < 4){
+                request.abort();
+            }
+        }, 15000);
+        
+        if(methodIsGET == 1){
+            if(param){
+                request.open("GET", url + "?" + param, true);
+            } else {
+                request.open("GET", url, true);
+            }
+            request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            request.send(null);
+        } else {
+            request.open("POST", url, true);
+            request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            if(param){
+                request.send(param);
+            } else {
+                request.send();
+            }
+        }
+    }
 }
 
-function aggiornaCatalogo(search, categorie) {
-	let url = "/catalogo";
-	let parametri;
-	
-	if(search != null) {
-		parametri = "search=" + search;
-	}else if(categorie != null){
-		parametri = "categorie=" + categorie[0];
-		for(let i = 1; i<categorie.length; i++){
-			parametri += "&categorie=" + categorie[i];
-		}
-	}
-	
-	loadDoc(url, 1, parametri, function(request) {
-		
-		let risposta = request.responseText;
-		let prodotti = JSON.parse(risposta);
-		let catalogo = document.getElementById("catalogo");
-		
-		catalogo.innerHTML = "";
-		
-		for(let i=0; i<prodotti.length; i++){
-			let prodotto = prodotti[i];
-			
-			catalogo.innerHTML += ("<p>" + prodotto + "</p><br>");
-		}
-	});
+function filtraCatalogo() {
+    var inputCerca = document.getElementById('cerca').value;
+    var params = "cerca=" + inputCerca;
+    
+    var checkboxes = document.querySelectorAll('input[name="categorie"]:checked');
+    for (var i = 0; i < checkboxes.length; i++) {
+        params += "&categorie=" + checkboxes[i].value;
+    }
+    
+    loadDoc("catalogo", 1, params, handleCatalogo);
 }
 
-window.onload = function() {
-  aggiornaCatalogo(null, null);
-};
+function handleCatalogo(request) {
+    var prodotti = JSON.parse(request.responseText);
+    
+    var sezioneProdotti = document.getElementById('prodotti');
+    sezioneProdotti.innerHTML = "";
+    
+    if (prodotti.length === 0) {
+        sezioneProdotti.innerHTML = "<p>Nessun prodotto trovato.</p>";
+        return;
+    }
+
+    for (var i = 0; i < prodotti.length; i++) {
+        var p = prodotti[i];
+        
+        sezioneProdotti.innerHTML += 
+            '<div class="glass">' +
+                '<h3>' + p.nome_prodotto + '</h3><br>' +
+                '<label class="prezzo">' + p.prezzo + ' €</label><br>' +
+                '<a href="SchedaProdottoServlet?id_prodotto=' + p.id_prodotto + '">Dettagli</a>' +
+            '</div>';
+    }
+}
