@@ -15,9 +15,9 @@
 	
 	<%@ include file="errorHandler.jsp" %>
 	
-	<section class="glass">
+	<section class="glass" id="cart_container">
 	
-		<h3>I tuoi ordini</h3>
+		<h1>I tuoi ordini</h1>
 		<hr><br>
 		
 		<% 
@@ -33,27 +33,26 @@
 		<% 
 			} else { 
 				for(OrdineBean o : ordini){
-		%>
-					<ul>
-						<li>ID Ordine: <%= o.getIdOrdine() %></li>
-						<li>Stato: <%= statoOrd[o.getStatoOrdine()] %></li>
-						<li>Totale: <%= o.getTotale() %>€</li>
-						
-						<% if(o.getStatoOrdine() != 0) { %>
-							<li>
-							<div id="form">
-								<form action="${pageContext.request.contextPath}/user_ordini" method="POST">
-									<input type="hidden" name="action" value="annulla">
-									<input type="hidden" name="id_ordine" value="<%= o.getIdOrdine() %>">
-									<input type="submit" value="Annulla Ordine">
-								</form>
-							</div>
-							</li>
-						<% } %>
-					</ul>
-					<hr>
-		<% 
-				}
+		%>			<section class="glass scheda_ordine" >
+						<ul>
+							<li>ID Ordine: <%= o.getIdOrdine() %></li>
+							<hr>
+							<li>Stato: <%= statoOrd[o.getStatoOrdine()] %></li>
+							<li>Totale: <%= o.getTotale() %>€</li>
+							
+							<% if(o.getStatoOrdine() != 0 && o.getStatoOrdine() != 3) { %>
+								<li>
+									<form action="${pageContext.request.contextPath}/user_ordini" method="POST">
+										<input type="hidden" name="action" value="annulla">
+										<input type="hidden" name="id_ordine" value="<%= o.getIdOrdine() %>">
+										<input type="submit" value="Annulla Ordine">
+									</form>
+								</li>
+							<% } %>
+						</ul>
+						<br>
+					</section>
+		<% 		}
 			}
 		%>
 		
