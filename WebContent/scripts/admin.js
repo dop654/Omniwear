@@ -12,4 +12,8 @@ function caricaProdotto(idProdotto, nome, prezzo, quantita){
 	document.getElementById("prezzo").value = prezzo;
 	document.getElementById("quantita").value = quantita;
 	document.getElementById("aggiungi").value = "Modifica";
+	let checkboxes = form.querySelectorAll('input[name="categorie"]');
+		checkboxes.forEach(function(checkbox) {
+			checkbox.checked = false;
+		});
 }
