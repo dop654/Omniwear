@@ -389,3 +389,83 @@ form input[type=submit]:hover, form a:hover{
 	margin: 0.5em;
 	padding: 1em;
 }
+
+
+@media screen and (max-width: 980px) {
+	.footer-col {
+		width: 50%;
+		margin-bottom: 30px;
+		float: left; 
+	}
+	#elenco_prodotti {
+		width: 65%;
+	}
+	#riepilogo {
+		width: 30%; 
+	}
+}
+
+@media screen and (max-width: 750px) {
+	header {
+		text-align: center;
+		padding: 10px;
+	}
+	nav {
+		text-align: center;
+		margin: 10px 0;
+	}
+	nav ul {
+		padding: 0;
+		margin: 0;
+	}
+	nav ul li {
+		display: block; 
+		margin: 10px 0;
+	}
+	#form .row {
+		display: block;
+		margin-bottom: 10px;
+	}
+	#form label, #form input {
+		display: block;
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 540px) {
+	#elenco_prodotti {
+		width: 100%;
+		display: block;
+		clear: both; 
+		margin-bottom: 2em;
+	}
+	#riepilogo {
+		width: 100%;
+		max-width: 100%;
+		display: block;
+		clear: both; 
+		box-sizing: border-box;
+		transform: none;
+		-webkit-transform: none;
+        margin: 20px 0;
+	}
+	.footer-col {
+		width: 100%;
+		clear: both;
+		text-align: center;
+	}
+}
+
+@media screen and (max-width: 380px) {
+	header h1 {
+		font-size: 1.4em;
+	}
+	#prodotti, #ordini, #add_prodotto, #catalogo,
+	#cart_container, #form {
+		padding: 10px;
+		width: 95%;
+	}
+	.anteprima_prodotto {
+		padding: 10px;
+	}
+}
