@@ -110,9 +110,9 @@ public class CheckoutServlet extends HttpServlet {
 		
 		try {
 			ordineDAO.doSave(newOrder);
-			Object[] ordiniUtente = ordineDAO.doRetrieveByUtente(idUser).toArray();
+			List<OrdineBean> ordiniUtente = (List<OrdineBean>) ordineDAO.doRetrieveByUtente(idUser);
 			
-			OrdineBean ordineSaved = (OrdineBean) ordiniUtente[0];
+			OrdineBean ordineSaved = (OrdineBean) ordiniUtente.get(ordiniUtente.size()-1);
 			
 			int id_ordine = ordineSaved.getIdOrdine();
 			

@@ -38,7 +38,10 @@
 							<li>ID Ordine: <%= o.getIdOrdine() %></li>
 							<hr>
 							<li>Stato: <%= statoOrd[o.getStatoOrdine()] %></li>
-							<li>Totale: <%= o.getTotale() %>€</li>
+							
+							<% if(o.getStatoOrdine() != 0) { %>
+								<li>Totale: <%= o.getTotale() %>€</li>
+							<% } %>
 							
 							<% if(o.getStatoOrdine() != 0 && o.getStatoOrdine() != 3) { %>
 								<li>
@@ -47,7 +50,8 @@
 										<input type="hidden" name="id_ordine" value="<%= o.getIdOrdine() %>">
 										<input type="submit" value="Annulla Ordine">
 									</form>
-								</li>
+								<br>
+								<a href="${pageContext.request.contextPath}/dettaglio_ordini?id_ordine=<%= o.getIdOrdine() %>">Dettagli</a>
 							<% } %>
 						</ul>
 						<br>
