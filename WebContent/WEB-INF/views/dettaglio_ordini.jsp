@@ -47,7 +47,7 @@
 						for(OrdineProdottoBean op : prodottiOrdine) {
 				%>
 							<div>
-								<p>ID Prodotto: <%= op.getIdProdotto() %></p>
+								<p><%= op.getProdotto().getNomeProdotto() %></p>
 								<p>Prezzo: <%= op.getPrezzo() %> €</p>
 								<p>Quantità: <%= op.getQuantita() %></p>
 							</div>

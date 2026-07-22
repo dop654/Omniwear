@@ -48,6 +48,7 @@
 									<input type="hidden" name="action" value="annulla">
 									<input type="hidden" name="id_ordine" value="<%= o.getIdOrdine() %>">
 									<input type="submit" value="Annulla Ordine">
+									<a href="${pageContext.request.contextPath}/dettaglio_ordini?id_ordine=<%= o.getIdOrdine() %>">Dettagli</a>
 								</form>
 							</div>
 							</li>

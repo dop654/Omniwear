@@ -9,6 +9,7 @@ public class OrdineProdottoBean implements Serializable {
     private int id_prodotto;
     private int quantita;
     private float prezzo_vendita;
+    private ProdottoBean prodotto;
     
     public int getIdOrdine() {
     	return id_ordine;
@@ -36,5 +37,12 @@ public class OrdineProdottoBean implements Serializable {
    }
    public void setPrezzo(float price) {
 	   prezzo_vendita = price;
+   }
+   
+   public ProdottoBean getProdotto() {
+	   return prodotto;
+   }
+   public void setProdotto(ProdottoBean product) {
+	   prodotto = product;
    }
 }
