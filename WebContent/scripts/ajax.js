@@ -84,7 +84,7 @@ function filtraCatalogo() {
 function handleCatalogo(request) {
     var prodotti = JSON.parse(request.responseText);
     
-    var sezioneProdotti = document.getElementById('prodotti');
+    var sezioneProdotti = document.getElementById('prodotti_main');
     sezioneProdotti.innerHTML = "";
     
     if (prodotti.length === 0) {
@@ -94,9 +94,13 @@ function handleCatalogo(request) {
 
     for (var i = 0; i < prodotti.length; i++) {
         var p = prodotti[i];
-        
+		var immagineHtml = p.immagine
+		            ? '<img class="immagine_prodotto" src="' + p.immagine + '" alt="' + p.nome_prodotto + '">'
+		            : '';
+					
         sezioneProdotti.innerHTML += 
-            '<div class="glass">' +
+            '<div class="glass anteprima_prodotto">' +
+				immagineHtml +
                 '<h3>' + p.nome_prodotto + '</h3><br>' +
                 '<label class="prezzo">' + p.prezzo + ' €</label><br>' +
                 '<a href="SchedaProdottoServlet?id_prodotto=' + p.id_prodotto + '">Dettagli</a>' +
