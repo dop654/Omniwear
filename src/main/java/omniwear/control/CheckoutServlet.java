@@ -134,6 +134,8 @@ public class CheckoutServlet extends HttpServlet {
 				}
 				
 				ordDAO.doSave(op);
+				check.setQt(check.getQt() - p.getQuantita());
+				prodottoDAO.doUpdate(check);
 			}
 		} catch (Exception e) {
 			errors.add(e.toString());
