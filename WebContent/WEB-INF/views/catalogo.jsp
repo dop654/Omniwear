@@ -18,17 +18,14 @@
 			if(prodotti != null) {
 				for(ProdottoBean p : prodotti) { 
 		%>
-					<form class="glass" id="schedaP" method="POST" action="${pageContext.request.contextPath}/CartServlet">
+					<div id="form">
 						<input type="hidden" name="action" value="aggiungi">
 						<input type="hidden" name="id_prodotto" value="<%= p.getIdProdotto() %>">
 						<input type="hidden" name="quantita" value="1">
 						<h3><%= p.getNomeProdotto() %></h3><br>
 						<label class="prezzo"><%= p.getPrezzo() %> €</label><br>
-						
 						<a href="${pageContext.request.contextPath}/SchedaProdottoServlet?id_prodotto=<%= p.getIdProdotto() %>">Dettagli</a>
-						
-						<input type="submit" value="Aggiungi al carrello">
-					</form>
+					</div>
 		<%	
 				}
 			} 
