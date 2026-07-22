@@ -170,8 +170,9 @@ nav ul{
 }
 
 nav ul li {
-	display: inline;
-	margin: 20px 15px;
+	display: inline-block;
+	margin: 10px 8px;
+	white-space: nowrap;
 }
 
 #form {
@@ -231,23 +232,37 @@ form input[type=submit]:hover, form a:hover{
 }
 
 #riepilogo {
-	max-width: 20%;
+	max-width: 30%;
+	min-width: 220px;
 	background-color: #FAFAFA;
 	font-family: "Lucida Console", "Courier New", monospace;
 	box-shadow: 5px 5px 20px rgba(10, 10, 10, 0.5);
-	padding: 10px;
+	padding: 15px;
 	margin: 10px;
 	display: inline-block;
 	-webkit-transform:  translateY(-10%) rotate(5deg) ;
     transform:  translateY(-10%) rotate(5deg);
     -webkit-transform-origin: left bottom;
     transform-origin: left bottom;
+    vertical-align: top;
+}
+
+#riepilogo a {
+	display: block;
+	box-sizing: border-box;
+}
+
+#riepilogo input[type="submit"] {
+	width: 100%; 
+	box-sizing: border-box; 
+	margin-top: 10px;
 }
 
 #elenco_prodotti {
 	display: inline-block;
 	width: 75%;
 	margin-bottom: 4em;
+	vertical-align: top;
 }
 
 #cart_container {
@@ -390,6 +405,55 @@ form input[type=submit]:hover, form a:hover{
 	padding: 1em;
 }
 
+.bottoni_carrello {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.bottoni_carrello .bottone_sx {
+	float: left;
+	width: 45%;
+	margin-right: 5%;
+	box-sizing: border-box;
+	text-align: center;
+	margin: 0;
+}
+
+.bottoni_carrello .bottone_dx {
+	float: right;
+	width: 45%;
+	box-sizing:	border-box;
+	background-color: red;
+}
+
+#catalogo_layout {
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    overflow: hidden;
+}
+
+#filtri_laterali {
+    float: left;
+    width: 25%;
+    box-sizing: border-box;
+    padding: 20px;
+    margin-right: 5%;
+}
+
+#filtri_laterali input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+
+#prodotti_main {
+    float: left;
+    width: 70%;
+    box-sizing: border-box;
+    padding: 20px;
+}
 
 @media screen and (max-width: 980px) {
 	.footer-col {
@@ -430,6 +494,12 @@ form input[type=submit]:hover, form a:hover{
 		display: block;
 		width: 100%;
 	}
+	#filtri_laterali, #prodotti_main {
+        float: none; 
+        width: 100%; 
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
 }
 
 @media screen and (max-width: 540px) {
@@ -454,6 +524,15 @@ form input[type=submit]:hover, form a:hover{
 		clear: both;
 		text-align: center;
 	}
+	.bottoni_carrello .bottone_sx,
+    .bottoni_carrello .bottone_dx {
+        width: 45%;
+        margin-bottom: 5%;
+    }
+    .card {
+    	width: 95%;
+    	margin: 3%;
+    }
 }
 
 @media screen and (max-width: 380px) {

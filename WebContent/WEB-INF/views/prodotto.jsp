@@ -82,7 +82,9 @@
 					</div>
 					
 					<% if(prodotto.getQt() > 0) { %>
+					<div class="bottoni_carrello">
 						<input type="submit" value="Aggiungi al Carrello">
+					</div>
 					<% } else { %>
 						<input type="button" value="Prodotto Esaurito" disabled>
 					<% } %>

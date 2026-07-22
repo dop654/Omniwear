@@ -36,12 +36,16 @@
 						<input type="hidden" name="id_prodotto" value="<%= p.getId_prodotto() %>">
 						<label>Quantità:</label>
 						<input type="number" name="quantita" value="<%= p.getQuantita() %>" min="0">
-						<input type="submit" value="Aggiorna">
+						<div class="bottoni_carrello">
+							<input type="submit" class="bottone_sx" value="Aggiorna">
+						</div>
 					</form>
 					<form action="${pageContext.request.contextPath}/CartServlet" method="POST">
 						<input type="hidden" name="action" value="rimuovi">
 						<input type="hidden" name="id_prodotto" value="<%= p.getId_prodotto() %>">
-						<input type="submit" value="Rimuovi">
+						<div class="bottoni_carrello">
+							<input type="submit" class="bottone_dx" value="Rimuovi">
+						</div>
 					</form>
 				<% 
 					}

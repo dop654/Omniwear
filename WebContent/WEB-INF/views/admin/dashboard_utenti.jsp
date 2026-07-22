@@ -15,7 +15,7 @@
 		<%@ include file="../header.jsp" %>
 		<%@ include file="../errorHandler.jsp" %>
 		
-		<section class="glass" id="utenti">
+		<section class="glass" id="utenti" class="dash_container">
 			<%	List<UtenteBean> utenti = (List<UtenteBean>) request.getAttribute("listaUtenti");
 			
 				if(utenti == null || utenti.isEmpty()) { %>
