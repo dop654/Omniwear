@@ -37,8 +37,10 @@
 					<ul>
 						<li>ID Ordine: <%= o.getIdOrdine() %></li>
 						<li>Stato: <%= statoOrd[o.getStatoOrdine()] %></li>
-						<li>Totale: <%= o.getTotale() %>€</li>
 						
+						<% if(o.getStatoOrdine() != 0) {%>
+							<li>Totale: <%= o.getTotale() %>€</li>
+						<% } %>
 						<% if(o.getStatoOrdine() != 0) { %>
 							<li>
 							<div id="form">
