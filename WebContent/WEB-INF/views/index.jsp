@@ -46,15 +46,16 @@
 			if(prodotti != null) {
 				for(ProdottoBean p : prodotti) { 
 					if(i++ > 5) {break;} %>
-					<form class="glass" id="scheda_prodotto" method="POST" action="${pageContext.request.contextPath}/CartServlet">
-						<input type="hidden" name="action" value="aggiungi">
-						<input type="hidden" name="id_prodotto" value="<%= p.getIdProdotto() %>">
-						<input type="hidden" name="quantita" value="1">
-						<label id="nomeProdotto" name="nomeProdotto"><%= p.getNomeProdotto() %></label><br>
-						<label id="prezzo" name="prezzo"><%= p.getPrezzo() %></label><br>
-						<a href="${pageContext.request.contextPath}/SchedaProdottoServlet?id_prodotto=<%= p.getIdProdotto() %>">Dettagli</a>
-						<input type="submit" value="Aggungi al carrello">
-					</form>
+					<div class="glass anteprima_prodotto">
+						<form id="scheda_prodotto" method="POST" action="${pageContext.request.contextPath}/CartServlet">
+							<input type="hidden" name="action" value="aggiungi">
+							<input type="hidden" name="id_prodotto" value="<%= p.getIdProdotto() %>">
+							<input type="hidden" name="quantita" value="1">
+							<label id="nomeProdotto" name="nomeProdotto"><%= p.getNomeProdotto() %></label><br>
+							<label id="prezzo" name="prezzo"><%= p.getPrezzo() %></label><br>
+							<a href="${pageContext.request.contextPath}/SchedaProdottoServlet?id_prodotto=<%= p.getIdProdotto() %>">Dettagli</a>
+						</form>
+					</div>
 			<%	}
 			} %>
 	</section>

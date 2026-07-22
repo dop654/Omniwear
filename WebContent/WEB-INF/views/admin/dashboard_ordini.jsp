@@ -23,25 +23,27 @@
 					</div>
 			<%	} else {
 					for(OrdineBean o : ordini) { %>
-						<ul>
-							<li>ID Ordine: <%= o.getIdOrdine() %></li>
-							<li>Totale: <%= o.getTotale() %>€</li>
-							
-							<li>
-								<div id="form">
-									<form action="${pageContext.request.contextPath}/admin/ordini" method="POST">
-										<input type="hidden" name="id_ordine" value="<%= o.getIdOrdine() %>">
-										<label for="stato">Stato:</label>
-										<select name="stato" id="stato">
-											<% for(int i = 0; i<statoOrd.length; i++) { %>
-												<option value="<%= i %>" <%= (o.getStatoOrdine() == i)?"selected='selected'" : ""%>><%= statoOrd[i] %></option>
-											<% } %>
-										</select>
-										<input type="submit" value="Aggiorna stato">
-									</form>
-								</div>
-							</li>
-						</ul>
+						<section class="glass scheda_ordine" >
+							<ul>
+								<li>ID Ordine: <%= o.getIdOrdine() %></li>
+								<li>Totale: <%= o.getTotale() %>€</li>
+								
+								<li>
+									<div id="form">
+										<form action="${pageContext.request.contextPath}/admin/ordini" method="POST">
+											<input type="hidden" name="id_ordine" value="<%= o.getIdOrdine() %>">
+											<label for="stato">Stato:</label>
+											<select name="stato" id="stato">
+												<% for(int i = 0; i<statoOrd.length; i++) { %>
+													<option value="<%= i %>" <%= (o.getStatoOrdine() == i)?"selected='selected'" : ""%>><%= statoOrd[i] %></option>
+												<% } %>
+											</select>
+											<input type="submit" value="Aggiorna stato">
+										</form>
+									</div>
+								</li>
+							</ul>
+						</section>
 			<%		} 
 				} %>
 		</section>

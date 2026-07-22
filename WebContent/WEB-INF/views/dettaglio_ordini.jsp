@@ -15,7 +15,7 @@
 	
 	<%@ include file="errorHandler.jsp" %>
 	
-	<section class="glass">
+	<section class="glass" id="cart_container">
 		<%
 			OrdineBean ordine = (OrdineBean) request.getAttribute("ordine");
 			List<OrdineProdottoBean> prodottiOrdine = (List<OrdineProdottoBean>) request.getAttribute("prodottiOrdine");
@@ -23,7 +23,7 @@
 			
 			if (ordine == null) {
 		%>
-				<div id="msg">
+				<div class="glass" id="msg">
 					Nessun dettaglio trovato per questo ordine.
 					<hr><br>
 					<a href="<%= request.getContextPath() %>/user_ordini">Torna ai tuoi ordini</a>

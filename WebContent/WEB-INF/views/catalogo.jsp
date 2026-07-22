@@ -50,7 +50,7 @@
 			if(prodotti != null) {
 				for(ProdottoBean p : prodotti) { 
 		%>
-					<div id="form">
+					<div class="glass anteprima_prodotto">
 						<input type="hidden" name="action" value="aggiungi">
 						<input type="hidden" name="id_prodotto" value="<%= p.getIdProdotto() %>">
 						<input type="hidden" name="quantita" value="1">
