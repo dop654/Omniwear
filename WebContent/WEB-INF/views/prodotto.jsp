@@ -19,8 +19,7 @@
 	</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/style.css">
 	<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images/favicons/favicon.ico">
-	<script src="scripts/utils.js"></script>
-</head>
+	<script src="${pageContext.request.contextPath}/scripts/utils.js"></script></head>
 <body>
 	<%@ include file="header.jsp" %>
 	<section class="glass" id="cart_container">
@@ -30,7 +29,7 @@
 		<div id="box_immagine">
 			<div class="slideshow-container">
 			<%	for(ImmagineBean i : img) { %>
-				<div class="mySlides fade" <% if(count == 0) out.print("style='display: block;'"); %>>
+				<div class="productSlides" <% if(count == 0) out.print("style='display: block;'"); %>>
 	    			<img src="<%= i.getPath() %>">
 	    		</div>
 	    	<%	count++;

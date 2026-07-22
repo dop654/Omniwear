@@ -343,6 +343,9 @@ form input[type=submit]:hover, form a:hover{
 .mySlides {
   	display: none;
 }
+.productSlides {
+    display: none;
+}
 .prev, .next {
   cursor: pointer;
   position: absolute;
@@ -358,11 +361,11 @@ form input[type=submit]:hover, form a:hover{
   user-select: none;
 }
 .prev {
-  left: 0;
+  left: 10px;
   border-radius: 0 3px 3px 0; 
 }
 .next {
-  right: 0;
+  right: 10px;
   border-radius: 3px 0 0 3px;
 }
 .prev:hover, .next:hover {
