@@ -669,3 +669,9 @@ form input[type=submit]:hover, form a:hover{
         height: 80px;
     }
 }
+
+.err_validazione {
+	font-size: small;
+	color: red;
+	margin: 0.1em;
+}

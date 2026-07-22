@@ -8,6 +8,7 @@
 	<title>Omniwear - Login</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/style.css">
 	<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images/favicons/favicon.ico">
+	<script src="${pageContext.request.contextPath}/scripts/validate.js"></script>
 </head>
 <body>
 	<%@ include file="header.jsp" %>
@@ -23,10 +24,16 @@
 			if(pass == null) { pass = ""; }
 		%>
 		<form method="POST" action="${pageContext.request.contextPath}/LoginServlet">
-			<span class="row"><label for="email">E-Mail: </label>
-			<input type="email" name="email" id="email"></span>
-			<span class="row"><label for="pass">Password: </label>
-			<input type="password" name="pass" id="pass"></span>
+			<span class="row">
+				<label for="email">E-Mail: </label>
+				<input type="email" name="email" id="email" required onchange="validateField(this, document.getElementById('errore_mail'), msg_email)">
+				<span class="err_validazione" id="errore_mail"></span>
+			</span>
+			<span class="row">
+				<label for="password">Password: </label>
+				<input type="password" name="pass" id="pass" required onchange="validateField(this, document.getElementById('errore_pw'), msg_pw)">
+				<span class="err_validazione" id="errore_pw"></span>
+			</span>
 			<input type="submit" value="Accedi">
 		</form>
 		<br>
