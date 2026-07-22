@@ -25,4 +25,6 @@ public interface OrdineDAO {
     Collection<OrdineProdottoBean> doRetrieveProdottiByOrdine(int id_ordine) throws SQLException; 
     
     boolean doUpdateStato(int id_ordine, int nuovoStato) throws SQLException;
+    
+    Collection<OrdineBean> doRetrieveFiltered(String email_utente, String data_ordine) throws SQLException;
 }

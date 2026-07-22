@@ -37,23 +37,24 @@ public class AdminOrdiniServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		List<String> errors = new ArrayList<>();
+		String filtroData = request.getParameter("filtroData");
+	    String filtroEmail = request.getParameter("filtroEmail");
 		
-		try {
-			List<OrdineBean> ordini = (List<OrdineBean>) ordineDAO.doRetrieveAll(null);
-			
-			request.setAttribute("listaOrdini", ordini);
-		} catch(SQLException e) {
-			errors.add(e.toString());
-		}
-		
-		 if(!errors.isEmpty()) {
-			request.setAttribute("errors", errors);
-		}
-		 
-        request.getRequestDispatcher("/WEB-INF/views/admin/dashboard_ordini.jsp").forward(request, response);
-		return;
+	    try {
+	        List<OrdineBean> ordini = (List<OrdineBean>) ordineDAO.doRetrieveFiltered(filtroEmail, filtroData);
+	        request.setAttribute("listaOrdini", ordini);
+	        
+	    } catch(SQLException e) {
+	        errors.add(e.toString());
+	    }
+	    
+	    if(!errors.isEmpty()) {
+	        request.setAttribute("errors", errors);
+	    }
+	     
+	    request.getRequestDispatcher("/WEB-INF/views/admin/dashboard_ordini.jsp").forward(request, response);
 	}
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		List<String> errors = new ArrayList<>();
