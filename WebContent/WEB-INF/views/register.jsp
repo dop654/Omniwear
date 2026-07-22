@@ -21,21 +21,21 @@
 		<form method="POST" action="${pageContext.request.contextPath}/RegisterServlet">
 			<span class="row"><label for="nome">Nome: </label>
 				<input type="text" name="nome" id="nome" required pattern="^[A-z]+(\s[A-z]+)*$" onchange="validateField(this, document.getElementById('errore_nome'), msg_solo_lettere)">
-				<span id="errore_nome"></span>
+				<span class="err_validazione" id="errore_nome"></span>
 			</span>
 			<span class="row"><label for="cognome">Cognome: </label>
 				<input type="text" name="cognome" id="cognome" required pattern="^[A-z]+(\s[A-z]+)*$" onchange="validateField(this, document.getElementById('errore_cognome'), msg_solo_lettere)">
-				<span id="errore_cognome"></span>
+				<span class="err_validazione" id="errore_cognome"></span>
 			</span>
 			<span class="row">
 				<label for="email">E-Mail: </label>
 				<input type="email" name="email" id="email" required onchange="validateField(this, document.getElementById('errore_mail'), msg_email)">
-				<span id="errore_mail"></span>
+				<span class="err_validazione" id="errore_mail"></span>
 			</span>
 			<span class="row">
 				<label for="password">Password: </label>
-				<input type="password" name="password" id="password" required pattern="/^\w[A-z\d_.,!?]{8,}$/" onchange="validateField(this, document.getElementById('errore_pw'), msg_pw)">
-				<span id="errore_pw"></span>
+				<input type="password" name="password" id="password" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-z\d@$!%*?&.]{8,}$" onchange="validateField(this, document.getElementById('errore_pw'), msg_pw)">
+				<span class="err_validazione" id="errore_pw"></span>
 			</span>
 			<span class="row">
 				<label for="dataNascita">Data di nascita: </label>

@@ -9,6 +9,7 @@
 	<title>Omniwear - Checkout</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/style.css">
 	<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images/favicons/favicon.ico">
+	<script src="${pageContext.request.contextPath}/scripts/validate.js"></script>
 </head>
 <body>
 	<%@ include file="header.jsp" %>
@@ -28,20 +29,32 @@
 		<hr><br>
 		
 		<form action="${pageContext.request.contextPath}/checkout" method="POST">
-		
-			<label for="indirizzo">Indirizzo di Spedizione:</label><br>
-			<input type="text" id="indirizzo" name="indirizzo" required placeholder="Es. Via Roma X, CAP Salerno"><br>
+			
+			<span class="row">
+				<label for="indirizzo">Indirizzo di Spedizione:</label><br>
+				<input type="text" id="indirizzo" name="indirizzo" required pattern="\w[\w\d,. ]+" placeholder="Es. Via Roma X, CAP Salerno" onchange="validateField(this, document.getElementById('errore_indirizzo'), msg_addr)">
+				<span class="err_validazione" id="errore_indirizzo"></span>
+			</span>
 			
 			<h3>Dati della Carta di Credito</h3>
 			
-			<label for="titolare">Titolare:</label><br>
-			<input type="text" id="titolare" name="titolare" required placeholder="Nome e cognome del titolare"><br>
+			<span class="row">
+				<label for="titolare">Titolare:</label><br>
+				<input type="text" id="titolare" name="titolare" required placeholder="Nome e cognome del titolare" pattern="^[A-z]+(\s[A-z]+)*$" onchange="validateField(this, document.getElementById('errore_titolare'), msg_solo_lettere)"><br>
+				<span class="err_validazione" id="errore_titolare"></span>
+			</span>
 			
-			<label for="numero_carta">Numero della Carta:</label><br>
-			<input type="text" id="numero_carta" name="numero_carta" pattern="\d{16}" required placeholder="1234567891234567" maxlength="16"><br>
+			<span class="row">
+				<label for="numero_carta">Numero della Carta:</label><br>
+				<input type="text" id="numero_carta" name="numero_carta" pattern="\d{16}" required placeholder="1234567891234567" maxlength="16" onchange="validateField(this, document.getElementById('errore_carta'), msg_carta)"><br>
+				<span class="err_validazione" id="errore_carta"></span>
+			</span>
 			
-			<label for="cvc">CVC:</label><br>
-			<input type="text" id="cvc" name="cvc" pattern="\d{3}" required maxlength="3" placeholder="123"><br>
+			<span class="row">
+				<label for="cvc">CVC:</label><br>
+				<input type="text" id="cvc" name="cvc" pattern="\d{3}" required maxlength="3" placeholder="123" onchange="validateField(this, document.getElementById('errore_cvc'), msg_cvc)"><br>
+				<span class="err_validazione" id="errore_cvc"></span>
+			</span>
 			
 			<input type="submit" value="Procedi con l'ordine">
 		</form>
