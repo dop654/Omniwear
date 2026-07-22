@@ -25,7 +25,7 @@
 						<label class="nomeProdotto"><%= p.getNomeProdotto() %></label><br>
 						<label class="prezzo"><%= p.getPrezzo() %> €</label><br>
 						
-						<a href="${pageContext.request.contextPath}/SchedaProdottoServlet?id=<%= p.getIdProdotto() %>">Dettagli</a>
+						<a href="${pageContext.request.contextPath}/SchedaProdottoServlet?id_prodotto=<%= p.getIdProdotto() %>">Dettagli</a>
 						
 						<input type="submit" value="Aggiungi al carrello">
 					</form>

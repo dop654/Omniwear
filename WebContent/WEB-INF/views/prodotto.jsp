@@ -3,6 +3,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="omniwear.model.ProdottoBean"%>
+<%@page import="omniwear.model.MisuraBean"%>
+<%@page import="omniwear.model.CategoriaBean"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,8 +49,45 @@
 		<aside id="riepilogo">
 			<h3><%= prodotto.getNomeProdotto() %></h3><br>
 			<hr>
+			<% Collection<CategoriaBean> categorie = (Collection<CategoriaBean>) request.getAttribute("categorie");
+				if(categorie != null && !categorie.isEmpty()) { %>
+				<p>Categoria: 
+					<% for(CategoriaBean c : categorie) { %>
+							<span><%= c.getNomeCat() %></span> 
+					<% } %>
+				</p>
+				
+			<%	} %>
 			<h4><%= prodotto.getPrezzo() %> €</h4>
+		
+			<form action="${pageContext.request.contextPath}/CartServlet" method="POST" id="form_carrello">
+					<input type="hidden" name="action" value="aggiungi">
+					<input type="hidden" name="id_prodotto" value="<%= prodotto.getIdProdotto() %>">
+					<div>
+						<label for="misura">Taglia:</label><br>
+						<select name="misura" id="misura" required>
+							<option value="" disabled selected>Scegli una taglia...</option>
+							<option value="S">S</option>
+							<option value="M">M</option>
+							<option value="L">L</option>
+							<option value="XL">XL</option>
+						</select>
+					</div>
+					
+					<div>
+						<label for="quantita">Quantità:</label><br>
+						<input type="number" name="quantita" id="quantita" value="1" min="1" max="<%= prodotto.getQt() %>" required>
+						<span>(Disponibili: <%= prodotto.getQt() %>)</span>
+					</div>
+					
+					<% if(prodotto.getQt() > 0) { %>
+						<input type="submit" value="Aggiungi al Carrello">
+					<% } else { %>
+						<input type="button" value="Prodotto Esaurito" disabled>
+					<% } %>
+				</form>
 		</aside>
+		
 	</section>
 	<%@ include file="footer.jsp" %>
 </body>
