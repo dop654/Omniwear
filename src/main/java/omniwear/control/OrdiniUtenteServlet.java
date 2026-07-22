@@ -46,7 +46,6 @@ public class OrdiniUtenteServlet extends HttpServlet{
 			List<OrdineBean> ordini = (List<OrdineBean>) ordineDAO.doRetrieveByUtente(userId);
 			
 			request.setAttribute("ordini", ordini);
-			request.getRequestDispatcher("/WEB-INF/views/ordini.jsp").forward(request, response);
 		} catch(SQLException e) {
 			errors.add(e.toString());
 		}
@@ -54,6 +53,8 @@ public class OrdiniUtenteServlet extends HttpServlet{
 		if(!errors.isEmpty()) {
 			request.setAttribute("errors", errors);
 		}
+		
+		request.getRequestDispatcher("/WEB-INF/views/ordini.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -67,6 +68,7 @@ public class OrdiniUtenteServlet extends HttpServlet{
 					
 					ordineDAO.doUpdateStato(idOrdine, 0);
 					response.sendRedirect(request.getContextPath() + "/user_ordini");
+					return;
 				} catch(SQLException e) {
 					errors.add(e.toString());
 				}
@@ -75,6 +77,8 @@ public class OrdiniUtenteServlet extends HttpServlet{
 		if(!errors.isEmpty()) {
 			request.setAttribute("errors", errors);
 		}
+		
+		doGet(request, response);
 	}
 		
 }

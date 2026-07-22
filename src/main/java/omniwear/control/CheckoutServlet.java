@@ -127,12 +127,16 @@ public class CheckoutServlet extends HttpServlet {
 		
 		if(!errors.isEmpty()) {
 			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/WEB-INF/views/checkout.jsp").forward(request, response);
+			return;
 		} else {
 			request.setAttribute("msg", "Ordine effettuato con successo!");
+			
+			cart = new Carrello();
+			session.setAttribute("carrello", cart);
+			
+			response.sendRedirect(request.getContextPath() + "/user_ordini");
+			return;
 		}
-		
-		cart = new Carrello();
-		session.setAttribute("carrello", cart);
-		request.getRequestDispatcher("/WEB-INF/views/ordini.jsp").forward(request, response);
 	}
 }

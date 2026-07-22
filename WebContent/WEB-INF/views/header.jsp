@@ -30,9 +30,13 @@
 				<li><a href="${pageContext.request.contextPath}/CartServlet">Carrello</a></li>
 				<li>
 					<c:if test="${sessionScope.utente != null}">
-							<a href="${pageContext.request.contextPath}/LogoutServlet">Esci</a>
+							<a href="${pageContext.request.contextPath}/user_ordini">I miei Ordini</a>
 					</c:if>
 				</li>
+				<li>
+					<c:if test="${sessionScope.utente != null}">
+							<a href="${pageContext.request.contextPath}/LogoutServlet">Esci</a>
+					</c:if>
 			</ul>
 		</nav>
 	</header>
