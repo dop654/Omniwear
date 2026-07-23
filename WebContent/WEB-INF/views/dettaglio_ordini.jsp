@@ -65,7 +65,7 @@
 				%>
 				
 				<br><hr><br>
-				<div style="text-align: center;">
+				<div>
 					<a href="${pageContext.request.contextPath}/user_ordini">
 						Torna allo storico
 					</a>

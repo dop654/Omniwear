@@ -40,7 +40,7 @@
 			</div>
 			<br>
 
-			<div style="text-align:center">
+			<div>
 				<%	for(int i = 0; i < count; i++) { %>
 					<span class="dot" onclick="currentSlide(<%= i+1 %>)"></span>
 				<%	} %>

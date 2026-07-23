@@ -49,8 +49,6 @@
 				<button type="button" value="elimina" id="elimina" onClick="eliminaProdotto(this)">Elimina</button>
 			</form>
 
-			<hr style="margin: 20px 0; border: 0; border-top: 1px solid rgba(255,255,255,0.5);">
-
 			<h3>Carica Immagine</h3>
 			<form method="post" action="${pageContext.request.contextPath}/admin/image" enctype="multipart/form-data">
 				<input type="hidden" name="action" value="upload"/>
