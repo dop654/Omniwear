@@ -39,7 +39,14 @@ public class AdminOrdiniServlet extends HttpServlet {
 		List<String> errors = new ArrayList<>();
 		String filtroData = request.getParameter("filtroData");
 	    String filtroEmail = request.getParameter("filtroEmail");
-		
+	    
+	    if (filtroData != null && filtroData.trim().isEmpty()) {
+	        filtroData = null;
+	    }
+	    if (filtroEmail != null && filtroEmail.trim().isEmpty()) {
+	        filtroEmail = null;
+	    }
+	    
 	    try {
 	        List<OrdineBean> ordini = (List<OrdineBean>) ordineDAO.doRetrieveFiltered(filtroEmail, filtroData);
 	        request.setAttribute("listaOrdini", ordini);
