@@ -13,7 +13,7 @@
 </head>
 <body>
 	<%@ include file="header.jsp" %>
-	<section class="glass" id="cart_container" style="text-align: center;">
+	<section class="glass" id="cart_container">
 	
 	<h1>Oops! Qualcosa è andato storto</h1>
 	<div class="glass" id="error">
