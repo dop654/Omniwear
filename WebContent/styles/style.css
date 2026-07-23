@@ -53,7 +53,7 @@ footer{
 	position: relative;
 }
 .footer-col p {
-	color: #FFDA78;
+	color: #2A629A;
 	font-size: small;
 	font-family: Les_Flos;
 	font-style: oblique;
@@ -403,7 +403,7 @@ form input[type=submit]:hover, form a:hover{
 	margin: 1em;
 	padding: 1em;
 }
-#schedaP h3 {
+#schedaP h3, #catalogo h3 {
 	font-family: Les_Flos;
 }
 
