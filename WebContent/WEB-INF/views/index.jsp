@@ -50,10 +50,10 @@
 		        	ProdottoBean p = prodotti.get(i);%>
 				    <div class="glass anteprima_prodotto">
 				    	<% 	List<ImmagineBean> immagini = (List<ImmagineBean>) p.getImmagini();
-							if(immagini != null && !immagini.isEmpty()) { 
-						%>
-							<img class="immagine_prodotto" src="<%= immagini.get(0).getPath() %>" alt="<%= p.getNomeProdotto() %>">
-						<% } %>
+				    		if(immagini != null && !immagini.isEmpty()) { 
+							%>
+								<img class="immagine_prodotto" src="<%= immagini.get(0).getPath() %>" alt="<%= p.getNomeProdotto() %>">
+							<% } %>
 					                
 					    <h3><%= p.getNomeProdotto() %></h3><br>
 					    <label class="prezzo"><%= p.getPrezzo() %> €</label><br>

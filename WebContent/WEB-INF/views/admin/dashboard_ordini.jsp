@@ -29,49 +29,49 @@
 					<input type="submit" value="Filtra" class="filtra">
 					<a href="${pageContext.request.contextPath}/admin/ordini" class="reset">Resetta filtri</a>
 				</form>
-		</aside>
-		<section class="glass" id="prodotti_main">
-			<h2>Gestione Ordini</h2>
-			<%	List<OrdineBean> ordini = (List<OrdineBean>) request.getAttribute("listaOrdini");
-				String[] statoOrd = {"Annullato", "Ricevuto", "Spedito", "Consegnato"};
-				if(ordini == null || ordini.isEmpty()) { %>
-					<div class="glass" id="msg">
-						Nessun ordine trovato con i filtri selezionati.
-					</div>
-			<%	} else {
-					for(OrdineBean o : ordini) { %>
-						<section class="glass scheda_ordine">
-							<ul>
-								<li>ID Ordine: <%= o.getIdOrdine() %></li>
-								<li>Data: <%= o.getDataOrdine() %></li>
-								<li>Cliente:
-									<% if(o.getUtente() != null) { %>
-										<%= o.getUtente().getNome() %> <%= o.getUtente().getCognome() %> (<%= o.getUtente().getEmail() %>)
-									<% } else { %>
-										Utente ID: <%= o.getIdUtente() %>
-									<% } %>
-								</li>
-								<li>Totale: <%= o.getTotale() %>€</li>
-								
-								<li>
-									<div id="form">
-										<form action="${pageContext.request.contextPath}/admin/ordini" method="POST">
-											<input type="hidden" name="id_ordine" value="<%= o.getIdOrdine() %>">
-											<label for="stato">Stato:</label>
-											<select name="stato" id="stato">
-												<% for(int i = 0; i<statoOrd.length; i++) { %>
-													<option value="<%= i %>" <%= (o.getStatoOrdine() == i) ? "selected" : "" %>><%= statoOrd[i] %></option>
-												<% } %>
-											</select>
-											<input type="submit" value="Aggiorna stato">
-										</form>
-									</div>
-								</li>
-							</ul>
-						</section>
-			<%		} 
-				} %>
-		</section>
+			</aside>
+			<section class="glass" id="prodotti_main">
+				<h2>Gestione Ordini</h2>
+				<%	List<OrdineBean> ordini = (List<OrdineBean>) request.getAttribute("listaOrdini");
+					String[] statoOrd = {"Annullato", "Ricevuto", "Spedito", "Consegnato"};
+					if(ordini == null || ordini.isEmpty()) { %>
+						<div class="glass" id="msg">
+							Nessun ordine trovato con i filtri selezionati.
+						</div>
+				<%	} else {
+						for(OrdineBean o : ordini) { %>
+							<section class="glass scheda_ordine">
+								<ul>
+									<li>ID Ordine: <%= o.getIdOrdine() %></li>
+									<li>Data: <%= o.getDataOrdine() %></li>
+									<li>Cliente:
+										<% if(o.getUtente() != null) { %>
+											<%= o.getUtente().getNome() %> <%= o.getUtente().getCognome() %> (<%= o.getUtente().getEmail() %>)
+										<% } else { %>
+											Utente ID: <%= o.getIdUtente() %>
+										<% } %>
+									</li>
+									<li>Totale: <%= o.getTotale() %>€</li>
+									
+									<li>
+										<div id="form">
+											<form action="${pageContext.request.contextPath}/admin/ordini" method="POST">
+												<input type="hidden" name="id_ordine" value="<%= o.getIdOrdine() %>">
+												<label for="stato">Stato:</label>
+												<select name="stato" id="stato">
+													<% for(int i = 0; i<statoOrd.length; i++) { %>
+														<option value="<%= i %>" <%= (o.getStatoOrdine() == i) ? "selected" : "" %>><%= statoOrd[i] %></option>
+													<% } %>
+												</select>
+												<input type="submit" value="Aggiorna stato">
+											</form>
+										</div>
+									</li>
+								</ul>
+							</section>
+				<%		} 
+					} %>
+			</section>
 		</div>
 		<%@ include file="../footer.jsp" %>
 	</body>

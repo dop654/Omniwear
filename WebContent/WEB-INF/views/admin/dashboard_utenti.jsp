@@ -28,19 +28,21 @@
 		<%	} else {
 				for(UtenteBean u : utenti) { %>
 					<section class="glass scheda_ordine">
-						<p>ID Utente: <%= u.getIdUtente() %></p><br>
-						<p>Nome e Cognome: <%= u.getNome() %> <%= u.getCognome() %></p><br>
-						<p>Email: <%= u.getEmail() %></p><br>
-						
-						<div id="form">
-							<% if(!u.getAdmin()) {%>
-										<form action="${pageContext.request.contextPath}/admin/users" method="POST">
-										<input type="hidden" name="action" value="rimuovi">
-										<input type="hidden" name="id_utente" value="<%= u.getIdUtente() %>">
-										<input type="submit" value="Rimuovi Utente">
-									</form>
-								<% } %>
-						</div>
+						<ul>
+							<li><p>ID Utente: <%= u.getIdUtente() %></p></li>
+							<li><p>Nome e Cognome: <%= u.getNome() %> <%= u.getCognome() %></p></li>
+							<li><p>Email: <%= u.getEmail() %></p></li>
+							
+							<div id="form">
+								<% if(!u.getAdmin()) {%>
+											<form action="${pageContext.request.contextPath}/admin/users" method="POST">
+											<input type="hidden" name="action" value="rimuovi">
+											<input type="hidden" name="id_utente" value="<%= u.getIdUtente() %>">
+											<input type="submit" value="Rimuovi Utente">
+										</form>
+									<% } %>
+							</div>
+						</ul>
 					</section>
 			<%		} 
 				} %>
