@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import omniwear.model.UtenteBean;
 
-@WebFilter(urlPatterns = {"/admin/home", "/admin/prodotti", "/user_page", "/admin/ordini", "/user_ordini", "/checkout"})
+@WebFilter(urlPatterns = {"/admin/home", "/admin/prodotti", "/user_page", "/admin/ordini", "/user_ordini", "/checkout", "/admin/users", "/dettaglio_ordini", "/LogoutServlet"})
 public class AuthFilter extends HttpFilter {
 	private static final long serialVersionUID = 1L;	
 	
