@@ -1,21 +1,22 @@
-	<%@page import="omniwear.model.UtenteBean"%>
-	<%@page import="java.util.List"%>
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
-	    pageEncoding="UTF-8"%>
-	<!DOCTYPE html>
-	<html>
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta charset="UTF-8">
-		<title>Dashboard Admin</title>
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/style.css">
-		<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images/favicons/favicon.ico">
-	</head>
-	<body>
-		<%@ include file="../header.jsp" %>
-		<%@ include file="../errorHandler.jsp" %>
-		
-		<section class="glass" id="utenti" class="dash_container">
+<%@page import="omniwear.model.UtenteBean"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<title>Dashboard Admin</title>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/style.css">
+	<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images/favicons/favicon.ico">
+</head>
+<body>
+	<%@ include file="../header.jsp" %>
+	<%@ include file="../errorHandler.jsp" %>
+	
+	<div id="catalogo_layout">
+		<section class="glass"  id="prodotti_main">
 			<%	List<UtenteBean> utenti = (List<UtenteBean>) request.getAttribute("listaUtenti");
 			
 				if(utenti == null || utenti.isEmpty()) { %>
@@ -26,7 +27,7 @@
 				</div>
 		<%	} else {
 				for(UtenteBean u : utenti) { %>
-	
+					<section class="glass scheda_ordine">
 						<p>ID Utente: <%= u.getIdUtente() %></p><br>
 						<p>Nome e Cognome: <%= u.getNome() %> <%= u.getCognome() %></p><br>
 						<p>Email: <%= u.getEmail() %></p><br>
@@ -40,12 +41,12 @@
 									</form>
 								<% } %>
 						</div>
-						
-					</ul>
-		<%		} 
-			} %>
-	</section>
+					</section>
+			<%		} 
+				} %>
+			</section>
+		</div>
 	
-	<%@ include file="../footer.jsp" %>
+		<%@ include file="../footer.jsp" %>
 </body>
 </html>

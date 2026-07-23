@@ -35,7 +35,7 @@
 		</div>
 		<br>
 
-		<div style="text-align:center">
+		<div>
 			<%	for(int i = 0; i < 3; i++) { %>
 				<span class="dot"></span>
 			<%	} %>

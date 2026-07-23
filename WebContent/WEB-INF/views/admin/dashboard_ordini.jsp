@@ -35,7 +35,7 @@
 			<%	List<OrdineBean> ordini = (List<OrdineBean>) request.getAttribute("listaOrdini");
 				String[] statoOrd = {"Annullato", "Ricevuto", "Spedito", "Consegnato"};
 				if(ordini == null || ordini.isEmpty()) { %>
-					<div class="glass" id="msg" style="padding: 15px; margin-top: 15px;">
+					<div class="glass" id="msg">
 						Nessun ordine trovato con i filtri selezionati.
 					</div>
 			<%	} else {
